@@ -1,0 +1,30 @@
+# TS baseline test run (unmodified TS, commit b243fa00, node v22.23.3, linux-x86_64, concurrent with other work)
+1..2105
+# tests 2114
+# suites 1
+# pass 2067
+# fail 18
+# cancelled 0
+# skipped 29
+# todo 0
+# duration_ms 162324.96475
+
+## pre-existing failures
+not ok 239 - production sidecar emits host tool progress before a slow tool completes
+not ok 268 - TCP sidecar provider reconnects one live stream without duplicating the host terminal
+not ok 270 - TCP sidecar replays a pending permission module call after interaction reconnect
+not ok 271 - TCP sidecar replays a pending capability question after interaction reconnect
+not ok 272 - TCP sidecar replays a plan-mode capability result without repeating its host transition
+not ok 273 - TCP sidecar active deadline records result_unknown and fails closed without a host resolution
+not ok 274 - TCP sidecar ignores a late host tool success after an active deadline
+not ok 617 - unsupported format, size and invalid UTF-8 reject with real status
+not ok 622 - export-composition bundles StaffDeck SOP and Knowledge runtimes for native-five profile
+not ok 632 - YAML-composed external AgentLoop runs SOP with external core modules (inherit)
+not ok 633 - YAML-composed external AgentLoop runs SOP with external core modules (new_session)
+not ok 634 - SOP-only profile enters a live handoff without Skill or Knowledge fallback
+not ok 669 - seven-slot YAML composition uses real StaffDeck Knowledge and SOP processes
+not ok 670 - native PilotDeck owners compose real StaffDeck Knowledge and SOP through Gateway
+not ok 1467 - createLocalGateway isolates Gateway-local SDK plugins to their configured session
+not ok 1953 - sandboxed FsPort denies read-only writes and canonicalizes workspace-write targets
+not ok 2010 - core imports and public SDK/wire types keep the execution provider removable
+not ok 2079 - startup recovery decides from the newest replacement transaction only

@@ -1,0 +1,25 @@
+capability_id,entrypoint,source_scope,classification,required_platforms,contract_id,target_rust_module,task_id,transition_bridge,third_party_exception,required_gates,evidence_refs,status
+CAP-CLI-CHAT-SEARCH,pilotdeck chat search,src/cli/commands/chatSearch.ts;src/session/search/*;src/session/storage/SessionList.ts(readSessionInfo);src/session/storage/SessionLiteReader.ts;src/pilot/paths.ts(subset),first_party_runtime,linux;macos;windows,CAP-CLI-CHAT-SEARCH/v1,rust/crates/session-search;rust/crates/cli,P09-slice-1,none,none,G03;G05;G06;G07;G09;G11;G17,docs/rust-migration/evidence/parity-chat-search.json,linux_parity_passed_pending_independent_review
+CAP-CLI-DISPATCH,pilotdeck <other commands>,src/cli/pilotdeck.ts(main),first_party_runtime,linux;macos;windows,,rust/crates/cli/src/main.rs,P13,process_forward_to_ts_cli(PILOTDECK_TS_CLI) delete_when_all_cli_commands_migrated,none,,,transitional
+CAP-CLI-SDK,pilotdeck run/resume/sessions/settings/help,src/cli/sdkCli.ts;packages/sdk,first_party_runtime,linux;macos;windows,,,,,,,,not_started
+CAP-CLI-SERVER,pilotdeck server,src/cli/pilotdeckServer.ts;src/gateway;ui/server,first_party_runtime,linux;macos;windows,,,,,,,,not_started
+CAP-CLI-GATEWAY-SETUP,pilotdeck gateway setup,src/cli/commands/gatewaySetup.ts,first_party_runtime,linux;macos;windows,,,,,,,,not_started
+CAP-CLI-CRON,pilotdeck cron,src/cli/pilotdeck.ts(handleCronCommand);src/cron,first_party_runtime,linux;macos;windows,,,,,,,,not_started
+CAP-CLI-UPDATE,pilotdeck update,src/cli/pilotdeck.ts(handleUpdateCommand),first_party_runtime,linux;macos;windows,,,,,,,,not_started
+CAP-CLI-SKILLS,pilotdeck skills migrate,src/extension/skills,first_party_runtime,linux;macos;windows,,,,,,,,not_started
+CAP-CLI-TUI,pilotdeck tui,src/adapters(TuiChannel/ink),first_party_runtime,linux;macos;windows,,,,,,,,not_started
+CAP-SIDECAR,pilotdeck-agent-loop-sidecar,src/cli/pilotdeck-agent-loop-sidecar.ts,first_party_runtime,linux;macos;windows,,,,,,,,not_started
+CAP-GATEWAY,HTTP/WS gateway,src/gateway,first_party_runtime,linux;macos;windows,,,,,,,,not_started
+CAP-AGENT-LOOP,agent loop,src/agent;src/model;src/router,first_party_runtime,linux;macos;windows,,,,,,,,not_started
+CAP-TOOLS,builtin tools,src/tool;src/sandbox;src/permission,first_party_runtime,linux;macos;windows,,,,,,,,not_started
+CAP-SESSION,session runtime/storage,src/session(rest);src/storage,first_party_runtime,linux;macos;windows,,,,,,,,not_started
+CAP-CONTEXT-MEMORY,context & memory,src/context;edgeclaw-memory-core,first_party_runtime,linux;macos;windows,,,,,,,,not_started
+CAP-MCP,MCP clients,src/mcp,first_party_runtime,linux;macos;windows,,,,,@modelcontextprotocol/sdk,,,not_started
+CAP-EXTENSIONS,plugins & skills,src/extension,first_party_runtime,linux;macos;windows,,,,,js_plugin_host_decision_pending,,,blocked_on_user_decision
+CAP-CHANNELS,channel adapters,src/adapters,first_party_runtime,linux;macos;windows,,,,,lark/weixin SDKs,,,not_started
+CAP-AUTOMATION,always-on/cron/sop/workflow/task/goal/plan-todo,src/always-on;src/cron;src/sop;src/workflow;src/task;src/goal;src/plan-todo,first_party_runtime,linux;macos;windows,,,,,,,,not_started
+CAP-MISC-RUNTIME,telemetry/status/lsp/web/network/lifecycle/runtime/interaction/composition/pilot,src/*,first_party_runtime,linux;macos;windows,,,,,,,,not_started
+CAP-UI-SERVER,express server,ui/server,first_party_runtime(js),linux;macos;windows,,,,,,,,not_started
+CAP-WEB-UI,browser UI,ui/src;ui/shared,first_party_browser,browsers,,,,,,,,blocked_on_user_decision
+CAP-DESKTOP,electron app,apps/desktop,first_party_desktop,macos;windows;linux,,,,,,,,blocked_on_user_decision
+CAP-SDK-NPM,@pilotdeck/sdk,packages/sdk,public_npm_api,node,,,,,,,,blocked_on_user_decision

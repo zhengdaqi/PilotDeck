@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "playbook": "ts-to-rust-agent-playbook v2.1.0",
+  "project_type": ["cli", "http/ws server (gateway + express ui/server)", "web frontend (React/Vite)", "desktop (Electron)", "npm SDK package", "agent runtime"],
+  "entrypoints": {
+    "cli": "package.json bin.pilotdeck -> src/cli/pilotdeck.ts",
+    "sidecar": "package.json bin.pilotdeck-agent-loop-sidecar -> src/cli/pilotdeck-agent-loop-sidecar.ts",
+    "server": "pilotdeck server (gateway + ui/server express app)",
+    "web_ui": "ui/ (vite build)",
+    "desktop": "apps/desktop (electron)",
+    "sdk": "packages/sdk (@pilotdeck/sdk)"
+  },
+  "package_manager": "pnpm@10.32.1",
+  "scope_axes": {
+    "first_party_runtime": "all_rust (target); currently migrating capability by capability",
+    "js_runtime": "unknown - needs user decision for ui/ (browser) and Electron desktop; declared_hosts proposed",
+    "first_party_toolchain": "retain_development_only"
+  },
+  "execution": {
+    "profile": "light",
+    "run_mode": "session_autonomous",
+    "max_author_lanes": 1
+  },
+  "budget": {"price": "unknown", "quota": "unknown", "hard_cap": "unknown"},
+  "external_permissions": {
+    "push": "fork zhengdaqi/PilotDeck only",
+    "pull_request": "draft PR inside the fork only; nothing to OpenBMB upstream",
+    "publish/release": "not authorized"
+  }
+}

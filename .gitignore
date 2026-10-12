@@ -220,3 +220,6 @@ Auto-Research-Skills/
 
 # Local agent notes
 CLAUDE.md
+
+# Rust migration build output
+rust/target/

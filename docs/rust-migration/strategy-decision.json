@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "scope_id": "pilotdeck-standalone_alpha1-b243fa00/CAP-CLI-CHAT-SEARCH",
+  "status": "SELECTED",
+  "selected_branches": [
+    "S03"
+  ],
+  "provisional_branches": [],
+  "reasons": [
+    "S03: target_integration=native"
+  ],
+  "blocking_checks": [],
+  "probe_checks": [],
+  "required_gates": [
+    "G03",
+    "G05",
+    "G06",
+    "G07",
+    "G09",
+    "G11",
+    "G17"
+  ],
+  "exit_checks": [
+    "architecture_dependency_constraints",
+    "external_contract_parity",
+    "feedback_window",
+    "formal_entrypoint",
+    "full_scope_native_ownership"
+  ],
+  "evidence_refs": [
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/baseline.json",
+      "sha256": "c24602c1dbb40785298f3ab5d2d52db8eb70d471c550e13b69ba57f885817214"
+    },
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/evidence/ts-baseline-tests.txt",
+      "sha256": "b433a0f6fef5a0bcc07bb61914de15e92a821dcd2a56f59d7b657b0b86421f42"
+    },
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/evidence/parity-chat-search.json",
+      "sha256": "1088e8f35bf4aeab89d1d8ab438c7b7d1700f2914621bf77cfba7e23bb94e64b"
+    },
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/ADR-0001-rust-architecture.md",
+      "sha256": "ee0f99372dbaf47a8a8fe268e81ebfe4e4be28a1223a0b7c0e746ffac922ed2e"
+    }
+  ],
+  "phase_bindings": {
+    "P03": "provisional_decision_and_ADR",
+    "P04": "branch_contract",
+    "P07": "branch_adapters",
+    "P08": "selection_confirmed",
+    "P09": "first_real_slice",
+    "P12": "recalibrate",
+    "P26": "branch_exit_audit"
+  },
+  "meaning": "selection only; not implementation, deployment approval, or product PASS",
+  "facts_sha256": "2ea6cd7436d64883d18934a8e5c5769d92bcfe144246ccaa37d32e4ac69c4b19",
+  "catalog_sha256": "1eb0fd94be42b40d4c075d7e80831a88e07e36bcc2d9b8f7c74958e9911cf375",
+  "selector_sha256": "1494d06c53c669aa990c2ba4337185aef9d6e8782fea505856cfde30e2e6d3fe"
+}

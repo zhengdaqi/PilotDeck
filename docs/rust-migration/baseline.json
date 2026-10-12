@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "kind": "frozen_behavior_baseline",
+  "repository": "https://github.com/OpenBMB/PilotDeck",
+  "ref": "standalone_alpha1",
+  "commit": "b243fa007dcd449a78cf48e3d1f9e10f99c6c845",
+  "tree": "343671ddd58997b0ec076087b122bfbea1f9df75",
+  "worktree_snapshot": "clean (no uncommitted business changes included)",
+  "lockfiles": {
+    "pnpm-lock.yaml": "664356f6b3abeb5af3c02f36cdedd2dee14958744478d2820bfaeb319506463b",
+    "package.json": "ffabff5602ace294ab869beb4b9a00ec5d05897e5d65c60d30a28152659c52ff"
+  },
+  "oracle_runtime": {
+    "node": "v22.23.3 (official linux-x64 tarball; package.json engines >=22.13.0 <23)",
+    "pnpm": "10.32.1 (packageManager pin)",
+    "build": "pnpm install --frozen-lockfile && npm run build -> dist/src/cli/pilotdeck.js"
+  },
+  "rust_toolchain": "rustc/cargo 1.85.1 (rust/rust-toolchain.toml)",
+  "platform": "linux x86_64 (agent box); macOS/Windows not yet verified",
+  "frozen_at": "2026-10-13T03:35+08:00"
+}

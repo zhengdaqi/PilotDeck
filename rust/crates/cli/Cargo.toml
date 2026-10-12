@@ -1,0 +1,15 @@
+[package]
+name = "pilotdeck-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Rust entry point for the pilotdeck CLI (migrated commands only)"
+
+[[bin]]
+name = "pilotdeck"
+path = "src/main.rs"
+
+[dependencies]
+pilotdeck-session-search = { path = "../session-search" }
+serde_json.workspace = true
+serde.workspace = true
