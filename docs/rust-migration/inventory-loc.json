@@ -1,0 +1,200 @@
+{
+  "generated_from_commit": "b243fa007dcd449a78cf48e3d1f9e10f99c6c845",
+  "note": "LOC = non-empty+empty lines of .ts/.tsx (excluding .d.ts, node_modules, build outputs). Classification is provisional (P01).",
+  "modules": [
+    {
+      "path": "src/adapters",
+      "ts_files": 98,
+      "lines": 17312
+    },
+    {
+      "path": "src/agent",
+      "ts_files": 115,
+      "lines": 24315
+    },
+    {
+      "path": "src/always-on",
+      "ts_files": 41,
+      "lines": 8461
+    },
+    {
+      "path": "src/cli",
+      "ts_files": 54,
+      "lines": 13703
+    },
+    {
+      "path": "src/composition",
+      "ts_files": 20,
+      "lines": 2118
+    },
+    {
+      "path": "src/context",
+      "ts_files": 56,
+      "lines": 21656
+    },
+    {
+      "path": "src/cron",
+      "ts_files": 25,
+      "lines": 3245
+    },
+    {
+      "path": "src/extension",
+      "ts_files": 55,
+      "lines": 5244
+    },
+    {
+      "path": "src/gateway",
+      "ts_files": 71,
+      "lines": 16361
+    },
+    {
+      "path": "src/goal",
+      "ts_files": 6,
+      "lines": 239
+    },
+    {
+      "path": "src/interaction",
+      "ts_files": 8,
+      "lines": 540
+    },
+    {
+      "path": "src/lifecycle",
+      "ts_files": 8,
+      "lines": 187
+    },
+    {
+      "path": "src/lsp",
+      "ts_files": 5,
+      "lines": 639
+    },
+    {
+      "path": "src/mcp",
+      "ts_files": 15,
+      "lines": 1697
+    },
+    {
+      "path": "src/model",
+      "ts_files": 65,
+      "lines": 10122
+    },
+    {
+      "path": "src/network",
+      "ts_files": 1,
+      "lines": 280
+    },
+    {
+      "path": "src/permission",
+      "ts_files": 6,
+      "lines": 859
+    },
+    {
+      "path": "src/pilot",
+      "ts_files": 20,
+      "lines": 4158
+    },
+    {
+      "path": "src/plan-todo",
+      "ts_files": 5,
+      "lines": 515
+    },
+    {
+      "path": "src/router",
+      "ts_files": 35,
+      "lines": 5369
+    },
+    {
+      "path": "src/runtime",
+      "ts_files": 2,
+      "lines": 180
+    },
+    {
+      "path": "src/sandbox",
+      "ts_files": 12,
+      "lines": 1808
+    },
+    {
+      "path": "src/session",
+      "ts_files": 82,
+      "lines": 10690
+    },
+    {
+      "path": "src/sop",
+      "ts_files": 9,
+      "lines": 2822
+    },
+    {
+      "path": "src/status",
+      "ts_files": 1,
+      "lines": 171
+    },
+    {
+      "path": "src/storage",
+      "ts_files": 4,
+      "lines": 1285
+    },
+    {
+      "path": "src/task",
+      "ts_files": 7,
+      "lines": 1387
+    },
+    {
+      "path": "src/telemetry",
+      "ts_files": 6,
+      "lines": 1269
+    },
+    {
+      "path": "src/tool",
+      "ts_files": 101,
+      "lines": 19051
+    },
+    {
+      "path": "src/web",
+      "ts_files": 9,
+      "lines": 4007
+    },
+    {
+      "path": "src/workflow",
+      "ts_files": 8,
+      "lines": 867
+    },
+    {
+      "path": "ui",
+      "ts_files": 749,
+      "lines": 135770
+    },
+    {
+      "path": "apps/desktop",
+      "ts_files": 21,
+      "lines": 3176
+    },
+    {
+      "path": "packages/sdk",
+      "ts_files": 16,
+      "lines": 15206
+    },
+    {
+      "path": "tests",
+      "ts_files": 418,
+      "lines": 97649
+    },
+    {
+      "path": "scripts",
+      "ts_files": 5,
+      "lines": 829
+    },
+    {
+      "path": "tools",
+      "ts_files": 0,
+      "lines": 0
+    },
+    {
+      "path": "products",
+      "ts_files": 0,
+      "lines": 0
+    }
+  ],
+  "totals": {
+    "src_lines": 180557,
+    "all_lines": 433187
+  }
+}
