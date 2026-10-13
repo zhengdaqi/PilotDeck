@@ -1,0 +1,18 @@
+[package]
+name = "pilotdeck-tui-term"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "EXPERIMENTAL crossterm front-end for pilotdeck-tui-app against a running Gateway server. Not wired into `pilotdeck tui` (production stays on the TS Ink TUI)."
+
+[[bin]]
+name = "pilotdeck-tui-rs"
+path = "src/main.rs"
+
+[dependencies]
+serde_json.workspace = true
+crossterm = "0.28"
+pilotdeck-tui-app = { path = "../tui-app" }
+pilotdeck-tui-core = { path = "../tui-core" }
+pilotdeck-gateway-client = { path = "../gateway-client" }
+pilotdeck-session-search = { path = "../session-search" }

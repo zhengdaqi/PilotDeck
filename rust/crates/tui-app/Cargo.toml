@@ -1,0 +1,14 @@
+[package]
+name = "pilotdeck-tui-app"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Interactive TUI state machine (Rust port of src/adapters/channel/tui/app/TuiApp.tsx + ink-text-input) and permission settings"
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+regex.workspace = true
+chrono.workspace = true
+pilotdeck-tui-core = { path = "../tui-core" }
+pilotdeck-session-search = { path = "../session-search" }

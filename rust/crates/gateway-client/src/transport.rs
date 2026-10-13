@@ -220,14 +220,24 @@ impl Transport {
 
     /// Next item of stream `id` (seq-validated, `{...event, sequence}` like the TS queue).
     pub fn stream_next(&mut self, id: &str, interrupt: &std::sync::atomic::AtomicBool) -> Result<StreamItem, String> {
+        self.stream_next_inner(id, &|| interrupt.load(std::sync::atomic::Ordering::SeqCst), Duration::from_millis(100))
+    }
+
+    /// Non-blocking-ish poll for UIs: returns `Interrupted` once `deadline` passes with no frame.
+    pub fn stream_poll(&mut self, id: &str, deadline: Instant) -> Result<StreamItem, String> {
+        let left = deadline.saturating_duration_since(Instant::now()).max(Duration::from_millis(1));
+        self.stream_next_inner(id, &|| Instant::now() >= deadline, left.min(Duration::from_millis(100)))
+    }
+
+    fn stream_next_inner(&mut self, id: &str, stop: &dyn Fn() -> bool, read_timeout: Duration) -> Result<StreamItem, String> {
         loop {
             let v = if let Some(v) = self.backlog.pop_front() {
                 v
             } else {
-                if interrupt.load(std::sync::atomic::Ordering::SeqCst) {
+                if stop() {
                     return Ok(StreamItem::Interrupted);
                 }
-                let _ = self.ws.get_ref().set_read_timeout(Some(Duration::from_millis(100)));
+                let _ = self.ws.get_ref().set_read_timeout(Some(read_timeout));
                 let msg = match self.ws.read() {
                     Ok(m) => m,
                     Err(tungstenite::Error::Io(e))
