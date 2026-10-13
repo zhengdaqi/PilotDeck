@@ -10,6 +10,7 @@ pub mod shell_quote;
 pub mod settings_files;
 pub mod services;
 pub mod connection_test_tasks;
+pub mod terminal_runtime;
 
 /// Node's fs error message: `<CODE>: <description>, <syscall> '<path>'`.
 pub fn node_fs_message(e: &std::io::Error, syscall: &str, path: &str) -> String {
