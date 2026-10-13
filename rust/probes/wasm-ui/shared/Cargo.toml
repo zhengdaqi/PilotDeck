@@ -1,0 +1,10 @@
+[package]
+name = "probe-shared"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[dependencies]
+serde_json = "1"
+pilotdeck-tui-core = { path = "../../../crates/tui-core" }

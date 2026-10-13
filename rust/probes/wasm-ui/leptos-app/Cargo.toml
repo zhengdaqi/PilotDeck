@@ -1,0 +1,10 @@
+[package]
+name = "probe-leptos"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[dependencies]
+leptos = { version = "0.7", features = ["csr"] }
+probe-shared = { path = "../shared" }

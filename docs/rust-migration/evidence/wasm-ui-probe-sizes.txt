@@ -1,0 +1,6 @@
+leptos build_s=0 wasm_bytes=169045 wasm_gzip_bytes=60963
+dioxus build_s=0 wasm_bytes=456610 wasm_gzip_bytes=165016
+yew build_s=0 wasm_bytes=229370 wasm_gzip_bytes=85680
+leptos cold_release_build_s=45
+dioxus cold_release_build_s=27
+yew cold_release_build_s=31

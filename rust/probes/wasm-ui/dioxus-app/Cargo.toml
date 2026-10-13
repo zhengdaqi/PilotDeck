@@ -1,0 +1,10 @@
+[package]
+name = "probe-dioxus"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[dependencies]
+dioxus = { version = "0.6", default-features = false, features = ["web", "macro", "html", "signals", "hooks", "launch"] }
+probe-shared = { path = "../shared" }

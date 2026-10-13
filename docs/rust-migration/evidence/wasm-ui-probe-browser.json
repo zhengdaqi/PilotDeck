@@ -1,0 +1,26 @@
+{
+  "dioxus": {
+    "mounted": true,
+    "mountMs": 66,
+    "before": "alpha (2)\nbeta (1)",
+    "btnBefore": "group: project",
+    "after": "Running (1)\nIdle (1)\nDone (1)",
+    "btnAfter": "group: status"
+  },
+  "leptos": {
+    "mounted": true,
+    "mountMs": 56,
+    "before": "alpha (2)\nbeta (1)",
+    "btnBefore": "group: project",
+    "after": "Running (1)\nIdle (1)\nDone (1)",
+    "btnAfter": "group: status"
+  },
+  "yew": {
+    "mounted": true,
+    "mountMs": 56,
+    "before": "alpha (2)\nbeta (1)",
+    "btnBefore": "group: project",
+    "after": "Running (1)\nIdle (1)\nDone (1)",
+    "btnAfter": "group: status"
+  }
+}
