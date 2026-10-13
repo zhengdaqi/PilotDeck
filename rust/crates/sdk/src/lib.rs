@@ -4,6 +4,7 @@ pub mod session_store;
 #[cfg(feature = "fs")]
 pub mod file_store;
 pub mod js;
+pub mod options;
 pub mod snapshot;
 pub mod transport_core;
 #[cfg(feature = "net")]

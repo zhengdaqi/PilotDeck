@@ -63,3 +63,12 @@ client.ts, transport.ts, hook-server.
 - **Pending:**
   - Abort on client disconnect mid-callback: TS aborts the callback signal at once. Rust notices the disconnect only on write; `close()` still aborts.
   - JSON bodies containing lone-surrogate escapes: serde rejects them, so Rust answers 500 "not valid JSON" where TS accepts the body.
+
+## Slice 29: client.ts validateOptions
+`crates/sdk/src/options.rs` ports `validateOptions` with normalizeSandbox (validation part), validateDeferredTools,
+normalizeSystemPrompt, isPilotDeckJsonSchema, validateAgentMcpServers/Transport, supportsUserDialogKind and
+isAbsolutePath. Input is a JS-shaped `Js` value (functions, undefined members and non-finite numbers included), so
+the wasm/JS host and loosely typed native config are validated the same way. Check order, messages, codes and the
+V8 TypeErrors for wrong member types are kept. Oracle: rust/parity/sdk/gen_validate_options.mjs → 9860/9860;
+evidence sdk-validate-options.txt. Pending in client.ts: sdkSessionConfig/query init sequence, Query/stream
+control, MCP preparation, resource-client methods (wasm export of validateOptions comes with that slice).
