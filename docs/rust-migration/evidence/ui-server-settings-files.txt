@@ -1,0 +1,8 @@
+slice 23 permissionSettings/mcpConfig evidence 2026-10-13 14:36:23 CST
+fixture DIFFERS
+test virtual_project_path_matches_ts ... ok
+test file_scripts_match_ts ... ok
+test normalizers_match_ts ... ok
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+normalizers: 22 entries + 1500 permission values + 1500 MCP configs (936 errors); 120 file scripts with on-disk tree + file modes byte-compared; 50 isVirtualProjectPath vectors
+mutations: Task alias, dedupe, 0600 mode, empty server name, string-record check -> each fails
