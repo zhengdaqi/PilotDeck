@@ -5,7 +5,7 @@ TS oracle: node ts_server.mjs (real dist GatewayServer + fake_gateway.mjs, in-pr
 Rust:      pilotdeck-gateway-server -- node bridge.mjs (same fake_gateway.mjs over the JSON-lines bridge).
 Every observable byte-level outcome (WS frames, close codes/reasons, HTTP status/content-type/body)
 is compared exactly after normalizing random ids/timestamps. Known, documented divergences
-(SRC-DEFECT-004/005 process crashes, PENDING routes) are asserted separately and never counted as passes.
+(SRC-DEFECT-004/005/006) are asserted separately and never counted as passes.
 Usage: gateway_server_parity.py --rust BIN [--out FILE]
 """
 import argparse, base64, json, os, re, socket, struct, subprocess, sys, tempfile, time
@@ -225,6 +225,62 @@ def http_cases(srv, static, web_gateway=True):
             cases["static " + p] = get(p)
     return {k: http(srv, v) for k, v in cases.items()}
 
+def make_project(base):
+    """Identical project tree per server (separate copies: writes mutate)."""
+    root = os.path.join(base, "proj"); outside = os.path.join(base, "outside")
+    os.makedirs(os.path.join(root, "src", "deep")); os.makedirs(outside)
+    files = {"README.md": "# hi\n", "src/a.ts": "export const a = 1;\n", "src/B.ts": "b", "src/b.ts": "b2", "src/deep/x.json": "{}",
+             "bin.dat": bytes(range(256)), "Makefile": "all:\n", "weird.TXT": "upper ext", "bad.txt": b"ok\xff\xfe bad utf8",
+             "bom.md": "\ufeffbom", "\u00e9t\u00e9.txt": "unicode name", "noext": "x", "big.txt": "a" * (1024 * 1024 + 1),
+             "big.bin": b"\0" * (1024 * 1024 + 5), "empty.txt": ""}
+    for n, c in files.items():
+        with open(os.path.join(root, n), "wb") as f: f.write(c if isinstance(c, bytes) else c.encode())
+    open(os.path.join(outside, "secret.txt"), "w").write("secret")
+    os.symlink(outside, os.path.join(root, "link_out")); os.symlink("src", os.path.join(root, "link_in"))
+    os.symlink(os.path.join(outside, "secret.txt"), os.path.join(root, "secret_link.txt"))
+    os.symlink("missing-target", os.path.join(root, "dangling"))
+    os.mkfifo(os.path.join(root, "fifo"))
+    return root
+
+def files_cases(srv, root):
+    from urllib.parse import quote
+    a = {"Authorization": "Bearer " + TOKEN}; k = quote(root, safe="")
+    def fp(sub, q=None): return "/api/web/projects/%s/files/%s%s" % (k, sub, "" if q is None else "?" + q)
+    def w(body, raw=False): return get(fp("write"), dict(a, **{"Content-Type": "application/json"}), "POST", body if raw else json.dumps(body).encode())
+    seq = [("tree_root", get(fp("tree"), a)), ("tree_dot", get(fp("tree", "path=."), a)), ("tree_src", get(fp("tree", "path=src"), a)),
+      ("tree_empty_q", get(fp("tree", "path="), a)), ("tree_plus", get(fp("tree", "path=src/../src"), a)), ("tree_file", get(fp("tree", "path=README.md"), a)),
+      ("tree_missing", get(fp("tree", "path=nope"), a)), ("tree_escape", get(fp("tree", "path=../"), a)), ("tree_abs", get(fp("tree", "path=/etc"), a)),
+      ("tree_dotdotname", get(fp("tree", "path=..foo"), a)), ("tree_link_out", get(fp("tree", "path=link_out"), a)), ("tree_link_in", get(fp("tree", "path=link_in"), a)),
+      ("tree_pct", get(fp("tree", "path=s%72c&path=x"), a)), ("tree_badpct", get(fp("tree", "path=%zz"), a)), ("tree_notdir_child", get(fp("tree", "path=README.md/x"), a)),
+      ("read_noq", get(fp("read"), a)), ("read_empty", get(fp("read", "path="), a)), ("read_md", get(fp("read", "path=README.md"), a)),
+      ("read_ts", get(fp("read", "path=src/a.ts"), a)), ("read_bin", get(fp("read", "path=bin.dat"), a)), ("read_make", get(fp("read", "path=Makefile"), a)),
+      ("read_upper", get(fp("read", "path=weird.TXT"), a)), ("read_badutf8", get(fp("read", "path=bad.txt"), a)), ("read_bom", get(fp("read", "path=bom.md"), a)),
+      ("read_unicode", get(fp("read", "path=" + quote("\u00e9t\u00e9.txt")), a)), ("read_plus_space", get(fp("read", "path=no+ext"), a)),
+      ("read_noext", get(fp("read", "path=noext"), a)), ("read_big", get(fp("read", "path=big.txt"), a)), ("read_bigbin", get(fp("read", "path=big.bin"), a)),
+      ("read_emptyfile", get(fp("read", "path=empty.txt"), a)), ("read_dir", get(fp("read", "path=src"), a)), ("read_missing", get(fp("read", "path=zz.txt"), a)),
+      ("read_secret_link", get(fp("read", "path=secret_link.txt"), a)), ("read_via_link_out", get(fp("read", "path=link_out/secret.txt"), a)),
+      ("read_via_link_in", get(fp("read", "path=link_in/a.ts"), a)), ("read_dangling", get(fp("read", "path=dangling"), a)), ("read_escape", get(fp("read", "path=src/../../x"), a)),
+      ("read_fifo", get(fp("read", "path=fifo"), a)), ("post_read", get(fp("read", "path=README.md"), a, "POST")), ("get_write", get(fp("write"), a)),
+      ("tree_noauth", get(fp("tree"))), ("files_unknown", get(fp("other"), a)),
+      ("w_empty", w(b"", True)), ("w_badjson", w(b"{bad", True)), ("w_null", w(b"null", True)), ("w_array", w([1])), ("w_nopath", w({"content": "x"})),
+      ("w_emptypath", w({"path": "", "content": "x"})), ("w_nocontent", w({"path": "n.txt"})), ("w_numcontent", w({"path": "n.txt", "content": 1})),
+      ("w_badenc", w({"path": "n.txt", "content": "x", "encoding": "hex"})), ("w_nullenc", w({"path": "n.txt", "content": "x", "encoding": None})),
+      ("w_ok", w({"path": "new/dir/n.txt", "content": "hello \u00e9"})), ("r_ok", get(fp("read", "path=new/dir/n.txt"), a)),
+      ("w_b64", w({"path": "b.bin", "content": "aGVs bG8-_w==extra", "encoding": "base64"})), ("r_b64", get(fp("read", "path=b.bin"), a)),
+      ("w_utf8enc", w({"path": "u.txt", "content": "u", "encoding": "utf8"})), ("w_escape", w({"path": "../evil.txt", "content": "x"})),
+      ("w_via_link_out", w({"path": "link_out/planted.txt", "content": "x"})), ("w_via_secret_link", w({"path": "secret_link.txt", "content": "y"})),
+      ("w_abs", w({"path": "/tmp/evil.txt", "content": "x"})), ("w_onto_dir", w({"path": "src", "content": "x"})),
+      ("w_under_file", w({"path": "README.md/child.txt", "content": "x"})), ("w_overwrite", w({"path": "README.md", "content": "new"})),
+      ("r_overwrite", get(fp("read", "path=README.md"), a)), ("tree_after", get(fp("tree"), a)), ("tree_new", get(fp("tree", "path=new"), a)),
+      ("w_chunked", ("POST %s HTTP/1.1\r\nHost: x\r\nAuthorization: Bearer %s\r\nTransfer-Encoding: chunked\r\nConnection: close\r\n\r\n" % (fp("write"), TOKEN)).encode()
+                    + b"10\r\n" + b'{"path":"c.txt",' + b"\r\n" + b"10\r\n" + b'"content":"chunk' + b"\r\n" + b"2\r\n" + b'"}' + b"\r\n0\r\n\r\n"),
+      ("r_chunked", get(fp("read", "path=c.txt"), a)), ("missing_project", get("/api/web/projects/%2Fno%2Fsuch/files/tree", a))]
+    out = {}
+    for name, raw in seq:
+        out[name] = http(srv, raw)
+    out["outside_after"] = sorted(os.listdir(os.path.join(os.path.dirname(root), "outside")))
+    return json.loads(json.dumps(out).replace(root, "<root>").replace(quote(root, safe=""), "<rootkey>"))
+
 UUID = re.compile(r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}")
 ISO = re.compile(r"\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z")
 def norm(v):
@@ -253,12 +309,6 @@ def divergence_cases(rust_srv_factory, ts_srv_factory):
     t, r = ts_srv_factory(), rust_srv_factory()
     try: res["SRC-DEFECT-006 client FIN without close frame (half-open socket, no close cleanup in TS)"] = {"ts_cleanup_calls": fin_only(t), "rust_cleanup_calls": fin_only(r)}
     finally: t.stop(); r.stop()
-    t, r = ts_srv_factory(), rust_srv_factory()
-    try:
-        a = {"Authorization": "Bearer " + TOKEN}
-        res["PENDING /api/web project files routes"] = {"ts": http(t, get("/api/web/projects/p1/files/tree", a)).get("status"),
-                                                       "rust": http(r, get("/api/web/projects/p1/files/tree", a))}
-    finally: t.stop(); r.stop()
     return res
 
 def main():
@@ -276,11 +326,15 @@ def main():
             results = {}
             for name, argv in [("ts", ts_argv), ("rust", rs_argv)]:
                 srv = Server(argv)
-                try: results[name] = {"http": http_cases(srv, with_static, variant == "full"), "ws": ws_cases(srv, variant) if not with_static else {}}
+                try:
+                    results[name] = {"http": http_cases(srv, with_static, variant == "full"), "ws": ws_cases(srv, variant) if not with_static else {}}
+                    if variant == "full" and not with_static:
+                        results[name]["files"] = files_cases(srv, make_project(tempfile.mkdtemp(prefix="gw-files-")))
                 except Exception as e:
                     raise RuntimeError("%s server (%s): %s; stderr tail: %s" % (name, variant, e, srv.p.stderr.read()[-1500:] if not srv.alive() else "alive"))
                 finally: srv.stop()
-            for kind in ["http", "ws"]:
+            for kind in ["http", "ws", "files"]:
+                if kind not in results["ts"]: continue
                 for k in results["ts"][kind]:
                     total += 1
                     tv, rv = norm(results["ts"][kind][k]), norm(results["rust"][kind].get(k))

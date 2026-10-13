@@ -375,6 +375,77 @@ PASS full/ws/client_close
 PASS full/ws/hang_first_event
 PASS full/ws/log_after_close
 PASS full/ws/upgrade_wrong_path
+PASS full/files/tree_root
+PASS full/files/tree_dot
+PASS full/files/tree_src
+PASS full/files/tree_empty_q
+PASS full/files/tree_plus
+PASS full/files/tree_file
+PASS full/files/tree_missing
+PASS full/files/tree_escape
+PASS full/files/tree_abs
+PASS full/files/tree_dotdotname
+PASS full/files/tree_link_out
+PASS full/files/tree_link_in
+PASS full/files/tree_pct
+PASS full/files/tree_badpct
+PASS full/files/tree_notdir_child
+PASS full/files/read_noq
+PASS full/files/read_empty
+PASS full/files/read_md
+PASS full/files/read_ts
+PASS full/files/read_bin
+PASS full/files/read_make
+PASS full/files/read_upper
+PASS full/files/read_badutf8
+PASS full/files/read_bom
+PASS full/files/read_unicode
+PASS full/files/read_plus_space
+PASS full/files/read_noext
+PASS full/files/read_big
+PASS full/files/read_bigbin
+PASS full/files/read_emptyfile
+PASS full/files/read_dir
+PASS full/files/read_missing
+PASS full/files/read_secret_link
+PASS full/files/read_via_link_out
+PASS full/files/read_via_link_in
+PASS full/files/read_dangling
+PASS full/files/read_escape
+PASS full/files/read_fifo
+PASS full/files/post_read
+PASS full/files/get_write
+PASS full/files/tree_noauth
+PASS full/files/files_unknown
+PASS full/files/w_empty
+PASS full/files/w_badjson
+PASS full/files/w_null
+PASS full/files/w_array
+PASS full/files/w_nopath
+PASS full/files/w_emptypath
+PASS full/files/w_nocontent
+PASS full/files/w_numcontent
+PASS full/files/w_badenc
+PASS full/files/w_nullenc
+PASS full/files/w_ok
+PASS full/files/r_ok
+PASS full/files/w_b64
+PASS full/files/r_b64
+PASS full/files/w_utf8enc
+PASS full/files/w_escape
+PASS full/files/w_via_link_out
+PASS full/files/w_via_secret_link
+PASS full/files/w_abs
+PASS full/files/w_onto_dir
+PASS full/files/w_under_file
+PASS full/files/w_overwrite
+PASS full/files/r_overwrite
+PASS full/files/tree_after
+PASS full/files/tree_new
+PASS full/files/w_chunked
+PASS full/files/r_chunked
+PASS full/files/missing_project
+PASS full/files/outside_after
 PASS minimal/http/health
 PASS minimal/http/local_token
 PASS minimal/http/nope
@@ -708,7 +779,7 @@ PASS minimal/ws/client_close
 PASS minimal/ws/hang_first_event
 PASS minimal/ws/log_after_close
 PASS minimal/ws/upgrade_wrong_path
-710/710 parity cases passed
+781/781 parity cases passed
 DOCUMENTED DIVERGENCES (not counted): {
  "SRC-DEFECT-004 unmasked client frame": {
   "ts_server_alive": false,
@@ -726,16 +797,5 @@ DOCUMENTED DIVERGENCES (not counted): {
    "disconnectInteraction",
    "abortTurn"
   ]
- },
- "PENDING /api/web project files routes": {
-  "ts": 500,
-  "rust": {
-   "status": 501,
-   "content-type": "application/json",
-   "body": "{\"error\":{\"code\":\"RUST_GATEWAY_PENDING\",\"message\":\"Rust gateway server: /api/web project files routes are not ported yet (pending).\"}}"
-  }
  }
 }
-
-# Repeated runs: run1 710/710 parity cases passed; run2 710/710 parity cases passed; run3 710/710 parity cases passed
-# Command: python3 rust/parity/gateway/gateway_server_parity.py --rust rust/target/release/pilotdeck-gateway-server

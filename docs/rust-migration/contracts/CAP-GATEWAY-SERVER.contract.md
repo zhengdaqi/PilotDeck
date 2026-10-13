@@ -35,8 +35,18 @@ Ported (behavior-compatible):
 Bounded fixes, each a documented divergence pending user decision and never counted as parity:
 SRC-DEFECT-004 (malformed frame crash), SRC-DEFECT-005 (unhandled rejection crash), SRC-DEFECT-006 (half-open close cleanup).
 
+- `/api/web/projects/:key/files/{tree,read,write}` and `ProjectFileService`:
+  - lexical and realpath boundary checks
+  - tree typing and sorting (`localeCompare` on names verified against Node, 20000/20000 cases, Latin and accent domain)
+  - text/base64 reads with the 1 MiB cap
+  - recursive mkdir and writes; lenient Node base64 decoding; WHATWG `searchParams`; Content-Length and chunked bodies
+  - Node `fs` error messages
+  - The root is `projectKey`, because the TS server entry binds no `resolveProject`.
+  - Covered by 71 file-route parity cases on real temp trees: symlinks in and out, a dangling link, a fifo, bad UTF-8, a
+    BOM, unicode names, big files.
+  - SRC-DEFECT-007 (write follows symlinks out of the root) is replicated as-is, pending user decision.
+
 PENDING. Not dropped; each fails loudly, never fakes success:
-- `/api/web/projects/:key/files/{tree,read,write}` (ProjectFileService): `501 RUST_GATEWAY_PENDING`.
 - Bound public approval bridge and public host provider resolver (`publicApprovals`, `publicHostCapabilities`).
 - `/feishu/webhook` option.
 - The `Gateway` implementation itself (InProcessGateway: sessions, agent loop host, tools, storage, cron, MCP...). The
