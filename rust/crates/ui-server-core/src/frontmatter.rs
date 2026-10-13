@@ -1,12 +1,12 @@
 //! Port of `ui/server/utils/frontmatter.js`: `gray-matter@4.0.3` with js-yaml 3.14 `safeLoad`.
 //! JS/JSON engines are disabled and return `{}`.
 //!
-//! The YAML syntax is parsed by `yaml-rust2`. Node construction follows js-yaml's DEFAULT_SAFE_SCHEMA:
+//! The YAML loader is a port of js-yaml 3.14.2 (`js_yaml.rs`). Node construction follows js-yaml's DEFAULT_SAFE_SCHEMA:
 //! - implicit types: null, bool, int (including 0b/0x/legacy octal/sexagesimal), float, timestamp, merge;
 //! - explicit types: !!str/!!seq/!!map/!!binary/!!omap/!!pairs/!!set;
 //! - keys are converted to strings; duplicate keys are an error; `<<` merges.
 //!
-//! YAML error messages are not reproduced; only whether parsing throws is.
+//! YAML error messages keep js-yaml's reason text but not its line/column snippet.
 //!
 //! Intended differences (ADR-0004):
 //! - SRC-DEFECT-013: TS turns a timestamp used as a mapping key into `String(date)`. That string depends on the
@@ -16,10 +16,7 @@
 use crate::js_number::js_number_to_string;
 use regex::Regex;
 use serde_json::{json, Map, Value};
-use std::collections::{HashMap, HashSet};
 use std::sync::OnceLock;
-use yaml_rust2::parser::{Event, MarkedEventReceiver, Parser, Tag};
-use yaml_rust2::scanner::{Marker, TScalarStyle};
 
 /// A js-yaml result value.
 #[derive(Debug, Clone)]
@@ -127,7 +124,7 @@ fn re(cell: &'static OnceLock<Regex>, src: &str) -> &'static Regex {
     cell.get_or_init(|| Regex::new(src).unwrap())
 }
 
-fn resolve_int(data: &str) -> bool {
+pub(crate) fn resolve_int(data: &str) -> bool {
     let b: Vec<char> = data.chars().collect();
     let max = b.len();
     if max == 0 {
@@ -207,7 +204,7 @@ fn parse_int(s: &str, radix: u32) -> f64 {
     v
 }
 
-fn construct_int(data: &str) -> f64 {
+pub(crate) fn construct_int(data: &str) -> f64 {
     let mut value: String = data.replace('_', "");
     let mut sign = 1.0;
     if value.starts_with('-') || value.starts_with('+') {
@@ -239,7 +236,7 @@ fn construct_int(data: &str) -> f64 {
     sign * parse_int(&value, 10)
 }
 
-fn resolve_float(data: &str) -> bool {
+pub(crate) fn resolve_float(data: &str) -> bool {
     static R: OnceLock<Regex> = OnceLock::new();
     re(&R, r"^(?:[-+]?(?:0|[1-9][0-9_]*)(?:\.[0-9_]*)?(?:[eE][-+]?[0-9]+)?|\.[0-9_]+(?:[eE][-+]?[0-9]+)?|[-+]?[0-9][0-9_]*(?::[0-5]?[0-9])+\.[0-9_]*|[-+]?\.(?:inf|Inf|INF)|\.(?:nan|NaN|NAN))$")
         .is_match(data)
@@ -253,7 +250,7 @@ fn parse_float(s: &str) -> f64 {
     m.and_then(|m| m.as_str().parse::<f64>().ok()).unwrap_or(f64::NAN)
 }
 
-fn construct_float(data: &str) -> f64 {
+pub(crate) fn construct_float(data: &str) -> f64 {
     let mut value = data.replace('_', "").to_lowercase();
     let sign = if value.starts_with('-') { -1.0 } else { 1.0 };
     if value.starts_with('+') || value.starts_with('-') {
@@ -276,7 +273,7 @@ fn construct_float(data: &str) -> f64 {
     sign * parse_float(&value)
 }
 
-fn timestamp(data: &str) -> Option<f64> {
+pub(crate) fn timestamp(data: &str) -> Option<f64> {
     static D: OnceLock<Regex> = OnceLock::new();
     static T: OnceLock<Regex> = OnceLock::new();
     if let Some(c) = re(&D, r"^([0-9]{4})-([0-9]{2})-([0-9]{2})$").captures(data) {
@@ -306,27 +303,8 @@ fn timestamp(data: &str) -> Option<f64> {
     Some(t)
 }
 
-/// Implicit resolution of a plain scalar (js-yaml order: null, bool, int, float, timestamp; merge is handled by keys).
-fn resolve_plain(s: &str) -> Y {
-    match s {
-        "" | "~" | "null" | "Null" | "NULL" => return Y::Null,
-        "true" | "True" | "TRUE" => return Y::Bool(true),
-        "false" | "False" | "FALSE" => return Y::Bool(false),
-        _ => {}
-    }
-    if resolve_int(s) {
-        return Y::Num(construct_int(s));
-    }
-    if resolve_float(s) {
-        return Y::Num(construct_float(s));
-    }
-    if let Some(ms) = timestamp(s) {
-        return Y::Date(ms, s.to_string());
-    }
-    Y::Str(s.to_string())
-}
 
-fn base64_decode(s: &str) -> Option<Vec<u8>> {
+pub(crate) fn base64_decode(s: &str) -> Option<Vec<u8>> {
     // js-yaml binary: ignores \n\r and requires the rest to be base64 with valid padding positions.
     const MAP: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\n\r";
     let mut bits = 0usize;
@@ -358,13 +336,9 @@ fn base64_decode(s: &str) -> Option<Vec<u8>> {
     Some(out)
 }
 
-fn tag_name(t: &Tag) -> String {
-    format!("{}{}", t.handle, t.suffix)
-}
-const Y_TAG: &str = "tag:yaml.org,2002:";
 
 /// `String(key)` for a mapping key (SRC-DEFECT-013: dates keep their source text).
-fn key_string(k: &Y) -> Result<String, String> {
+pub(crate) fn key_string(k: &Y) -> Result<String, String> {
     Ok(match k {
         Y::Arr(a) => {
             let mut parts = vec![];
@@ -387,215 +361,18 @@ fn key_string(k: &Y) -> Result<String, String> {
     })
 }
 
-struct Events(Vec<(Event, Marker)>);
-impl MarkedEventReceiver for Events {
-    fn on_event(&mut self, ev: Event, m: Marker) {
-        self.0.push((ev, m));
-    }
-}
-
-struct Composer {
-    ev: Vec<Event>,
-    pos: usize,
-    anchors: HashMap<usize, Y>,
-}
-
-enum Node {
-    Value(Y),
-    /// A key that is the merge type (`<<` plain, or `!!merge`).
-    Merge,
-}
-
-impl Composer {
-    fn next(&mut self) -> Event {
-        let e = self.ev.get(self.pos).cloned().unwrap_or(Event::StreamEnd);
-        self.pos += 1;
-        e
-    }
-
-    fn node(&mut self, as_key: bool) -> Result<Node, String> {
-        match self.next() {
-            Event::Alias(id) => self.anchors.get(&id).cloned().map(Node::Value).ok_or_else(|| "unidentified alias".to_string()),
-            Event::Scalar(v, style, anchor, tag) => {
-                let y = match tag.as_ref().map(tag_name) {
-                    None if style == TScalarStyle::Plain => {
-                        if as_key && v == "<<" {
-                            return Ok(Node::Merge);
-                        }
-                        resolve_plain(&v)
-                    }
-                    None => Y::Str(v),
-                    Some(t) if t == "!" => Y::Str(v),
-                    Some(t) => {
-                        let Some(name) = t.strip_prefix(Y_TAG) else { return Err(format!("unknown tag !<{t}>")) };
-                        let bad = || format!("cannot resolve a node with !<{t}> explicit tag");
-                        let raw = v.clone();
-                        match name {
-                            "str" => Y::Str(raw),
-                            "null" if matches!(raw.as_str(), "~" | "null" | "Null" | "NULL") => Y::Null,
-                            "bool" if matches!(raw.as_str(), "true" | "True" | "TRUE") => Y::Bool(true),
-                            "bool" if matches!(raw.as_str(), "false" | "False" | "FALSE") => Y::Bool(false),
-                            "int" if resolve_int(&raw) => Y::Num(construct_int(&raw)),
-                            "float" if resolve_float(&raw) => Y::Num(construct_float(&raw)),
-                            "timestamp" => Y::Date(timestamp(&raw).ok_or_else(bad)?, raw),
-                            "merge" if raw == "<<" => {
-                                if as_key {
-                                    return Ok(Node::Merge);
-                                }
-                                Y::Str(raw)
-                            }
-                            "binary" => Y::Buffer(base64_decode(&raw).ok_or_else(bad)?),
-                            "seq" | "map" | "omap" | "pairs" | "set" => return Err(format!("unacceptable node kind for !<{t}> tag")),
-                            _ => return Err(if ["null", "bool", "int", "float", "merge"].contains(&name) { bad() } else { format!("unknown tag !<{t}>") }),
-                        }
-                    }
-                };
-                if anchor > 0 {
-                    self.anchors.insert(anchor, y.clone());
-                }
-                Ok(Node::Value(y))
-            }
-            Event::SequenceStart(anchor, tag) => {
-                let mut items = vec![];
-                loop {
-                    if matches!(self.ev.get(self.pos), Some(Event::SequenceEnd)) {
-                        self.pos += 1;
-                        break;
-                    }
-                    match self.node(false)? {
-                        Node::Value(v) => items.push(v),
-                        Node::Merge => unreachable!(),
-                    }
-                }
-                let y = match tag.as_ref().map(tag_name).as_deref() {
-                    None | Some("!") => Y::Arr(items),
-                    Some(t) if t == format!("{Y_TAG}seq") => Y::Arr(items),
-                    Some(t) if t == format!("{Y_TAG}omap") => {
-                        let mut seen = HashSet::new();
-                        for it in &items {
-                            let Y::Obj(m) = it else { return Err("omap".into()) };
-                            if m.len() != 1 || !seen.insert(m[0].0.clone()) {
-                                return Err("omap".into());
-                            }
-                        }
-                        Y::Arr(items)
-                    }
-                    Some(t) if t == format!("{Y_TAG}pairs") => {
-                        let mut out = vec![];
-                        for it in items {
-                            let Y::Obj(m) = it else { return Err("pairs".into()) };
-                            if m.len() != 1 {
-                                return Err("pairs".into());
-                            }
-                            let (k, v) = m.into_iter().next().unwrap();
-                            out.push(Y::Arr(vec![Y::Str(k), v]));
-                        }
-                        Y::Arr(out)
-                    }
-                    Some(t) => return Err(format!("unknown or unacceptable tag !<{t}> for a sequence")),
-                };
-                if anchor > 0 {
-                    self.anchors.insert(anchor, y.clone());
-                }
-                Ok(Node::Value(y))
-            }
-            Event::MappingStart(anchor, tag) => {
-                let mut result: Vec<(String, Y)> = vec![];
-                let mut overridable: HashSet<String> = HashSet::new();
-                loop {
-                    if matches!(self.ev.get(self.pos), Some(Event::MappingEnd)) {
-                        self.pos += 1;
-                        break;
-                    }
-                    let key = self.node(true)?;
-                    let Node::Value(value) = self.node(false)? else { unreachable!() };
-                    match key {
-                        Node::Merge => {
-                            let sources = match value {
-                                Y::Arr(a) => a,
-                                other => vec![other],
-                            };
-                            for src in sources {
-                                let entries: Vec<(String, Y)> = match src {
-                                    Y::Obj(m) => m,
-                                    Y::Arr(a) => a.into_iter().enumerate().map(|(i, v)| (i.to_string(), v)).collect(),
-                                    Y::Buffer(b) => b.into_iter().enumerate().map(|(i, v)| (i.to_string(), Y::Num(v as f64))).collect(),
-                                    Y::Date(..) => vec![],
-                                    _ => return Err("cannot merge mappings; the provided source object is unacceptable".into()),
-                                };
-                                // Object.keys order: index keys first.
-                                let mut entries = entries;
-                                let mut idx: Vec<(u64, (String, Y))> = vec![];
-                                let mut rest = vec![];
-                                for e in entries.drain(..) {
-                                    match crate::js_object::array_index(&e.0) {
-                                        Some(n) => idx.push((n, e)),
-                                        None => rest.push(e),
-                                    }
-                                }
-                                idx.sort_by_key(|x| x.0);
-                                for (k, v) in idx.into_iter().map(|x| x.1).chain(rest) {
-                                    if !result.iter().any(|(rk, _)| *rk == k) {
-                                        result.push((k.clone(), v));
-                                        overridable.insert(k);
-                                    }
-                                }
-                            }
-                        }
-                        Node::Value(k) => {
-                            let k = key_string(&k)?;
-                            match result.iter_mut().find(|(rk, _)| *rk == k) {
-                                Some(slot) => {
-                                    if !overridable.contains(&k) {
-                                        return Err("duplicated mapping key".into());
-                                    }
-                                    slot.1 = value;
-                                }
-                                None => result.push((k.clone(), value)),
-                            }
-                            overridable.remove(&k);
-                        }
-                    }
-                }
-                let y = match tag.as_ref().map(tag_name).as_deref() {
-                    None | Some("!") => Y::Obj(result),
-                    Some(t) if t == format!("{Y_TAG}map") => Y::Obj(result),
-                    Some(t) if t == format!("{Y_TAG}set") => {
-                        if result.iter().any(|(_, v)| !matches!(v, Y::Null)) {
-                            return Err("set".into());
-                        }
-                        Y::Obj(result)
-                    }
-                    Some(t) => return Err(format!("unknown or unacceptable tag !<{t}> for a mapping")),
-                };
-                if anchor > 0 {
-                    self.anchors.insert(anchor, y.clone());
-                }
-                Ok(Node::Value(y))
-            }
-            other => Err(format!("unexpected event {other:?}")),
-        }
-    }
-}
-
 /// js-yaml 3 `safeLoad` (None when the stream has no document, which JS returns as undefined).
 pub fn yaml_safe_load(src: &str) -> Result<Option<Y>, String> {
-    let mut rec = Events(vec![]);
-    Parser::new_from_str(src).load(&mut rec, true).map_err(|e| e.to_string())?;
-    let ev: Vec<Event> = rec.0.into_iter().map(|x| x.0).collect();
-    let docs = ev.iter().filter(|e| matches!(e, Event::DocumentStart)).count();
-    if docs > 1 {
-        return Err("expected a single document in the stream, but found more".into());
-    }
-    if docs == 0 {
-        return Ok(None);
-    }
-    let start = ev.iter().position(|e| matches!(e, Event::DocumentStart)).unwrap() + 1;
-    let mut c = Composer { ev, pos: start, anchors: HashMap::new() };
-    match c.node(false)? {
-        Node::Value(v) => Ok(Some(v)),
-        Node::Merge => Ok(Some(Y::Str("<<".into()))),
-    }
+    crate::js_yaml::safe_load(src)
+}
+
+/// `Object.keys` order: array-index keys ascending, then the rest in insertion order.
+pub(crate) fn js_keys(m: &[(String, Y)]) -> Vec<String> {
+    let mut idx: Vec<(u64, String)> = m.iter().filter_map(|(k, _)| crate::js_object::array_index(k).map(|i| (i, k.clone()))).collect();
+    idx.sort();
+    let mut out: Vec<String> = idx.into_iter().map(|x| x.1).collect();
+    out.extend(m.iter().filter(|(k, _)| crate::js_object::array_index(k).is_none()).map(|(k, _)| k.clone()));
+    out
 }
 
 /// The parts of the gray-matter file object that callers use.

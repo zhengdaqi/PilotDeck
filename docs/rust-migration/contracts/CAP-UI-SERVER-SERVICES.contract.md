@@ -17,5 +17,5 @@ Not yet ported: the rest of ui/server, about 48k LOC, including index.js, pilotd
 other services. Next: commandParser, pilotdeckConfig, modelConfigurationState, spreadsheetPreview, then the HTTP
 routes (the axum host is to be decided in the routes slice).
 - commandParser (replaceArguments, isPathSafe, validateCommand via shell-quote port, sanitizeOutput, processFileIncludes) ported; SRC-DEFECT-010/011/012 fixed (intended, ADR-0004). parseCommand (gray-matter) and processBashCommands pending.
-- frontmatter.js (gray-matter 4.0.3 + js-yaml 3.14 safeLoad on yaml-rust2), parseCommand, processBashCommands ported; SRC-DEFECT-013/014 fixed; YAML-GAP-001 pending.
+- frontmatter.js (gray-matter 4.0.3 + js-yaml 3.14.2 loader ported in js_yaml.rs), parseCommand, processBashCommands ported; SRC-DEFECT-013/014 fixed; YAML-GAP-001 closed (option a, 0 gaps).
 - permissionSettings.js and mcpConfig.js ported (settings_files.rs, with Node fs messages and modes); pilotPaths.isVirtualProjectPath.

@@ -1,0 +1,13 @@
+# slice 24: js-yaml 3.14.2 loader port (YAML-GAP-001 option a), 2026-10-13 14:41 CST
+$ node rust/parity/ui_server/gen_js_yaml.mjs --check
+fixture stable
+fixture stable
+$ cargo test -p pilotdeck-ui-server-core --test js_yaml_oracle --test frontmatter_oracle -- --nocapture
+exact 4035 (yaml error reason only: 2094) intended 311 bad 0
+test frontmatter_and_parse_command_match_ts ... ok
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.46s
+ok 1133 err 4867 bad 0
+test js_yaml_safe_load_matches_ts ... ok
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s
+mutations (each must fail the oracles; 7/7 killed): explicit-key colon on same line only, folded line join space->LF, duplicate-key check off, \N escape value, chomping +/- swapped, Date merge source -> error, block-mapping indentation check +1
+$ cargo test --workspace: 0 failures

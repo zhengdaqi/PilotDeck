@@ -2,6 +2,7 @@
 pub mod js_object;
 pub mod js_number;
 pub mod frontmatter;
+pub mod js_yaml;
 pub mod model_references;
 pub mod command_parser;
 pub mod node_path;

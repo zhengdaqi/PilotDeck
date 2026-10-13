@@ -67,7 +67,7 @@ Evidence: the `command_parser_oracle` test. TS must still show each defect, and 
 
 SRC-DEFECT-010 also covers `processBashCommands`: command output is inserted literally.
 
-Evidence: the `frontmatter_oracle` and `bash_commands_oracle` tests. YAML-GAP-001 is pending (see feedback/).
+Evidence: the `frontmatter_oracle` and `bash_commands_oracle` tests. YAML-GAP-001 is closed with option (a): js-yaml 3.14.2 loader ported (`js_yaml.rs`), 0 gaps, `js_yaml_oracle` 6000/6000 (see feedback/).
 
 ## SRC-DEFECT-015 (2026-10-13: fixed under the source-defect policy, intended difference)
 In the SDK transport, malformed frames (`null`, `ok:false` without `error`, a non-string `error.code`) no longer throw in the socket listener. A `null` frame is ignored; the request settles as `gateway_request_failed`. Evidence: `transport_oracle`.

@@ -12,7 +12,6 @@ regex.workspace = true
 pilotdeck-web-ui-core = { path = "../web-ui-core" }
 pilotdeck-session-search = { path = "../session-search" }
 pilotdeck-skills = { path = "../skills" }
-yaml-rust2 = "0.13"
 
 [dev-dependencies]
 tempfile = "3"
