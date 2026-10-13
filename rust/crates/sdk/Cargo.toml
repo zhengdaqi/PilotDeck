@@ -6,5 +6,12 @@ rust-version = "1.85"
 publish = false
 description = "Transport-agnostic core of the PilotDeck SDK (port of packages/sdk)."
 
+[features]
+# Native-only parts (filesystem session store). The wasm build uses default-features = false.
+default = ["fs"]
+fs = ["dep:base64", "dep:pilotdeck-agent-loop-sidecar"]
+
 [dependencies]
 serde_json = { workspace = true, features = ["preserve_order"] }
+base64 = { version = "0.22", optional = true }
+pilotdeck-agent-loop-sidecar = { path = "../agent-loop-sidecar", optional = true }

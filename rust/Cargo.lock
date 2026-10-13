@@ -664,6 +664,8 @@ dependencies = [
 name = "pilotdeck-sdk"
 version = "0.0.0"
 dependencies = [
+ "base64",
+ "pilotdeck-agent-loop-sidecar",
  "serde_json",
 ]
 
