@@ -652,6 +652,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "pilotdeck-plugin-host"
+version = "0.1.0"
+dependencies = [
+ "pilotdeck-session-search",
+ "serde_json",
+]
+
+[[package]]
 name = "pilotdeck-session-search"
 version = "0.1.0"
 dependencies = [
@@ -716,6 +724,13 @@ dependencies = [
  "pilotdeck-session-search",
  "pilotdeck-tui-app",
  "pilotdeck-tui-core",
+ "serde_json",
+]
+
+[[package]]
+name = "pilotdeck-web-ui-core"
+version = "0.1.0"
+dependencies = [
  "serde_json",
 ]
 

@@ -1,0 +1,21 @@
+# Tauri v2 desktop shell hosting the Leptos web UI (rust/web-ui/dist). Separate workspace.
+[workspace]
+resolver = "3"
+
+[package]
+name = "pilotdeck-desktop"
+version = "0.0.0"
+edition = "2021"
+rust-version = "1.85"
+publish = false
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+
+[features]
+# Embed frontendDist (no dev server) in every build profile.
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]

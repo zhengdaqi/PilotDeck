@@ -11,4 +11,4 @@
   `rust_cleanup_calls=[disconnectInteraction, abortTurn]`.
 - When the close handshake is initiated by a client close frame, the server-initiated close (4001/4002/4003) or a socket
   error, both implementations run identical cleanup. That case is in the parity set (`log_after_close`).
-- Rust treatment (bounded fix, **pending user decision**): read EOF is treated as connection close, so cleanup runs.
+- Rust treatment (bounded fix, **FINAL: intended behaviour difference, ADR-0004**): read EOF is treated as connection close, so cleanup runs.

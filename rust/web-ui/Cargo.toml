@@ -1,0 +1,15 @@
+# Leptos (ADR-0003) web UI. Separate workspace: wasm32 target + its own lockfile.
+[workspace]
+resolver = "3"
+members = ["app"]
+
+[workspace.package]
+version = "0.0.0"
+edition = "2021"
+rust-version = "1.85"
+publish = false
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1

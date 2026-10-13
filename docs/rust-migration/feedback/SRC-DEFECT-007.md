@@ -12,3 +12,5 @@
 - Rust treatment: **behavior-compatible (same escape)**. The port is not allowed to silently change semantics.
   **Pending user decision**: either realpath-check the deepest existing ancestor and the target before writing, returning
   403 `workspace_boundary`, or keep the TS behavior.
+
+- Decision (ADR-0004, 2026-10-13): keep reproducing the TS behaviour for now.

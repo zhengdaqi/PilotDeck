@@ -1,0 +1,5160 @@
+{
+ "nodeExecutable": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+ "moduleDir": "/workspace/PilotDeck/dist/src/mcp/runtime",
+ "cwd": "/workspace/PilotDeck",
+ "tmp": "/tmp/pd-plughost-PxCnYJ",
+ "cases": [
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/p/proj",
+     "--runtime-root",
+     "/h/.pilotdeck/funasr",
+     "--install-command",
+     "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/workspace/PilotDeck/rel/proj",
+     "--runtime-root",
+     "/workspace/PilotDeck/relhome/funasr",
+     "--install-command",
+     "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/p/b/c",
+     "--runtime-root",
+     "/h/y/funasr",
+     "--install-command",
+     "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/workspace/PilotDeck",
+     "--runtime-root",
+     "/h/.pilotdeck/funasr",
+     "--install-command",
+     "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": ".",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": ".",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": ".",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": null,
+   "installCommand": "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/p/proj",
+     "--runtime-root",
+     "/h/.pilotdeck/funasr",
+     "--install-command",
+     "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/workspace/PilotDeck/rel/proj",
+     "--runtime-root",
+     "/workspace/PilotDeck/relhome/funasr",
+     "--install-command",
+     "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/p/b/c",
+     "--runtime-root",
+     "/h/y/funasr",
+     "--install-command",
+     "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/workspace/PilotDeck",
+     "--runtime-root",
+     "/h/.pilotdeck/funasr",
+     "--install-command",
+     "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": ".",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": ".",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": ".",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "",
+   "installCommand": "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/p/proj",
+     "--runtime-root",
+     "/h/.pilotdeck/funasr",
+     "--install-command",
+     "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/workspace/PilotDeck/rel/proj",
+     "--runtime-root",
+     "/workspace/PilotDeck/relhome/funasr",
+     "--install-command",
+     "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/p/b/c",
+     "--runtime-root",
+     "/h/y/funasr",
+     "--install-command",
+     "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/workspace/PilotDeck",
+     "--runtime-root",
+     "/h/.pilotdeck/funasr",
+     "--install-command",
+     "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": ".",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": ".",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": ".",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/nonexistent/rt",
+   "installCommand": "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/p/proj",
+     "--runtime-root",
+     "/h/.pilotdeck/funasr",
+     "--install-command",
+     "'/workspace/.tools/node-v22.23.3-linux-x64/bin/node' '/workspace/PilotDeck/scripts/install-asr.mjs'"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/workspace/PilotDeck/rel/proj",
+     "--runtime-root",
+     "/workspace/PilotDeck/relhome/funasr",
+     "--install-command",
+     "'/workspace/.tools/node-v22.23.3-linux-x64/bin/node' '/workspace/PilotDeck/scripts/install-asr.mjs'"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/p/b/c",
+     "--runtime-root",
+     "/h/y/funasr",
+     "--install-command",
+     "'/workspace/.tools/node-v22.23.3-linux-x64/bin/node' '/workspace/PilotDeck/scripts/install-asr.mjs'"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/workspace/PilotDeck",
+     "--runtime-root",
+     "/h/.pilotdeck/funasr",
+     "--install-command",
+     "'/workspace/.tools/node-v22.23.3-linux-x64/bin/node' '/workspace/PilotDeck/scripts/install-asr.mjs'"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": ".",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": ".",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": ".",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/workspace/PilotDeck",
+   "installCommand": "'/workspace/.tools/node-v22.23.3-linux-x64/bin/node' '/workspace/PilotDeck/scripts/install-asr.mjs'"
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/p/proj",
+     "--runtime-root",
+     "/h/.pilotdeck/funasr",
+     "--install-command",
+     "'/workspace/.tools/node-v22.23.3-linux-x64/bin/node' '/workspace/PilotDeck/scripts/install-asr.mjs'"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/workspace/PilotDeck/rel/proj",
+     "--runtime-root",
+     "/workspace/PilotDeck/relhome/funasr",
+     "--install-command",
+     "'/workspace/.tools/node-v22.23.3-linux-x64/bin/node' '/workspace/PilotDeck/scripts/install-asr.mjs'"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/p/b/c",
+     "--runtime-root",
+     "/h/y/funasr",
+     "--install-command",
+     "'/workspace/.tools/node-v22.23.3-linux-x64/bin/node' '/workspace/PilotDeck/scripts/install-asr.mjs'"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/workspace/PilotDeck",
+     "--runtime-root",
+     "/h/.pilotdeck/funasr",
+     "--install-command",
+     "'/workspace/.tools/node-v22.23.3-linux-x64/bin/node' '/workspace/PilotDeck/scripts/install-asr.mjs'"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/tmp/pd-plughost-PxCnYJ/link-root/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/tmp/pd-plughost-PxCnYJ/link-root/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/tmp/pd-plughost-PxCnYJ/link-root/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": ".",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/tmp/pd-plughost-PxCnYJ/link-root/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/tmp/pd-plughost-PxCnYJ/link-root/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/tmp/pd-plughost-PxCnYJ/link-root/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/tmp/pd-plughost-PxCnYJ/link-root/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": ".",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/tmp/pd-plughost-PxCnYJ/link-root/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": ".",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/link-root",
+   "installCommand": "'/workspace/.tools/node-v22.23.3-linux-x64/bin/node' '/workspace/PilotDeck/scripts/install-asr.mjs'"
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/p/proj",
+     "--runtime-root",
+     "/h/.pilotdeck/funasr",
+     "--install-command",
+     "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/workspace/PilotDeck/rel/proj",
+     "--runtime-root",
+     "/workspace/PilotDeck/relhome/funasr",
+     "--install-command",
+     "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/p/b/c",
+     "--runtime-root",
+     "/h/y/funasr",
+     "--install-command",
+     "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/workspace/PilotDeck",
+     "--runtime-root",
+     "/h/.pilotdeck/funasr",
+     "--install-command",
+     "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": ".",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": ".",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/workspace/PilotDeck/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": ".",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/other",
+   "installCommand": "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/p/proj",
+     "--runtime-root",
+     "/h/.pilotdeck/funasr",
+     "--install-command",
+     "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/workspace/PilotDeck/rel/proj",
+     "--runtime-root",
+     "/workspace/PilotDeck/relhome/funasr",
+     "--install-command",
+     "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/p/b/c",
+     "--runtime-root",
+     "/h/y/funasr",
+     "--install-command",
+     "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_FUNASR_MCP_ENTRYPOINT__",
+     "--project-root",
+     "__PILOTDECK_PROJECT_ROOT__",
+     "--runtime-root",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__",
+     "--install-command",
+     "__PILOTDECK_FUNASR_INSTALL_COMMAND__"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/workspace/PilotDeck/dist/src/extension/plugins/builtin/funasr/funasr-local-mcp.mjs",
+     "--project-root",
+     "/workspace/PilotDeck",
+     "--runtime-root",
+     "/h/.pilotdeck/funasr",
+     "--install-command",
+     "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+    ],
+    "perSession": true,
+    "callTimeoutMs": 300000,
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/tmp/pd-plughost-PxCnYJ/rt/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/tmp/pd-plughost-PxCnYJ/rt/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/tmp/pd-plughost-PxCnYJ/rt/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true
+   },
+   "projectRoot": ".",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "args": [
+     "/tmp/pd-plughost-PxCnYJ/rt/node_modules/@playwright/mcp/cli.js",
+     "--browser",
+     "chromium",
+     "--allow-unrestricted-file-access"
+    ],
+    "perSession": true,
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__ __PILOTDECK_NODE_EXECUTABLE__",
+    "env": {
+     "A": "1"
+    }
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "/workspace/.tools/node-v22.23.3-linux-x64/bin/node /workspace/.tools/node-v22.23.3-linux-x64/bin/node",
+    "env": {
+     "A": "1"
+    },
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "stdio",
+    "command": "x",
+    "args": [
+     "__PILOTDECK_PROJECT_ROOT__/__PILOTDECK_PROJECT_ROOT__",
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     7,
+     null,
+     true
+    ]
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "__error": "TypeError"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/tmp/pd-plughost-PxCnYJ/rt/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/tmp/pd-plughost-PxCnYJ/rt/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/tmp/pd-plughost-PxCnYJ/rt/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "__PILOTDECK_PLAYWRIGHT_MCP_ENTRYPOINT__",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ]
+   },
+   "projectRoot": ".",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "__PILOTDECK_PROJECT_ROOT__",
+    "args": [
+     "/tmp/pd-plughost-PxCnYJ/rt/node_modules/@playwright/mcp/cli.js",
+     "__PILOTDECK_FUNASR_RUNTIME_ROOT__"
+    ],
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "other",
+    "transport": "stdio",
+    "command": "__PILOTDECK_NODE_EXECUTABLE__",
+    "args": []
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   },
+   "projectRoot": ".",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "funasr",
+    "transport": "http",
+    "url": "http://x"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": "/p/proj",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/p/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": "rel/proj",
+   "pilotHome": "/h/x/../y",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/workspace/PilotDeck/rel/proj"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": "/p/a/../b/./c/",
+   "pilotHome": "/h/.pilotdeck",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/p/b/c"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "spec": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "args": null
+   },
+   "projectRoot": ".",
+   "pilotHome": "relhome",
+   "out": {
+    "id": "browser-use",
+    "transport": "stdio",
+    "command": "a",
+    "cwd": "/workspace/PilotDeck"
+   }
+  },
+  {
+   "runtimeRoot": "/tmp/pd-plughost-PxCnYJ/rt",
+   "installCommand": "npm --prefix \"/workspace/PilotDeck\" run install:asr"
+  }
+ ]
+}

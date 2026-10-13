@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "template_only": false,
+  "scope_id": "pilotdeck-standalone_alpha1-b243fa00/CAP-WEB-UI",
+  "facts": {
+    "baseline_runnable": true,
+    "oracle_ready": true,
+    "target_integration": "native",
+    "boundary_separable": true,
+    "atomic_cutover_required": false,
+    "bridge_scope_allowed": "unknown",
+    "wasm_host_probe_passed": true,
+    "native_entry_probe_passed": true,
+    "bounded_batch_defined": "unknown",
+    "rule_stress_test_passed": "unknown",
+    "serial_build_budget_measured": "unknown",
+    "rollback_artifact_ready": "unknown",
+    "deterministic_core": true,
+    "replay_corpus_ready": true,
+    "is_compiler": false,
+    "conformance_corpus_ready": "unknown",
+    "shadow_requested": false,
+    "shadow_effects_isolated": "unknown"
+  },
+  "evidence_refs": [
+    {
+      "path": "baseline.json",
+      "sha256": "c24602c1dbb40785298f3ab5d2d52db8eb70d471c550e13b69ba57f885817214"
+    },
+    {
+      "path": "evidence/web-ui-slice1-chrome.json",
+      "sha256": "3ba75edc389fd4ab921bd0672cbe22a683d22cb1e776bee04775c64f6a507f00"
+    },
+    {
+      "path": "evidence/desktop-tauri-linux-smoke.txt",
+      "sha256": "ef78f474c68f614de5335483d897042c42c2baeef47102e81e6c06c265bfe677"
+    },
+    {
+      "path": "contracts/CAP-WEB-UI.contract.md",
+      "sha256": "7f268a8bbdbb9d77d0131200243ab8f1dbe5f7f344d29094edfe60352385882f"
+    },
+    {
+      "path": "../../rust/crates/web-ui-core/tests/fixtures/workspace_file_mention.json",
+      "sha256": "d2a3d496cacc6564027f98818d8b1420750346fc2042732d2745cbe380fcc052"
+    }
+  ],
+  "frozen_by": "grokbot-executor (session 2026-10-13, standard profile; not independent of author)"
+}
