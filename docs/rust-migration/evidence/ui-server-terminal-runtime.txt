@@ -1,0 +1,7 @@
+slice 30 terminalSessionRegistry + runtimeCoordination evidence 2026-10-13 15:21:47 CST
+fixture stable
+test runtime_coordination_matches_ts ... ok
+test terminal_session_registry_matches_ts ... ok
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+cases: 709 terminal scripts (constructor validation incl. NaN/Infinity, 9 fixed buffer/timeout scenarios, random ops over PTYs with/without write/resize/kill and throwing kill, null/undefined sockets, timers) + 300 runtimeCoordination scripts (supervised env, send/on/off presence, connected=false, throwing send, IPC messages); event logs compared line by line
+mutations: 10/12 killed. Equivalent survivors: the disposed check in reconnect (dispose empties the map, so the lookup fails first) and the socket check in the detach timer (reconnect always clears the timer).
