@@ -1,0 +1,323 @@
+{
+  "cases_planned": 43,
+  "cases_executed": 43,
+  "passed": 43,
+  "failed": 0,
+  "negative_controls": [
+    {
+      "id": "nc-normalizer-keeps-content",
+      "detected": true
+    },
+    {
+      "id": "nc-oracle-has-session",
+      "detected": true
+    },
+    {
+      "id": "nc-oracle-settings-changed",
+      "detected": true
+    }
+  ],
+  "results": [
+    {
+      "id": "no-server",
+      "ok": true,
+      "exit": 1,
+      "stderr": "Gateway auth token is required. Set PILOTDECK_TOKEN or pass --auth-token.\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "no-token",
+      "ok": true,
+      "exit": 1,
+      "stderr": "Gateway auth token is required. Set PILOTDECK_TOKEN or pass --auth-token.\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "sessions-list",
+      "ok": true,
+      "exit": 0,
+      "stderr": "",
+      "stdout_len": 224
+    },
+    {
+      "id": "sessions-default",
+      "ok": true,
+      "exit": 0,
+      "stderr": "",
+      "stdout_len": 224
+    },
+    {
+      "id": "sessions-list-project",
+      "ok": true,
+      "exit": 0,
+      "stderr": "",
+      "stdout_len": 224
+    },
+    {
+      "id": "sessions-list-project-missing",
+      "ok": true,
+      "exit": 0,
+      "stderr": "",
+      "stdout_len": 3
+    },
+    {
+      "id": "sessions-messages",
+      "ok": true,
+      "exit": 0,
+      "stderr": "",
+      "stdout_len": 3444
+    },
+    {
+      "id": "sessions-messages-flags-first",
+      "ok": true,
+      "exit": 0,
+      "stderr": "",
+      "stdout_len": 3588
+    },
+    {
+      "id": "sessions-messages-noid",
+      "ok": true,
+      "exit": 1,
+      "stderr": "Usage: pilotdeck sessions messages <session-id>\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "sessions-messages-unknown",
+      "ok": true,
+      "exit": 0,
+      "stderr": "",
+      "stdout_len": 3
+    },
+    {
+      "id": "sessions-bogus",
+      "ok": true,
+      "exit": 1,
+      "stderr": "Usage: pilotdeck sessions <list|messages> ...\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "sessions-flag-first",
+      "ok": true,
+      "exit": 1,
+      "stderr": "Usage: pilotdeck sessions <list|messages> ...\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "settings-get",
+      "ok": true,
+      "exit": 0,
+      "stderr": "",
+      "stdout_len": 2074
+    },
+    {
+      "id": "settings-default",
+      "ok": true,
+      "exit": 0,
+      "stderr": "",
+      "stdout_len": 2074
+    },
+    {
+      "id": "settings-bogus",
+      "ok": true,
+      "exit": 1,
+      "stderr": "Usage: pilotdeck settings <get|set> ...\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "settings-set-empty",
+      "ok": true,
+      "exit": 1,
+      "stderr": "Usage: pilotdeck settings set '<json>'\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "settings-set-token",
+      "ok": true,
+      "exit": 1,
+      "stderr": "Invalid settings JSON: Unexpected token 'x', \"xyz\" is not valid JSON\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "settings-set-eoi",
+      "ok": true,
+      "exit": 1,
+      "stderr": "Invalid settings JSON: Unexpected end of JSON input\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "settings-set-array",
+      "ok": true,
+      "exit": 1,
+      "stderr": "updateSettings settings must be an object.\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "settings-set-null",
+      "ok": true,
+      "exit": 1,
+      "stderr": "updateSettings settings must be an object.\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "settings-set-string",
+      "ok": true,
+      "exit": 1,
+      "stderr": "updateSettings settings must be an object.\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "settings-set-trailing",
+      "ok": true,
+      "exit": 1,
+      "stderr": "Invalid settings JSON: Unexpected non-whitespace character after JSON at position 3 (line 1 column 4)\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "settings-set-propname",
+      "ok": true,
+      "exit": 1,
+      "stderr": "Invalid settings JSON: Expected property name or '}' in JSON at position 1 (line 1 column 2)\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "settings-set-long-ctx",
+      "ok": true,
+      "exit": 1,
+      "stderr": "Invalid settings JSON: Unexpected token 'o', ...\"tTokens\": oops}}\" is not valid JSON\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "settings-set-unsupported",
+      "ok": true,
+      "exit": 1,
+      "stderr": "localSettings.x is not supported by PilotDeck localSettings.\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "settings-set-noop",
+      "ok": true,
+      "exit": 0,
+      "stderr": "",
+      "stdout_len": 17
+    },
+    {
+      "id": "settings-set-valid",
+      "ok": true,
+      "exit": 0,
+      "stderr": "",
+      "stdout_len": 17
+    },
+    {
+      "id": "settings-get-after",
+      "ok": true,
+      "exit": 0,
+      "stderr": "",
+      "stdout_len": 2074
+    },
+    {
+      "id": "settings-set-clear",
+      "ok": true,
+      "exit": 0,
+      "stderr": "",
+      "stdout_len": 17
+    },
+    {
+      "id": "settings-get-final",
+      "ok": true,
+      "exit": 0,
+      "stderr": "",
+      "stdout_len": 2035
+    },
+    {
+      "id": "auth-bad-token",
+      "ok": true,
+      "exit": 1,
+      "stderr": "auth_failed\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "auth-env-token-bad",
+      "ok": true,
+      "exit": 1,
+      "stderr": "auth_failed\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "auth-empty-sdk-token",
+      "ok": true,
+      "exit": 1,
+      "stderr": "Gateway auth token is required. Set PILOTDECK_TOKEN or pass --auth-token.\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "url-refused",
+      "ok": true,
+      "exit": 1,
+      "stderr": "Gateway connection failed.\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "url-invalid",
+      "ok": true,
+      "exit": 1,
+      "stderr": "TypeError: Invalid URL\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "url-ftp",
+      "ok": true,
+      "exit": 1,
+      "stderr": "Expected a ws: or wss: protocol, got ftp:\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "url-http",
+      "ok": true,
+      "exit": 0,
+      "stderr": "",
+      "stdout_len": 224
+    },
+    {
+      "id": "url-localhost",
+      "ok": true,
+      "exit": 0,
+      "stderr": "",
+      "stdout_len": 224
+    },
+    {
+      "id": "url-fragment",
+      "ok": true,
+      "exit": 1,
+      "stderr": "Got fragment\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "url-wrong-path",
+      "ok": true,
+      "exit": 1,
+      "stderr": "Gateway connection failed.\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "env-port",
+      "ok": true,
+      "exit": 1,
+      "stderr": "Gateway connection failed.\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "env-sdk-url",
+      "ok": true,
+      "exit": 1,
+      "stderr": "Gateway connection failed.\n",
+      "stdout_len": 0
+    },
+    {
+      "id": "env-url-empty",
+      "ok": true,
+      "exit": 1,
+      "stderr": "gatewayUrl and authToken are required; pass them in query options or createPilotDeckClient defaults.\n",
+      "stdout_len": 0
+    }
+  ]
+}

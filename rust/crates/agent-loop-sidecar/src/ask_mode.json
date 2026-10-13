@@ -1,0 +1,53 @@
+{
+ "agent": {
+  "description": "Launch a read-only subagent for investigation, planning, or verification.\n\nIn ask mode, subagents inherit ask mode and the same permission setting. Only read-only subagent types are available; 'general-purpose' is treated as 'explore'.\n\nProvide:\n- `description`: a short 3-5 word label for the task.\n- `prompt`: the full directive for the subagent. Include goal, context, constraints, and what good output looks like. The subagent can only read and search; it cannot modify files.\n- `subagent_type` (optional): 'explore', 'plan', or 'verify'. Defaults to 'explore'.\n\nAvailable subagent types:\n- explore: Read-only exploration subagent. Inspects files, runs grep/glob, and may run safe shell commands. Cannot edit files. Tools: read_file, grep, glob, bash.\n- plan: Read-only planning subagent. Inspects code via read/grep/glob and produces a step-by-step plan. Tools: read_file, grep, glob.\n- verify: Verification subagent. Inspects generated artifacts (images, HTML, PDFs) for correctness. Can read files, run shell commands, and search code, but cannot modify files. Tools: read_file, grep, glob, bash.\n\nThe subagent returns one structured report with these sections: `Scope`, `Result`, `Key files`, `Files changed`, and `Issues`.",
+  "inputSchema": {
+   "type": "object",
+   "required": [
+    "description",
+    "prompt"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "description": {
+     "type": "string",
+     "description": "Short 3-5 word task summary used to label the subagent run."
+    },
+    "prompt": {
+     "type": "string",
+     "description": "Detailed directive for the subagent. Include the goal, relevant context, constraints, and desired output. The subagent can only read and search; it cannot modify files."
+    },
+    "subagent_type": {
+     "type": "string",
+     "description": "Subagent preset. In ask mode only 'explore', 'plan', and 'verify' are available. Defaults to 'explore'."
+    },
+    "subagentType": {
+     "type": "string",
+     "description": "Deprecated legacy alias for subagent_type. Prefer subagent_type."
+    }
+   }
+  }
+ },
+ "allowed": [
+  "read_file",
+  "get_current_time",
+  "grep",
+  "glob",
+  "web_search",
+  "web_fetch",
+  "ask_user_question",
+  "read_skill",
+  "structured_output",
+  "agent",
+  "execute_code",
+  "bash",
+  "task_list",
+  "task_output",
+  "task_wait"
+ ],
+ "suffix": {
+  "bash": "\n\n[ASK MODE] READ-ONLY commands only. Write/modify/delete commands will be rejected.",
+  "agent": "\n\n[ASK MODE] Subagents inherit ask mode and the same permission setting. They can read and search, but cannot modify files.",
+  "execute_code": "\n\n[ASK MODE] READ-ONLY Python scripts only. Scripts that call write_file, edit_file, or non-read-only bash commands will be rejected."
+ }
+}

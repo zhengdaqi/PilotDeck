@@ -1,0 +1,226 @@
+{
+  "oracle_hangs_SRC_DEFECT_002": [
+    "run-model-no-project",
+    "run-model-missing"
+  ],
+  "cases_planned": 25,
+  "cases_executed": 25,
+  "passed": 25,
+  "failed": 0,
+  "negative_controls": [
+    {
+      "id": "nc-oracle-completed",
+      "detected": true
+    },
+    {
+      "id": "nc-oracle-failed-path",
+      "detected": true
+    },
+    {
+      "id": "nc-normalizer-keeps-content",
+      "detected": true
+    }
+  ],
+  "results": [
+    {
+      "id": "run-text",
+      "ok": true,
+      "exit": 0,
+      "stdout_head": "MOCK_REPLY::hello world\n",
+      "stderr": "",
+      "oracle_hung": false
+    },
+    {
+      "id": "run-json",
+      "ok": true,
+      "exit": 0,
+      "stdout_head": "MOCK_REPLY::hello\n{\"sessionId\":\"cli:s_<sid>\",\"result\":{\"status\":\"completed\",\"output\":\"MOCK_REPLY::hello\",\"usage\":{\"inputTokens\":10,\"outputTokens\":5,\"totalTokens",
+      "stderr": "",
+      "oracle_hung": false
+    },
+    {
+      "id": "run-stream-json",
+      "ok": true,
+      "exit": 0,
+      "stdout_head": "{\"type\":\"turn.started\",\"runId\":\"<uuid#0>\",\"sequence\":0,\"sessionId\":\"cli:s_<sid>\"}\n{\"type\":\"user.accepted\",\"runId\":\"<uuid#0>\",\"sequence\":1,\"sessionId\":\"cli:s_<si",
+      "stderr": "",
+      "oracle_hung": false
+    },
+    {
+      "id": "run-json-stream-json",
+      "ok": true,
+      "exit": 0,
+      "stdout_head": "{\"type\":\"turn.started\",\"runId\":\"<uuid#0>\",\"sequence\":0,\"sessionId\":\"cli:s_<sid>\"}\n{\"type\":\"user.accepted\",\"runId\":\"<uuid#0>\",\"sequence\":1,\"sessionId\":\"cli:s_<si",
+      "stderr": "",
+      "oracle_hung": false
+    },
+    {
+      "id": "run-model-error",
+      "ok": true,
+      "exit": 1,
+      "stdout_head": "{\"status\":\"failed\",\"error\":{\"code\":\"agent_model_error\",\"details\":{},\"retryable\":false,\"name\":\"PilotDeckError\"}}\n",
+      "stderr": "",
+      "oracle_hung": false
+    },
+    {
+      "id": "run-model-error-json",
+      "ok": true,
+      "exit": 1,
+      "stdout_head": "{\"sessionId\":\"cli:s_<sid>\",\"result\":{\"status\":\"failed\",\"error\":{\"code\":\"agent_model_error\",\"details\":{},\"retryable\":false,\"name\":\"PilotDeckError\"}}}\n",
+      "stderr": "",
+      "oracle_hung": false
+    },
+    {
+      "id": "run-stdin",
+      "ok": true,
+      "exit": 0,
+      "stdout_head": "MOCK_REPLY::from stdin\n",
+      "stderr": "",
+      "oracle_hung": false
+    },
+    {
+      "id": "run-empty-prompt",
+      "ok": true,
+      "exit": 1,
+      "stdout_head": "",
+      "stderr": "A prompt is required, or provide it through stdin.\n",
+      "oracle_hung": false
+    },
+    {
+      "id": "run-channel",
+      "ok": true,
+      "exit": 0,
+      "stdout_head": "MOCK_REPLY::chan\n{\"sessionId\":\"feishu:s_<sid>\",\"result\":{\"status\":\"completed\",\"output\":\"MOCK_REPLY::chan\",\"usage\":{\"inputTokens\":10,\"outputTokens\":5,\"totalToken",
+      "stderr": "",
+      "oracle_hung": false
+    },
+    {
+      "id": "run-project",
+      "ok": true,
+      "exit": 0,
+      "stdout_head": "MOCK_REPLY::proj\n{\"sessionId\":\"cli:project=/tmp/pd-run-9ggw8c3q/fx/ph:s_<sid>\",\"result\":{\"status\":\"completed\",\"output\":\"MOCK_REPLY::proj\",\"usage\":{\"inputTokens\"",
+      "stderr": "",
+      "oracle_hung": false
+    },
+    {
+      "id": "run-model-no-project",
+      "ok": true,
+      "exit": 1,
+      "stdout_head": "",
+      "stderr": "projectKey is required when options.model is set.\n",
+      "oracle_hung": true
+    },
+    {
+      "id": "run-model-ok",
+      "ok": true,
+      "exit": 0,
+      "stdout_head": "MOCK_REPLY::m2\n{\"sessionId\":\"cli:project=/tmp/pd-run-9ggw8c3q/fx/ph:s_<sid>\",\"result\":{\"status\":\"completed\",\"output\":\"MOCK_REPLY::m2\",\"usage\":{\"inputTokens\":10,",
+      "stderr": "",
+      "oracle_hung": false
+    },
+    {
+      "id": "run-model-missing",
+      "ok": true,
+      "exit": 1,
+      "stdout_head": "",
+      "stderr": "Model is not uniquely resolvable: nope\n",
+      "oracle_hung": true
+    },
+    {
+      "id": "run-perm-plan",
+      "ok": true,
+      "exit": 0,
+      "stdout_head": "MOCK_REPLY::When the plan is ready for user review, \n{\"sessionId\":\"cli:s_<sid>\",\"result\":{\"status\":\"completed\",\"output\":\"MOCK_REPLY::When the plan is ready for ",
+      "stderr": "",
+      "oracle_hung": false
+    },
+    {
+      "id": "run-perm-accept",
+      "ok": true,
+      "exit": 0,
+      "stdout_head": "MOCK_REPLY::acc\n{\"sessionId\":\"cli:s_<sid>\",\"result\":{\"status\":\"completed\",\"output\":\"MOCK_REPLY::acc\",\"usage\":{\"inputTokens\":10,\"outputTokens\":5,\"totalTokens\":15",
+      "stderr": "",
+      "oracle_hung": false
+    },
+    {
+      "id": "run-perm-bogus",
+      "ok": true,
+      "exit": 1,
+      "stdout_head": "{\"sessionId\":\"cli:s_<sid>\",\"result\":{\"status\":\"failed\",\"error\":{\"code\":\"INVALID_PERMISSION_MODE\",\"details\":{},\"retryable\":false,\"name\":\"PilotDeckError\"}}}\n",
+      "stderr": "",
+      "oracle_hung": false
+    },
+    {
+      "id": "resume-ok",
+      "ok": true,
+      "exit": 0,
+      "stdout_head": "MOCK_REPLY::again\n",
+      "stderr": "",
+      "oracle_hung": false
+    },
+    {
+      "id": "resume-json",
+      "ok": true,
+      "exit": 0,
+      "stdout_head": "MOCK_REPLY::more\n{\"sessionId\":\"cli:s_<sid>\",\"result\":{\"status\":\"completed\",\"output\":\"MOCK_REPLY::more\",\"usage\":{\"inputTokens\":10,\"outputTokens\":5,\"totalTokens\":",
+      "stderr": "",
+      "oracle_hung": false
+    },
+    {
+      "id": "resume-no-id",
+      "ok": true,
+      "exit": 1,
+      "stdout_head": "",
+      "stderr": "Usage: pilotdeck resume <session-id> <prompt>\n",
+      "oracle_hung": false
+    },
+    {
+      "id": "resume-unknown",
+      "ok": true,
+      "exit": 0,
+      "stdout_head": "MOCK_REPLY::x\n",
+      "stderr": "",
+      "oracle_hung": false
+    },
+    {
+      "id": "resume-no-prompt",
+      "ok": true,
+      "exit": 1,
+      "stdout_head": "",
+      "stderr": "A prompt is required, or provide it through stdin.\n",
+      "oracle_hung": false
+    },
+    {
+      "id": "run-bad-token",
+      "ok": true,
+      "exit": 1,
+      "stdout_head": "",
+      "stderr": "auth_failed\n",
+      "oracle_hung": false
+    },
+    {
+      "id": "run-refused",
+      "ok": true,
+      "exit": 1,
+      "stdout_head": "",
+      "stderr": "Gateway connection failed.\n",
+      "oracle_hung": false
+    },
+    {
+      "id": "run-sigint",
+      "ok": true,
+      "exit": 1,
+      "stdout_head": "{\"status\":\"aborted\",\"reason\":\"CLI interrupted\"}\n",
+      "stderr": "",
+      "oracle_hung": false
+    },
+    {
+      "id": "sessions-after",
+      "ok": true,
+      "exit": 0,
+      "stdout_head": "[\n  {\n    \"sessionId\": \"cli:s_<sid>\",\n    \"summary\": \"SLOW please\",\n    \"lastModified\": <epoch>,\n    \"fileSize\": <n>,\n    \"firstPrompt\": \"SLOW please\",\n    \"cwd",
+      "stderr": "",
+      "oracle_hung": false
+    }
+  ]
+}

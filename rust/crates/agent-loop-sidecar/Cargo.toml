@@ -1,0 +1,15 @@
+[package]
+name = "pilotdeck-agent-loop-sidecar"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Rust port of the PilotDeck AgentLoop sidecar (stdio JSON-lines module protocol)."
+
+[dependencies]
+pilotdeck-skills = { path = "../skills" }
+chrono = { workspace = true }
+regex = { workspace = true }
+
+[[bin]]
+name = "pilotdeck-agent-loop-sidecar"
+path = "src/main.rs"

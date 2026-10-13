@@ -52,8 +52,28 @@ impl JsObject {
         self.entries.iter().find(|(k, _)| k == key).map(|(_, v)| v)
     }
 
+    pub fn get_mut(&mut self, key: &str) -> Option<&mut JsValue> {
+        self.entries.iter_mut().find(|(k, _)| k == key).map(|(_, v)| v)
+    }
+
+    /// `delete obj[key]`
+    pub fn remove(&mut self, key: &str) -> Option<JsValue> {
+        let idx = self.entries.iter().position(|(k, _)| k == key)?;
+        Some(self.entries.remove(idx).1)
+    }
+
+    /// Own entries in ECMAScript enumeration order.
+    pub fn iter(&self) -> impl Iterator<Item = (&String, &JsValue)> {
+        self.ordered().into_iter().map(|(k, v)| (k, v))
+    }
+
     pub fn is_empty(&self) -> bool {
         self.entries.is_empty()
+    }
+
+    /// Own keys in ECMAScript enumeration order.
+    pub fn keys(&self) -> Vec<String> {
+        self.ordered().into_iter().map(|(k, _)| k.clone()).collect()
     }
 
     /// Own enumerable keys in ECMAScript order.
@@ -184,4 +204,51 @@ mod tests {
             "{\n  \"2\": 1e+21,\n  \"10\": 0.1,\n  \"b\": 1,\n  \"a\": []\n}"
         );
     }
+}
+
+fn write_compact(v: &JsValue, out: &mut String) -> bool {
+    match v {
+        JsValue::Undefined => return false,
+        JsValue::Null => out.push_str("null"),
+        JsValue::Bool(b) => out.push_str(if *b { "true" } else { "false" }),
+        JsValue::Num(n) => out.push_str(&if n.is_finite() { js_number_to_string(*n) } else { "null".into() }),
+        JsValue::Str(s) => quote(s, out),
+        JsValue::Arr(items) => {
+            out.push('[');
+            for (i, item) in items.iter().enumerate() {
+                if i > 0 {
+                    out.push(',');
+                }
+                if !write_compact(item, out) {
+                    out.push_str("null");
+                }
+            }
+            out.push(']');
+        }
+        JsValue::Obj(obj) => {
+            out.push('{');
+            let mut first = true;
+            for (k, v) in obj.ordered() {
+                if matches!(v, JsValue::Undefined) {
+                    continue;
+                }
+                if !first {
+                    out.push(',');
+                }
+                first = false;
+                quote(k, out);
+                out.push(':');
+                write_compact(v, out);
+            }
+            out.push('}');
+        }
+    }
+    true
+}
+
+/// `JSON.stringify(v)`
+pub fn stringify_compact(v: &JsValue) -> String {
+    let mut out = String::new();
+    write_compact(v, &mut out);
+    out
 }

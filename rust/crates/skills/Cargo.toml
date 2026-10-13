@@ -10,3 +10,6 @@ pilotdeck-session-search = { path = "../session-search" }
 serde_yaml.workspace = true
 ryu-js.workspace = true
 regex.workspace = true
+
+[dev-dependencies]
+serde_json = { workspace = true }

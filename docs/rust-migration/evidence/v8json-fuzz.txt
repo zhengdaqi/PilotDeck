@@ -1,0 +1,6 @@
+3061 cases, 5 mismatches
+3061 cases, 5 mismatches
+3061 cases, 5 mismatches
+3061 cases, 6 mismatches
+3061 cases, 9 mismatches
+remaining mismatches are lone UTF-16 surrogates only (\uD800-\uDFFF escapes), a documented gap

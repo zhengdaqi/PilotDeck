@@ -1,6 +1,7 @@
 [workspace]
 resolver = "2"
-members = ["crates/session-search", "crates/skills", "crates/gateway-client", "crates/cli"]
+members = [
+    "crates/setup","crates/agent-loop-sidecar","crates/session-search", "crates/skills", "crates/gateway-client", "crates/cli"]
 
 [workspace.package]
 version = "0.1.0"
@@ -10,7 +11,7 @@ rust-version = "1.80"
 
 [workspace.dependencies]
 serde = { version = "1", features = ["derive"] }
-serde_json = "1"
+serde_json = { version = "1", features = ["float_roundtrip"] }
 regex = "1"
 chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
 serde_yaml = "0.9"

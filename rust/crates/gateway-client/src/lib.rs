@@ -11,6 +11,8 @@ use std::net::{TcpStream, ToSocketAddrs};
 use std::time::{Duration, Instant};
 use tungstenite::{Message, WebSocket};
 
+pub mod transport;
+
 pub const PROTOCOL_VERSION: &str = "1.2";
 pub const DEFAULT_URL_HOST: &str = "127.0.0.1:18789";
 
@@ -157,7 +159,7 @@ impl Gateway {
 }
 
 /// RFC 4122 v4 UUID from the OS CSPRNG (equivalent of `crypto.randomUUID()`).
-fn random_uuid_v4() -> String {
+pub fn random_uuid_v4() -> String {
     let mut b = [0u8; 16];
     if let Ok(mut f) = std::fs::File::open("/dev/urandom") {
         let _ = f.read_exact(&mut b);
