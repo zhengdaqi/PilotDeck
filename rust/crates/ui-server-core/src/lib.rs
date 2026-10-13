@@ -16,6 +16,7 @@ pub mod web_update_command;
 pub mod release_service;
 pub mod config_parsers;
 pub mod pilotdeck_config;
+pub mod pilotdeck_config_write;
 pub mod connection_test_tasks;
 pub mod terminal_runtime;
 

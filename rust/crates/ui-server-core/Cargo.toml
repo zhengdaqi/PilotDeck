@@ -13,6 +13,7 @@ url = "2"
 miniz_oxide = "0.8"
 base64 = "0.22"
 sha2 = "0.10"
+pilotdeck-setup = { path = "../setup" }
 pilotdeck-web-ui-core = { path = "../web-ui-core" }
 pilotdeck-session-search = { path = "../session-search" }
 pilotdeck-skills = { path = "../skills" }

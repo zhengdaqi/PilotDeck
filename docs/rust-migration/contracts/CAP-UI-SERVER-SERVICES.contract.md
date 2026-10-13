@@ -45,3 +45,20 @@ routes (the axum host is to be decided in the routes slice).
 - Pending: YAML read/write half (readPilotDeckConfigFile, serializePilotDeckConfigResponse, updatePilotDeckConfig,
   writePilotDeckConfig, atomic writes, finalizeBootstrapPlaceholder, purgeLegacyProviderDrafts, configToYaml,
   rawYamlToMaskedString, parseConfigYaml).
+
+## pilotdeckConfig write-side pipeline — slice 41 (`ui-server-core/src/pilotdeck_config_write.rs`)
+
+- Ported: purgeLegacyProviderDrafts, finalizeBootstrapPlaceholder, the in-memory part of writePilotDeckConfig
+  (`prepare_pilotdeck_config_write`: shallow copy → sanitize → purge → syncAgentModelWithRouter → finalize → blank
+  memory.model removal → validate → YAML text), serializePilotDeckConfigResponse, configToYaml,
+  rawYamlToMaskedString, detectYamlIndent, valueAtPath.
+- YAML text: `pilotdeck_setup::yamlfmt::stringify` (the existing fuzz-verified yaml@2 `stringify` emulation;
+  ui-server-core now depends on pilotdeck-setup). Byte equality with the file the real writePilotDeckConfig wrote
+  is part of the oracle.
+- Host contract: when `previousConfig` is not a record, the host passes the disk config (defaults when the file is
+  missing; nothing when it failed to parse, JS then skips purging). Atomic replace, mode preservation, symlink
+  resolution, revision check and fsync stay host-side (pending slice).
+- Typed boundary: valueAtPath with key "length" on arrays (JS returns the length) is not reproduced.
+- Pending: readPilotDeckConfigFile (exact yaml@2 parse + error text), atomicWritePilotDeckYaml,
+  resolveConfigWritePath, readStablePilotDeckConfigFile, updatePilotDeckConfig (comment-preserving
+  parseDocument/setIn/deleteIn editing), withPilotDeckConfigWrite queue.
