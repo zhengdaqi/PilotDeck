@@ -18,8 +18,14 @@ introduced. First-party PilotDeck logic must not live in plugins.
     - an existing target, including a dangling symlink, must resolve inside the root;
     - so must the deepest existing ancestor.
 
-    So no files or directories are created outside the root. Remaining risk: a race window between the check and the
-    write, if another process swaps a symlink in between (no O_NOFOLLOW/openat yet). This is recorded as a follow-up.
+    So no files or directories are created outside the root. The check-then-write race is **closed** (slice 17).
+    `safe_write` walks from an fd for the root, one component at a time, using `openat(O_DIRECTORY|O_NOFOLLOW)` and
+    `mkdirat`, and opens the file with `openat(O_NOFOLLOW)`. A symlink inside the root is followed only after its
+    target is checked; the walk then restarts from the root fd. Evidence:
+    - A stress test (`symlink_swap_race_never_escapes`) swaps a directory and a symlink 3000 times. 0 escapes.
+    - Negative control: with the old check-then-`fs::write`, the same test leaked 80-130 files outside the root in
+      each of 3 runs.
+    - Unix only, like the rest of the crate. Windows needs its own handling when the Windows port is done.
     Evidence:
     - `rust/crates/gateway-server/tests/write_boundary.rs`, including a negative control. The control shows the
       fixture really escapes when written without the check.
@@ -35,3 +41,14 @@ introduced. First-party PilotDeck logic must not live in plugins.
 Production stays on the TS implementation until **all** of the following hold: everything is migrated; the
 migration is independently reviewed; and it is verified on Linux, macOS and Windows. Until then Rust binaries
 remain opt-in/experimental and `pilotdeck` entry points keep forwarding to TS where not yet native.
+
+## Source-defect policy (user decision 2026-10-13 14:08)
+Low-risk source defects are **fixed by default** and recorded here as intended differences, each with tests that
+include a negative control. The parity harness must show TS still has the defect and Rust has the fix. Only defects
+with product or behaviour impact are escalated to the user.
+
+## SRC-DEFECT-009 (FINAL 2026-10-13 14:08: fixed, intended difference)
+`planModelRemoval` for a provider id that is not configured, including `__proto__`, returns `NOT_FOUND`
+("Provider \"<id>\" is not configured."). Rust looks up own keys only; `serde_json::Map` has no prototype chain.
+TS returns success or blames the model instead. Evidence: the `model_references_oracle` test checks 167 intended
+cases (TS shows the defect, Rust the fix) and 7878 byte-exact cases.

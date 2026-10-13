@@ -9,7 +9,7 @@ JS behaviour kept:
   "Cannot read properties of null (reading 'providerId')");
 - `Map` last-wins;
 - truthiness rules;
-- the `__proto__` lookup (SRC-DEFECT-009, kept as-is pending a decision).
+- provider lookup uses own keys only (SRC-DEFECT-009 fixed; intended difference, ADR-0004).
 Oracle: `rust/parity/ui_server/gen_model_references.mjs` runs the real JS. It writes 8045 cases (mulberry32-seeded,
 plus hand-written router/tokenSaver and prototype-key cases), compared byte for byte. Result: 8045/8045.
 Mutation checks: 6 and 93 mismatches.

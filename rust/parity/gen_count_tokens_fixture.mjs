@@ -16,6 +16,16 @@ for (let i = 0; i < 4000; i++) {
   for (let j = 0; j < n; j++) s += atoms[rnd(atoms.length)];
   cases.push([s, enc.encode(s, [], []).length]);
 }
+// MIGRATION-AUDIT-001: second vector set from mulberry32 (the LCG above has short low-bit cycles that skip
+// combinations). The original vectors are kept unchanged and come first.
+let mseed = 20261013;
+const mrnd = (n) => { mseed = (mseed + 0x6d2b79f5) | 0; let t = mseed; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) % n; };
+for (let i = 0; i < 4000; i++) {
+  const n = 1 + mrnd(14);
+  let s = "";
+  for (let j = 0; j < n; j++) s += atoms[mrnd(atoms.length)];
+  cases.push([s, enc.encode(s, [], []).length]);
+}
 const long = Array.from({ length: 400 }, (_, i) => atoms[(i * 7) % atoms.length]).join("");
 cases.push([long, enc.encode(long, [], []).length]);
 const fixturePath = new URL("../crates/agent-loop-sidecar/tests/fixtures/count_tokens.json", import.meta.url);
