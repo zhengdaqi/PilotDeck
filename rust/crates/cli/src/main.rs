@@ -9,6 +9,7 @@ mod chat_search;
 mod skills;
 mod cron;
 mod update;
+mod sdk_cli;
 
 use std::process::{Command, ExitCode};
 
@@ -21,6 +22,7 @@ fn main() -> ExitCode {
             println!("{}", SDK_HELP);
             ExitCode::SUCCESS
         }
+        Some(c @ ("sessions" | "settings")) => sdk_cli::run(c, &argv[1..]),
         Some("update") => update::run_update_cli(&argv[1..]),
         Some("gateway") if argv.get(1).map(String::as_str) != Some("setup") => {
             eprintln!("Usage: pilotdeck gateway setup [feishu|weixin|wecom]");

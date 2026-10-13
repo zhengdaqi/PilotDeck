@@ -185,3 +185,50 @@ mod tests {
         );
     }
 }
+
+fn write_compact(v: &JsValue, out: &mut String) -> bool {
+    match v {
+        JsValue::Undefined => return false,
+        JsValue::Null => out.push_str("null"),
+        JsValue::Bool(b) => out.push_str(if *b { "true" } else { "false" }),
+        JsValue::Num(n) => out.push_str(&if n.is_finite() { js_number_to_string(*n) } else { "null".into() }),
+        JsValue::Str(s) => quote(s, out),
+        JsValue::Arr(items) => {
+            out.push('[');
+            for (i, item) in items.iter().enumerate() {
+                if i > 0 {
+                    out.push(',');
+                }
+                if !write_compact(item, out) {
+                    out.push_str("null");
+                }
+            }
+            out.push(']');
+        }
+        JsValue::Obj(obj) => {
+            out.push('{');
+            let mut first = true;
+            for (k, v) in obj.ordered() {
+                if matches!(v, JsValue::Undefined) {
+                    continue;
+                }
+                if !first {
+                    out.push(',');
+                }
+                first = false;
+                quote(k, out);
+                out.push(':');
+                write_compact(v, out);
+            }
+            out.push('}');
+        }
+    }
+    true
+}
+
+/// `JSON.stringify(v)`
+pub fn stringify_compact(v: &JsValue) -> String {
+    let mut out = String::new();
+    write_compact(v, &mut out);
+    out
+}

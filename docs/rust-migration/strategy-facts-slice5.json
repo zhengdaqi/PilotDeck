@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "template_only": false,
+  "scope_id": "pilotdeck-standalone_alpha1-b243fa00/CAP-CLI-SDK",
+  "facts": {
+    "baseline_runnable": true,
+    "oracle_ready": true,
+    "target_integration": "native",
+    "boundary_separable": true,
+    "atomic_cutover_required": false,
+    "bridge_scope_allowed": "unknown",
+    "wasm_host_probe_passed": "unknown",
+    "native_entry_probe_passed": true,
+    "bounded_batch_defined": "unknown",
+    "rule_stress_test_passed": "unknown",
+    "serial_build_budget_measured": "unknown",
+    "rollback_artifact_ready": "unknown",
+    "deterministic_core": false,
+    "replay_corpus_ready": "unknown",
+    "is_compiler": false,
+    "conformance_corpus_ready": "unknown",
+    "shadow_requested": false,
+    "shadow_effects_isolated": "unknown"
+  },
+  "evidence_refs": [
+    {
+      "path": "baseline.json",
+      "sha256": "c24602c1dbb40785298f3ab5d2d52db8eb70d471c550e13b69ba57f885817214"
+    },
+    {
+      "path": "evidence/parity-sdk-cli-sessions-settings.json",
+      "sha256": "b3b3e715ab2eee022cfce6978ea70c3d4e04e98d7096e847f57921dbba8b47dd"
+    },
+    {
+      "path": "evidence/v8json-fuzz.txt",
+      "sha256": "ff99c73d38895d7657d3bf4ec8d7bf020f2286fa4e7b4ec959932e82d3c25ad0"
+    },
+    {
+      "path": "ADR-0001-rust-architecture.md",
+      "sha256": "ee0f99372dbaf47a8a8fe268e81ebfe4e4be28a1223a0b7c0e746ffac922ed2e"
+    },
+    {
+      "path": "ADR-0002-user-decisions.md",
+      "sha256": "afcd5d6023e22b8f4f686859427261aa37545cbb2567ff1ac84bdd0c43c305d7"
+    },
+    {
+      "path": "contracts/CAP-CLI-SDK.contract.md",
+      "sha256": "9a86e92a44db066de942061980df35663a11889ea7f56f25a8894ca3cf2e4e1d"
+    }
+  ],
+  "frozen_by": "grokbot-executor (session 2026-10-13, light profile; not independent of author)"
+}

@@ -328,6 +328,7 @@ dependencies = [
  "pilotdeck-session-search",
  "regex",
  "ryu-js",
+ "serde_json",
  "serde_yaml",
 ]
 

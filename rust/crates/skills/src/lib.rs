@@ -5,3 +5,4 @@ pub mod migrate;
 pub mod validate;
 
 pub(crate) use pilotdeck_session_search::js::js_trim;
+pub mod v8json;

@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "scope_id": "pilotdeck-standalone_alpha1-b243fa00/CAP-CLI-SDK",
+  "status": "SELECTED",
+  "selected_branches": [
+    "S03"
+  ],
+  "provisional_branches": [],
+  "reasons": [
+    "S03: target_integration=native"
+  ],
+  "blocking_checks": [],
+  "probe_checks": [],
+  "required_gates": [
+    "G03",
+    "G05",
+    "G06",
+    "G07",
+    "G09",
+    "G11",
+    "G17"
+  ],
+  "exit_checks": [
+    "architecture_dependency_constraints",
+    "external_contract_parity",
+    "feedback_window",
+    "formal_entrypoint",
+    "full_scope_native_ownership"
+  ],
+  "evidence_refs": [
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/baseline.json",
+      "sha256": "c24602c1dbb40785298f3ab5d2d52db8eb70d471c550e13b69ba57f885817214"
+    },
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/evidence/parity-sdk-cli-sessions-settings.json",
+      "sha256": "b3b3e715ab2eee022cfce6978ea70c3d4e04e98d7096e847f57921dbba8b47dd"
+    },
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/evidence/v8json-fuzz.txt",
+      "sha256": "ff99c73d38895d7657d3bf4ec8d7bf020f2286fa4e7b4ec959932e82d3c25ad0"
+    },
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/ADR-0001-rust-architecture.md",
+      "sha256": "ee0f99372dbaf47a8a8fe268e81ebfe4e4be28a1223a0b7c0e746ffac922ed2e"
+    },
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/ADR-0002-user-decisions.md",
+      "sha256": "afcd5d6023e22b8f4f686859427261aa37545cbb2567ff1ac84bdd0c43c305d7"
+    },
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/contracts/CAP-CLI-SDK.contract.md",
+      "sha256": "9a86e92a44db066de942061980df35663a11889ea7f56f25a8894ca3cf2e4e1d"
+    }
+  ],
+  "phase_bindings": {
+    "P03": "provisional_decision_and_ADR",
+    "P04": "branch_contract",
+    "P07": "branch_adapters",
+    "P08": "selection_confirmed",
+    "P09": "first_real_slice",
+    "P12": "recalibrate",
+    "P26": "branch_exit_audit"
+  },
+  "meaning": "selection only; not implementation, deployment approval, or product PASS",
+  "facts_sha256": "9587afd4e0765cbfb6b6705ab12b102865471651f3326236465a7570031509d8",
+  "catalog_sha256": "1eb0fd94be42b40d4c075d7e80831a88e07e36bcc2d9b8f7c74958e9911cf375",
+  "selector_sha256": "1494d06c53c669aa990c2ba4337185aef9d6e8782fea505856cfde30e2e6d3fe"
+}
