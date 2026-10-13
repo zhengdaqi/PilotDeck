@@ -1,0 +1,10 @@
+[package]
+name = "probe-yew"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[dependencies]
+yew = { version = "0.21", features = ["csr"] }
+probe-shared = { path = "../shared" }
