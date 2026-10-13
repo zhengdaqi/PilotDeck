@@ -8,6 +8,7 @@ description = "Rust port of the PilotDeck AgentLoop sidecar (stdio JSON-lines mo
 [dependencies]
 pilotdeck-skills = { path = "../skills" }
 chrono = { workspace = true }
+regex = { workspace = true }
 
 [[bin]]
 name = "pilotdeck-agent-loop-sidecar"

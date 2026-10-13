@@ -38,13 +38,15 @@ pub struct Run<'a> {
     pub turn_count: f64,
     pub started_at: String,
     transient_ids: Vec<String>,
+    transient_counter: u32,
+    lfr: crate::lfr::LargeFileRepair,
 }
 
 impl<'a> Run<'a> {
     pub fn new(a: &'a mut Agent, rt: &'a mut Rt) -> Self {
         let messages = a.input.messages.clone();
         Run { a, rt, messages, usage: obj! {}, permission_denials: Vec::new(), structured_output: JsValue::Undefined,
-            final_message: JsValue::Undefined, turn_count: 1.0, started_at: String::new(), transient_ids: Vec::new() }
+            final_message: JsValue::Undefined, turn_count: 1.0, started_at: String::new(), transient_ids: Vec::new(), transient_counter: 0, lfr: Default::default() }
     }
 
     // ---------- event publication (timeline + stream events) ----------
@@ -183,7 +185,9 @@ impl<'a> Run<'a> {
     }
 
     fn push_transient(&mut self, prompt: &str, purpose: &str) {
-        let id = crate::util::uuid_v4();
+        // The sidecar's clock capability has no uuid(): TS falls back to `transient-${++counter}`.
+        self.transient_counter += 1;
+        let id = format!("transient-{}", self.transient_counter);
         self.messages.push(obj! {"role" => "user", "content" => vec![obj! {"type" => "text", "text" => prompt}],
             "metadata" => obj! {"synthetic" => true, "transient" => true, "transientId" => &id, "purpose" => purpose}});
         self.transient_ids.push(id);
@@ -369,9 +373,7 @@ impl<'a> Run<'a> {
             .filter(|t| can_prompt || !((t.name == "enter_plan_mode" || t.requires_user_interaction) && !(can_elicit && t.name == "ask_user_question")))
             .filter(|t| a.input.allow_plan_mode_tools || (t.name != "enter_plan_mode" && t.name != "exit_plan_mode"))
             .collect();
-        if a.cfg.run_mode.as_deref() == Some("ask") {
-            return Err(pending("ask runMode tool filtering (filterAskModeTools)"));
-        }
+        let ask = a.cfg.run_mode.as_deref() == Some("ask");
         let (provider, model) = match &a.input.model_override {
             Some(o) => (gs(o, "provider").unwrap_or("").to_string(), gs(o, "model").unwrap_or("").to_string()),
             None => (a.cfg.provider.clone(), a.cfg.model.clone()),
@@ -393,7 +395,7 @@ impl<'a> Run<'a> {
             "protocol" => protocol, "supportsPromptCache" => prompt_cache, "permissionMode" => &a.cfg.permission_mode,
             "runMode" => a.cfg.run_mode.clone().unwrap_or_else(|| "agent".into()),
             "additionalWorkingDirectories" => get(&a.cfg.permission_context, "additionalWorkingDirectories"),
-            "messages" => normalize_messages(messages), "tools" => tools.iter().map(|t| tool_schema(t)).collect::<Vec<_>>(),
+            "messages" => normalize_messages(messages), "tools" => if ask { filter_ask_mode_tools(&tools) } else { tools.iter().map(|t| tool_schema(t)).collect::<Vec<_>>() },
             "maxMessages" => a.cfg.max_context_messages, "customSystemPrompt" => a.cfg.system_prompt.clone(),
             "appendSystemPrompt" => if parts.is_empty() { None } else { Some(parts.join("\n\n")) }})
     }
@@ -411,19 +413,20 @@ impl<'a> Run<'a> {
             let e = obj! {"type" => "instructions_loaded", "sessionId" => &self.a.session_id, "turnId" => &self.a.turn_id, "hasSystemPrompt" => has};
             self.a.emit_host_event(self.rt, e);
         }
-        let pm = ga(&prepared, "messages").to_vec();
-        if pm.iter().any(has_media_reference) {
-            return Err(pending("media_reference materialization (materializeMediaReferences)"));
-        }
-        if truthy(get(&prepared, "cachePlan")) {
-            return Err(pending("cachePlan (buildCachePlan)"));
-        }
+        // finalizePreparedModelRequest
+        let (pm, diagnostics) = crate::cacheplan::materialize_media_references(ga(&prepared, "messages"));
         let plan = self.a.cfg.permission_mode == "plan";
         let mut msgs = pm;
         if plan {
             msgs.push(obj! {"role" => "user", "content" => vec![obj! {"type" => "text", "text" => PLAN_MODE_REMINDER}],
                 "metadata" => obj! {"synthetic" => true, "purpose" => "plan_mode_reminder"}});
         }
+        let cache_plan = if truthy(get(&prepared, "cachePlan")) {
+            crate::cacheplan::build_cache_plan(&JsValue::Str(provider.clone()), &JsValue::Str(model.clone()),
+                get(&prepared, "systemPrompt"), ga(&prepared, "tools"), &msgs, get(get(&prepared, "cachePlan"), "generation"))
+        } else {
+            JsValue::Undefined
+        };
         let a = &*self.a;
         let mo = a.input.model_override.clone().unwrap_or(JsValue::Undefined);
         let thinking = if nullish(get(&mo, "thinking")) { a.cfg.thinking.clone() } else { get(&mo, "thinking").clone() };
@@ -432,37 +435,57 @@ impl<'a> Run<'a> {
             "maxOutputTokens" => self.current_max_output(&provider, &model).or(a.cfg.max_output_tokens),
             "speed" => get(&mo, "speed"), "thinking" => thinking, "stream" => true, "metadata" => &a.cfg.metadata};
         let sp = if nullish(get(&prepared, "systemPrompt")) { a.cfg.system_prompt.clone().map(JsValue::Str).unwrap_or(JsValue::Undefined) } else { get(&prepared, "systemPrompt").clone() };
-        Ok(spread(&base, obj! {"messages" => msgs, "systemPrompt" => sp, "tools" => get(&prepared, "tools"),
-            "cacheBreakpoints" => if plan { JsValue::Undefined } else { get(&prepared, "cacheBreakpoints").clone() },
-            "cachePlan" => JsValue::Undefined}))
-    }
-
-    fn materialize_prepared(&mut self, prepared: &JsValue, candidate: &JsValue) -> R<JsValue> {
-        if Methods::has(&self.a.m.model, "materialize_prepared_request") {
-            return Err(pending("materialize_prepared_request routing"));
+        let r = Ok(spread(&base, obj! {"messages" => msgs, "systemPrompt" => sp, "tools" => get(&prepared, "tools"),
+            "cacheBreakpoints" => if !is_undef(get(&cache_plan, "messages")) { get(&cache_plan, "messages").clone() }
+                else if plan { JsValue::Undefined } else { get(&prepared, "cacheBreakpoints").clone() },
+            "cachePlan" => cache_plan}));
+        for d in diagnostics {
+            eprintln!("{d}");
         }
-        Ok(spread(get(prepared, "request"), obj! {"messages" => get(candidate, "messages"),
-            "cacheBreakpoints" => get(candidate, "cacheBreakpoints"), "cachePlan" => get(candidate, "cachePlan"),
-            "provider" => get(prepared, "provider"), "model" => get(prepared, "model")}))
+        r
     }
 
-    fn budget_request(&mut self, messages: &[JsValue], decision: Option<(&str, &str)>, base: Option<&JsValue>, prepared: Option<&JsValue>) -> R<JsValue> {
+    /// `materializePreparedRequest`; with the host `materialize_prepared_request` method this is
+    /// `hostModelInvokerPort.materializePreparedRequest`.
+    fn materialize_prepared(&mut self, prepared: &JsValue, candidate: &JsValue, preparation_id: &str) -> R<(JsValue, Option<String>)> {
+        if Methods::has(&self.a.m.model, "materialize_prepared_request") {
+            let routed = spread(candidate, obj! {"provider" => get(prepared, "provider"), "model" => get(prepared, "model")});
+            let payload = obj! {"operation" => "materialize_prepared_request", "preparationId" => preparation_id,
+                "request" => json_clone(&routed)};
+            let call = self.model_call(format!("model-materialize-{}", random_id()), payload, false);
+            let r = self.rt.call(call)?;
+            if gb(&r, "ok") != Some(true) {
+                return Err(model_module_failure(&r, "Model request materialization failed"));
+            }
+            let m = get(get(&r, "payload"), "request");
+            if !is_obj(m) {
+                return Err(invalid_model("INVALID_MODEL_RESPONSE", "Model materialization response must contain a canonical request."));
+            }
+            // rememberRequestPreparationId: only host-materialized requests carry the preparation id.
+            return Ok((json_clone(m), Some(preparation_id.to_string())));
+        }
+        Ok((spread(get(prepared, "request"), obj! {"messages" => get(candidate, "messages"),
+            "cacheBreakpoints" => get(candidate, "cacheBreakpoints"), "cachePlan" => get(candidate, "cachePlan"),
+            "provider" => get(prepared, "provider"), "model" => get(prepared, "model")}), None))
+    }
+
+    fn budget_request(&mut self, messages: &[JsValue], decision: Option<(&str, &str)>, base: Option<&JsValue>, prepared: Option<(&JsValue, &str)>) -> R<(JsValue, Option<String>)> {
         let candidate = self.create_model_request(messages, false, true)?;
-        if let (Some(p), Some(b)) = (prepared, base) {
+        if let (Some((p, pid)), Some(b)) = (prepared, base) {
             let m = spread(b, obj! {"messages" => get(&candidate, "messages"), "systemPrompt" => get(&candidate, "systemPrompt"),
                 "tools" => get(&candidate, "tools"), "cacheBreakpoints" => get(&candidate, "cacheBreakpoints"), "cachePlan" => get(&candidate, "cachePlan")});
             let p = p.clone();
-            return self.materialize_prepared(&p, &m);
+            return self.materialize_prepared(&p, &m, pid);
         }
         if let Some((p, m)) = decision {
-            return Ok(spread(&candidate, obj! {"provider" => p, "model" => m}));
+            return Ok((spread(&candidate, obj! {"provider" => p, "model" => m}), None));
         }
-        Ok(candidate)
+        Ok((candidate, None))
     }
 
     /// `tryAutoCompact` through the host context module.
     #[allow(clippy::too_many_arguments)]
-    fn try_auto_compact(&mut self, stage: &str, max_ctx: f64, reserved: f64, budget_request: JsValue, route: (&str, &str), allow_fallback: bool) -> R<JsValue> {
+    fn try_auto_compact(&mut self, stage: &str, max_ctx: f64, reserved: f64, budget_request: (JsValue, Option<String>), route: (&str, &str), allow_fallback: bool) -> R<JsValue> {
         let preparation = self.context_prepare_input(&self.messages.clone())?;
         let calibration = self.calibration_for(route.0, route.1);
         let mut projection = obj! {"stage" => stage, "trigger" => "auto", "maxContextTokens" => max_ctx, "reservedOutputTokens" => reserved};
@@ -470,10 +493,11 @@ impl<'a> Run<'a> {
             set(&mut projection, "allowFallbackOnFailure", true);
         }
         let input = obj! {"sessionId" => &self.a.session_id, "turnId" => &self.a.turn_id, "messages" => self.messages.clone(),
-            "maxContextTokens" => max_ctx, "reservedOutputTokens" => reserved, "budgetRequest" => budget_request,
+            "maxContextTokens" => max_ctx, "reservedOutputTokens" => reserved, "budgetRequest" => budget_request.0,
             "budgetPreparation" => preparation, "budgetCalibration" => calibration,
             "allowFallbackOnFailure" => if allow_fallback { JsValue::Bool(true) } else { JsValue::Undefined },
-            "budgetProjection" => projection};
+            // serializeContextInput appends budgetPreparationId after the input's own keys.
+            "budgetPreparationId" => budget_request.1, "budgetProjection" => projection};
         self.a.context_call(self.rt, "try_auto_compact", input, true)
     }
 
@@ -481,6 +505,11 @@ impl<'a> Run<'a> {
     fn apply_compacted(&mut self, compact: &JsValue) -> R<()> {
         self.messages = ga(compact, "messages").to_vec();
         self.a.calibration.clear();
+        self.persist_compact_snapshot(compact)
+    }
+
+    /// `persistCompactSnapshot`.
+    fn persist_compact_snapshot(&mut self, compact: &JsValue) -> R<()> {
         let result = get(compact, "result");
         if !self.a.input.has_persist_compaction || !truthy(result) {
             return Ok(());
@@ -584,10 +613,6 @@ pub fn normalize_messages(messages: &[JsValue]) -> Vec<JsValue> {
     out
 }
 
-fn has_media_reference(m: &JsValue) -> bool {
-    ga(m, "content").iter().any(|b| gs(b, "type") == Some("media_reference")
-        || ga(b, "content").iter().any(|c| gs(c, "type") == Some("media_reference")))
-}
 
 // ---------------- model + tool ports ----------------
 fn invalid_model(code: &str, m: &str) -> LoopErr {
@@ -1099,6 +1124,47 @@ fn sorted_js(mut v: Vec<String>) -> Vec<String> {
 
 // ---------------- runOrdered ----------------
 impl<'a> Run<'a> {
+    /// `continueWithSyntheticPrompt`: Ok(None) = continue the loop, Ok(Some) = completed turn.
+    fn continue_with_synthetic(&mut self, decision: crate::lfr::Decision, strip_current: bool) -> R<Option<RunResult>> {
+        use crate::lfr::Decision;
+        match decision {
+            Decision::Stop { reason } => {
+                let error = agent_error("agent_tool_error_loop", &reason, JsValue::Undefined, None);
+                let result = self.err_result("tool_error", error.clone(), true);
+                self.emit_status(tool_error_loop_status(&error, None));
+                self.publish_ev("turn_failed", obj! {"error" => &error});
+                self.capture_turn(true)?;
+                self.publish_ev("turn_completed", obj! {"result" => &result});
+                Ok(Some(RunResult { result, messages: self.messages.clone() }))
+            }
+            Decision::Continue { prompt, purpose, strip } => {
+                if strip_current {
+                    match strip {
+                        Some("error_pair") => strip_trailing_error_pair(&mut self.messages),
+                        Some("assistant") => {
+                            if self.messages.last().map_or(false, |m| gs(m, "role") == Some("assistant")) {
+                                self.messages.pop();
+                            }
+                        }
+                        _ => {}
+                    }
+                }
+                self.push_transient(&prompt, &purpose);
+                let (p, m) = (self.a.cfg.provider.clone(), self.a.cfg.model.clone());
+                let rec = crate::lfr::LARGE_FILE_OUTPUT_RETRY_TOKENS;
+                if self.current_max_output(&p, &m).map_or(true, |c| c < rec) {
+                    self.set_cap(&p, &m, |c| c.session_max_output_tokens = Some(rec));
+                }
+                self.continued("model_error");
+                Ok(None)
+            }
+        }
+    }
+    /// `truncateHeadKeepRatio` + calibration reset.
+    fn truncate_head_keep_ratio(&mut self, keep_ratio: f64) {
+        self.messages = crate::truncate::truncate_head_preserving_checkpoint(&self.messages, keep_ratio);
+        self.a.calibration.clear();
+    }
     fn err_result(&self, stop: &str, error: JsValue, with_structured: bool) -> JsValue {
         self.turn_result("error", stop, Some(vec![error]), with_structured, None, None)
     }
@@ -1126,9 +1192,6 @@ impl<'a> Run<'a> {
                     self.a.cfg.run_mode = Some("agent".into());
                 }
             }
-        }
-        if self.a.cfg.run_mode.as_deref() == Some("ask") {
-            return Err(pending("ask runMode"));
         }
         {
             let pm = self.a.input.permission_mode.clone();
@@ -1197,7 +1260,7 @@ impl<'a> Run<'a> {
                     let reserved = self.reserved_output(None);
                     let msgs = self.messages.clone();
                     let br = self.budget_request(&msgs, None, None, None)?;
-                    let route = (gs(&br, "provider").unwrap_or("").to_string(), gs(&br, "model").unwrap_or("").to_string());
+                    let route = (gs(&br.0, "provider").unwrap_or("").to_string(), gs(&br.0, "model").unwrap_or("").to_string());
                     let compact = self.try_auto_compact("pre_route", pre_ctx, reserved, br, (&route.0, &route.1), false)?;
                     if gs(&compact, "type") == Some("compacted") {
                         self.apply_compacted(&compact)?;
@@ -1237,15 +1300,18 @@ impl<'a> Run<'a> {
                     let attempt: R<Option<RunResult>> = (|| {
                         let reserved = self.reserved_output(Some((&rp, &rm)));
                         let msgs = self.messages.clone();
-                        let br = self.budget_request(&msgs, Some((&rp, &rm)), Some(&request), Some(&prepared))?;
+                        let br = self.budget_request(&msgs, Some((&rp, &rm)), Some(&request), Some((&prepared, &preparation_id)))?;
                         let compact = self.try_auto_compact("routed", routed_ctx, reserved, br, (&rp, &rm), false)?;
                         if gs(&compact, "type") == Some("compacted") {
-                            self.apply_compacted(&compact)?;
+                            self.messages = ga(&compact, "messages").to_vec();
+                            self.a.calibration.clear();
                             let msgs = self.messages.clone();
                             let r2 = self.create_model_request(&msgs, true, false)?;
                             request = self.apply_token_caps(&r2, &rp, &rm);
-                            let materialized = self.materialize_prepared(&prepared, &request)?;
+                            let (materialized, _) = self.materialize_prepared(&prepared, &request, &preparation_id)?;
                             set(&mut prepared, "request", json_clone(&materialized));
+                            // TS persists the routed compaction only after re-materializing.
+                            self.persist_compact_snapshot(&compact)?;
                             self.continued("auto_compact");
                             if truthy(get(&compact, "error")) {
                                 self.publish_ev("context_budget", obj! {"snapshot" => get(&compact, "snapshot")});
@@ -1382,7 +1448,7 @@ impl<'a> Run<'a> {
             }
             let assistant = assembled.message.clone();
             let tool_calls = collect_tool_calls(&assistant);
-            let budget_usage = if !tracks_budget { assembled.usage.clone() } else { self.resolve_budget_usage(&assembled.usage, input_estimate)? };
+            let budget_usage = if !tracks_budget { assembled.usage.clone() } else { self.resolve_budget_usage(&assembled.usage, input_estimate, &assistant)? };
             self.usage = merge_usage(&self.usage, &budget_usage);
             self.final_message = assistant.clone();
             self.expire_transients();
@@ -1472,7 +1538,39 @@ impl<'a> Run<'a> {
             unknown_recoveries = 0;
 
             if assembled.repaired && matches!(assembled.finish.as_str(), "length" | "tool_call" | "stop") {
-                return Err(pending("repaired-truncated tool call recovery (LargeFileRepair)"));
+                eprintln!("[AgentLoop] Blocking {} repaired-but-truncated tool call(s) — entering max_output recovery", tool_calls.len());
+                if let Some(d) = self.lfr.recover_from_repaired_truncation(&tool_calls) {
+                    match self.continue_with_synthetic(d, false)? {
+                        Some(done) => return Ok(done),
+                        None => continue,
+                    }
+                }
+                // Phase A: token doubling (if not yet attempted)
+                if !has_attempted_output_retry {
+                    has_attempted_output_retry = true;
+                    if let Some(next) = output_retry_bump(self.current_max_output(&decision.0, &decision.1), routed_max_output) {
+                        let previous = self.current_max_output(&decision.0, &decision.1);
+                        self.set_cap(&decision.0, &decision.1, |c| c.requested_max_output_tokens = Some(next));
+                        self.publish_ev("token_cap_adjusted", obj! {"provider" => &decision.0, "model" => &decision.1, "cap" => "output", "previous" => previous, "next" => next, "reason" => "max-output-retry-bump"});
+                        self.continued("model_error");
+                        continue;
+                    }
+                }
+                // Phase B: continuation recovery
+                if max_output_recovery < MAX_OUTPUT_RECOVERY_LIMIT {
+                    max_output_recovery += 1;
+                    self.push_transient(MAX_OUTPUT_RESUME, "max_output_recovery");
+                    self.continued("model_error");
+                    continue;
+                }
+                // Phase C: exhausted.
+                let error = agent_error("agent_model_error", "Recovered tool call still looked repaired/truncated after max-output recovery was exhausted.", JsValue::Undefined, None);
+                let result = self.err_result("model_error", error.clone(), true);
+                self.emit_status(tool_call_recovery_exhausted_status(&error, Some(max_output_recovery as f64), Some("repaired_truncated_tool_calls")));
+                self.publish_ev("turn_failed", obj! {"error" => &error});
+                self.capture_turn(true)?;
+                self.publish_ev("turn_completed", obj! {"result" => &result});
+                return Ok(RunResult { result, messages: self.messages.clone() });
             }
 
             if assembled.error.is_none() && tool_calls.is_empty() && text_from_message(&assistant).is_empty() {
@@ -1589,7 +1687,8 @@ impl<'a> Run<'a> {
                                 }
                                 Ok(None)
                             } else {
-                                Err(pending("truncateHeadPreservingCheckpoint"))
+                                self.truncate_head_keep_ratio(0.5);
+                                Ok(None)
                             }
                         })();
                         match attempt {
@@ -1597,17 +1696,25 @@ impl<'a> Run<'a> {
                             Ok(None) => {}
                             Err(e) if is_fatal_compaction(&e) => return Err(e),
                             Err(e) if e.code.as_deref() == Some("RUST_SIDECAR_PENDING") => return Err(e),
-                            Err(_) => return Err(pending("truncateHeadPreservingCheckpoint")),
+                            Err(e) => {
+                                eprintln!("[agent:auto-compact] model-error-recovery failed sessionId={} turnId={}: {}", self.a.session_id, self.a.turn_id, e.message);
+                                self.truncate_head_keep_ratio(0.5);
+                            }
                         }
                     } else {
-                        return Err(pending("truncateHeadPreservingCheckpoint"));
+                        self.truncate_head_keep_ratio(0.5);
                     }
                     has_attempted_compact = true;
                     self.continued("model_error");
                     continue;
                 }
                 if rtype == "truncate_head_and_retry" {
-                    return Err(pending("truncateHeadPreservingCheckpoint"));
+                    strip_trailing_error_pair(&mut self.messages);
+                    let keep = reactive.as_ref().and_then(|r| num(get(r, "keepRatio"))).unwrap_or(f64::NAN);
+                    self.truncate_head_keep_ratio(keep);
+                    has_attempted_compact = true;
+                    self.continued("model_error");
+                    continue;
                 }
                 if rtype == "strip_images_and_retry" && !image_strip {
                     image_strip = true;
@@ -1690,6 +1797,12 @@ impl<'a> Run<'a> {
                     }
                     self.emit_status(max_output_recovery_exhausted_status(max_output_recovery as f64));
                 }
+                if let Some(d) = self.lfr.on_no_tool_calls() {
+                    match self.continue_with_synthetic(d, true)? {
+                        Some(done) => return Ok(done),
+                        None => continue,
+                    }
+                }
                 let can_continue = self.a.input.max_turns.map_or(true, |m| self.turn_count < m);
                 if can_continue && self.a.input.has_drain_or_close {
                     let p = self.a.turn_call(self.rt, "drain_or_close_steer")?;
@@ -1770,6 +1883,9 @@ impl<'a> Run<'a> {
                 paired = paired.into_iter().map(|r| annotate_repeated(r, &repeated)).collect();
             }
             last_failure_fp = fp;
+            let tool_result_repair = self.lfr.analyze_tool_results(&paired, &crate::lfr::ToolContext {
+                output_truncated: assembled.finish == "length" || assembled.repaired,
+                repaired_tool_calls: assembled.repaired, finish_reason: Some(assembled.finish.as_str()) });
             for r in &paired {
                 if gs(r, "type") == Some("error") && matches!(gs(get(r, "error"), "code"), Some("permission_denied" | "permission_required" | "permission_cancelled")) {
                     self.permission_denials.push(obj! {"toolCallId" => get(r, "toolCallId"), "toolName" => get(r, "toolName"), "errorCode" => get(get(r, "error"), "code")});
@@ -1844,6 +1960,13 @@ impl<'a> Run<'a> {
                 }
             }
 
+            if let Some(d) = tool_result_repair {
+                match self.continue_with_synthetic(d, true)? {
+                    Some(done) => return Ok(done),
+                    None => continue,
+                }
+            }
+
             if let Some(block) = paired.iter().find_map(|r| {
                 let b = get(get(get(r, "metadata"), "lifecycle"), "blocked");
                 if is_obj(b) && gs(b, "reason").is_some() { Some(gs(b, "reason").unwrap().to_string()) } else { None }
@@ -1858,6 +1981,14 @@ impl<'a> Run<'a> {
             }
 
             let all_invalid = !paired.is_empty() && paired.iter().all(|r| gs(r, "type") == Some("error") && gs(get(r, "error"), "code") == Some("invalid_tool_input"));
+            if all_invalid && self.lfr.has_pending_repair() {
+                if let Some(d) = self.lfr.on_invalid_tool_input() {
+                    match self.continue_with_synthetic(d, true)? {
+                        Some(done) => return Ok(done),
+                        None => continue,
+                    }
+                }
+            }
             if all_invalid {
                 let fp = sorted_js(paired.iter().map(|r| format!("{}::{}", crate::rt::js_string(get(r, "toolName")), crate::rt::js_string(get(get(r, "error"), "message")))).collect()).join("\n");
                 if Some(&fp) == last_invalid_fp.as_ref() {
@@ -2030,11 +2161,34 @@ impl<'a> Run<'a> {
         }
     }
 
-    fn resolve_budget_usage(&mut self, usage: &JsValue, _estimate: Option<f64>) -> R<JsValue> {
+    /// `resolveBudgetUsage`: provider usage, else the countTokens-based estimate.
+    fn resolve_budget_usage(&mut self, usage: &JsValue, estimate: Option<f64>, assistant: &JsValue) -> R<JsValue> {
         if matches!(usage, JsValue::Obj(o) if o.iter().any(|(_, v)| num(v).map_or(false, |n| n.is_finite()))) {
             return Ok(usage.clone());
         }
-        Err(pending("countTokens fallback in resolveBudgetUsage"))
+        let text = ga(assistant, "content").iter().map(|b| match gs(b, "type") {
+            // Array.prototype.join renders undefined/null as "".
+            Some("text" | "thinking") => if nullish(get(b, "text")) { String::new() } else { crate::rt::js_string(get(b, "text")) },
+            Some("tool_call") => match get(b, "input") {
+                JsValue::Str(s) => s.clone(),
+                v if nullish(v) => "{}".to_string(),
+                v => to_json(v),
+            },
+            _ => String::new(),
+        }).collect::<Vec<_>>().join("\n");
+        let output = crate::tokenizer::count_tokens(&text) as f64;
+        if estimate.is_none() && output == 0.0 {
+            return Ok(usage.clone());
+        }
+        let mut r = obj! {};
+        if let Some(e) = estimate {
+            set(&mut r, "inputTokens", e);
+        }
+        if output > 0.0 {
+            set(&mut r, "outputTokens", output);
+        }
+        set(&mut r, "totalTokens", estimate.unwrap_or(0.0) + output);
+        Ok(r)
     }
 
     fn estimate_cost(&mut self, usage: &JsValue, p: &str, m: &str) -> R<Option<f64>> {
@@ -2109,4 +2263,23 @@ impl<'a> Run<'a> {
         self.publish_ev("turn_completed", obj! {"result" => &result});
         Ok(RunResult { result, messages: self.messages.clone() })
     }
+}
+
+/// `filterAskModeTools` (AgentLoop.ts) with constants from `src/tool/askModeConstraints.ts` and
+/// `buildAskModeAgentToolSchema` (src/tool/builtin/agent.ts), snapshotted in `ask_mode.json`
+/// (regenerate with rust/parity/gen_ask_mode.mjs; check with `node rust/parity/gen_ask_mode.mjs --check`).
+fn filter_ask_mode_tools(tools: &[&ToolDesc]) -> Vec<JsValue> {
+    let spec = pilotdeck_skills::v8json::parse(include_str!("ask_mode.json")).expect("ask_mode.json");
+    let allowed: Vec<&str> = ga(&spec, "allowed").iter().filter_map(str_of).collect();
+    tools.iter().filter(|t| if t.kind == "mcp" { t.read_only } else { allowed.contains(&t.name.as_str()) }).map(|t| {
+        let mut s = tool_schema(t);
+        if t.name == "agent" {
+            let o = get(&spec, "agent");
+            set(&mut s, "description", get(o, "description").clone());
+            set(&mut s, "inputSchema", get(o, "inputSchema").clone());
+        } else if let Some(suffix) = gs(get(&spec, "suffix"), &t.name) {
+            set(&mut s, "description", JsValue::Str(format!("{}{}", t.description, suffix)));
+        }
+        s
+    }).collect()
 }

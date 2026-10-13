@@ -1,7 +1,7 @@
 //! Replays the factory prologue of the recorded TS `pure_text` execute (plan/todo read,
 //! model metadata) against the native runtime and checks call order and payloads.
 use pilotdeck_agent_loop_sidecar::json::*;
-use pilotdeck_agent_loop_sidecar::rt::{Incoming, Rt};
+use pilotdeck_agent_loop_sidecar::rt::{Host, Incoming};
 use std::io::Write;
 use std::sync::mpsc::{channel, Sender};
 
@@ -29,7 +29,7 @@ fn factory_prologue_matches_ts_recording() {
     let fx = parse(include_str!("fixtures/pure_text_factory.json"));
     let (in_tx, in_rx) = channel();
     let (out_tx, out_rx) = channel();
-    let handle = std::thread::spawn(move || Rt::new(in_rx, Box::new(ChanWriter(out_tx, Vec::new()))).serve());
+    let handle = std::thread::spawn(move || Host::new(in_rx, Box::new(ChanWriter(out_tx, Vec::new()))).serve());
     in_tx.send(Incoming::Line(to_json(get(&fx, "execute")))).unwrap();
     let accepted = parse(&out_rx.recv().unwrap());
     assert_eq!(gs(&accepted, "kind"), Some("response"));

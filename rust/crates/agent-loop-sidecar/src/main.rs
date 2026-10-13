@@ -1,7 +1,7 @@
 //! `pilotdeck-agent-loop-sidecar` (Rust): native port of the AgentLoop sidecar.
-//! NOT wired into production: several AgentLoop features are still pending
-//! (see docs coverage); production keeps the TS sidecar.
-use pilotdeck_agent_loop_sidecar::rt::{Incoming, Rt};
+//! NOT wired into production: the shim delegates only when PILOTDECK_AGENT_LOOP_SIDECAR_EXEC is
+//! set; production keeps the TS sidecar until the cutover is approved (see docs coverage).
+use pilotdeck_agent_loop_sidecar::rt::{Host, Incoming};
 use std::io::BufRead;
 
 fn main() {
@@ -16,6 +16,6 @@ fn main() {
         }
         let _ = tx.send(Incoming::Eof);
     });
-    let code = Rt::new(rx, Box::new(std::io::stdout())).serve();
+    let code = Host::new(rx, Box::new(std::io::stdout())).serve();
     std::process::exit(code);
 }

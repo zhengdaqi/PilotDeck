@@ -49,8 +49,13 @@ impl Timeline {
                 let order = self.next_order;
                 self.next_order += 1.0;
                 self.revision += 1.0;
-                let p = obj! {"version" => 1.0, "turnId" => &self.turn_id, "id" => id,
-                    "previousId" => self.previous_id.clone(), "order" => order, "revision" => self.revision};
+                // `...(previousId ? { previousId } : {})`: the key is absent (not undefined) when unset.
+                let mut p = obj! {"version" => 1.0, "turnId" => &self.turn_id, "id" => id};
+                if let Some(prev) = &self.previous_id {
+                    set(&mut p, "previousId", prev.as_str());
+                }
+                set(&mut p, "order", order);
+                set(&mut p, "revision", self.revision);
                 self.put(id, p.clone());
                 if provisional {
                     if !self.provisional.iter().any(|x| x == id) {

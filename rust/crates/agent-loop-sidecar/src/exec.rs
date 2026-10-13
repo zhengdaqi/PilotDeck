@@ -3,8 +3,7 @@
 use crate::agent::Agent;
 use crate::json::*;
 use crate::obj;
-use crate::now_ms;
-use crate::rt::{earliest_deadline, next_id, Active, LoopErr, Rt};
+use crate::rt::{next_id, LoopErr, Rt};
 
 fn serialize_error(e: &LoopErr) -> JsValue {
     obj! {"code" => e.code.clone(), "message" => e.message.clone()}
@@ -53,27 +52,13 @@ fn deadline_unknown(rt: &mut Rt, ids: &Ids, seq: f64) {
     result_unknown(rt, ids, seq, obj! {"code" => "DEADLINE_EXCEEDED", "message" => "Module execution deadline exceeded."});
 }
 
-pub fn handle_execute(rt: &mut Rt, request: JsValue) {
+/// Runs one admitted execute (the host already sent the accepted response; see `Host::admit`).
+pub fn handle_execute(rt: &mut Rt, request: JsValue, stream_id: String) {
     let run_id = gs(&request, "runId").unwrap_or("").to_string();
     let op = gs(&request, "operationId").unwrap_or("").to_string();
     let request_id = gs(&request, "requestId").unwrap_or("").to_string();
-    rt.op_accept(&run_id, &op, &request_id);
-    let deadline_at = earliest_deadline(&[gs(&request, "operationDeadline"), gs(&request, "attemptDeadline")]);
-    if let Some(d) = deadline_at {
-        if d <= now_ms() {
-            rt.op_final(&op, "failed");
-            rt.send(&obj! {"kind" => "response", "messageId" => next_id("deadline"), "inReplyTo" => gs(&request, "messageId"),
-                "requestId" => &request_id, "ok" => false, "final" => true, "outcome" => "failed", "code" => "DEADLINE_EXCEEDED"});
-            return;
-        }
-    }
-    rt.active = Some(Active { run_id: run_id.clone(), operation_id: op.clone(), request_id: request_id.clone(),
-        reason: None, deadline_exceeded: false, deadline_at });
-    let stream_id = next_id("stream");
-    rt.send(&obj! {"kind" => "response", "messageId" => next_id("accepted"), "inReplyTo" => gs(&request, "messageId"),
-        "requestId" => &request_id, "ok" => true, "streamId" => &stream_id, "cursor" => 0.0});
     let ids = Ids { run: run_id, op: op.clone(), req: request_id, stream: stream_id.clone() };
-    let deadline_exceeded = |rt: &Rt| rt.active.as_ref().map_or(false, |a| a.deadline_exceeded);
+    let deadline_exceeded = |rt: &Rt| rt.deadline_exceeded();
     match crate::factory::create(rt, &request, &stream_id) {
         Err(e) => {
             // The factory publishes no stream events; sequence starts at 0.
@@ -109,7 +94,6 @@ pub fn handle_execute(rt: &mut Rt, request: JsValue) {
             }
         }
     }
-    rt.active = None;
     rt.clear_module_failure(&op);
 }
 

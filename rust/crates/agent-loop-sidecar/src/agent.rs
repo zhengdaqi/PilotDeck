@@ -210,11 +210,8 @@ impl Agent {
         if gb(&r, "ok") != Some(true) {
             return Err(module_failure(&r, "Plan/todo module failed."));
         }
-        let snapshot = get(get(&r, "payload"), "snapshot");
-        if !is_obj(snapshot) {
-            return Err(LoopErr::msg("Plan/todo module response must contain a snapshot."));
-        }
-        self.plan_todo = Some(Some(snapshot.clone()));
+        let snapshot = crate::plantodo::parse_plan_todo_snapshot(get(get(&r, "payload"), "snapshot")).map_err(LoopErr::msg)?;
+        self.plan_todo = Some(Some(snapshot));
         Ok(())
     }
 

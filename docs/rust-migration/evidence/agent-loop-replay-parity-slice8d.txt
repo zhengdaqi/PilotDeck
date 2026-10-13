@@ -1,0 +1,74 @@
+# Slice 8d replay differential: Rust agent-loop sidecar vs TS sidecar (dist), 2026-10-13 12:27 CST
+# Harness: rust/parity/agent_loop_replay_parity.py --variant V --rust rust/target/release/pilotdeck-agent-loop-sidecar /tmp/alp/rec/*.in (70 TS recordings of run.py scenarios)
+# Exact comparison of the full normalized message transcript (ids first-seen, ISO timestamps, durationMs/elapsedMs/moduleInstanceId/connectionGeneration), including key order.
+# SKIP = the TS oracle itself did not settle under replay (message cap 2000 or 15 s timeout); never counted as pass.
+
+variant=none pass=67 fail=0 skip=3
+variant=ask pass=67 fail=0 skip=3
+variant=cacheplan pass=67 fail=0 skip=3
+variant=media pass=67 fail=0 skip=3
+variant=cacheplan_media pass=67 fail=0 skip=3
+variant=routed pass=67 fail=0 skip=3
+variant=materialize pass=67 fail=0 skip=3
+variant=repaired pass=67 fail=0 skip=3
+variant=repaired_write pass=67 fail=0 skip=3
+variant=write_error pass=67 fail=0 skip=3
+variant=write_then_error pass=67 fail=0 skip=3
+variant=ptl_truncate pass=63 fail=0 skip=7
+variant=ptl_compact pass=67 fail=0 skip=3
+
+## SKIP details
+      1 SKIP 1791860661300943554.in[ask] oracle did not settle under replay: timeout
+      1 SKIP 1791860661300943554.in[cacheplan] oracle did not settle under replay: timeout
+      1 SKIP 1791860661300943554.in[cacheplan_media] oracle did not settle under replay: timeout
+      1 SKIP 1791860661300943554.in[materialize] oracle did not settle under replay: timeout
+      1 SKIP 1791860661300943554.in[media] oracle did not settle under replay: timeout
+      1 SKIP 1791860661300943554.in[none] oracle did not settle under replay: timeout
+      1 SKIP 1791860661300943554.in[ptl_compact] oracle did not settle under replay: timeout
+      1 SKIP 1791860661300943554.in[ptl_truncate] oracle did not settle under replay: timeout
+      1 SKIP 1791860661300943554.in[repaired] oracle did not settle under replay: timeout
+      1 SKIP 1791860661300943554.in[repaired_write] oracle did not settle under replay: timeout
+      1 SKIP 1791860661300943554.in[routed] oracle did not settle under replay: timeout
+      1 SKIP 1791860661300943554.in[write_error] oracle did not settle under replay: timeout
+      1 SKIP 1791860661300943554.in[write_then_error] oracle did not settle under replay: timeout
+      1 SKIP 1791860812709477790.in[ptl_truncate] oracle did not settle under replay: message_limit
+      1 SKIP 1791860817721611135.in[ptl_truncate] oracle did not settle under replay: message_limit
+      1 SKIP 1791860822430805386.in[ptl_truncate] oracle did not settle under replay: message_limit
+      1 SKIP 1791860827194280626.in[ptl_truncate] oracle did not settle under replay: message_limit
+      1 SKIP 1791860842929699248.in[ask] oracle did not settle under replay: timeout
+      1 SKIP 1791860842929699248.in[cacheplan] oracle did not settle under replay: timeout
+      1 SKIP 1791860842929699248.in[cacheplan_media] oracle did not settle under replay: timeout
+      1 SKIP 1791860842929699248.in[materialize] oracle did not settle under replay: timeout
+      1 SKIP 1791860842929699248.in[media] oracle did not settle under replay: timeout
+      1 SKIP 1791860842929699248.in[none] oracle did not settle under replay: timeout
+      1 SKIP 1791860842929699248.in[ptl_compact] oracle did not settle under replay: timeout
+      1 SKIP 1791860842929699248.in[ptl_truncate] oracle did not settle under replay: timeout
+      1 SKIP 1791860842929699248.in[repaired] oracle did not settle under replay: timeout
+      1 SKIP 1791860842929699248.in[repaired_write] oracle did not settle under replay: timeout
+      1 SKIP 1791860842929699248.in[routed] oracle did not settle under replay: timeout
+      1 SKIP 1791860842929699248.in[write_error] oracle did not settle under replay: timeout
+      1 SKIP 1791860842929699248.in[write_then_error] oracle did not settle under replay: timeout
+      1 SKIP 1791860975374291062.in[ask] oracle did not settle under replay: message_limit
+      1 SKIP 1791860975374291062.in[cacheplan] oracle did not settle under replay: message_limit
+      1 SKIP 1791860975374291062.in[cacheplan_media] oracle did not settle under replay: message_limit
+      1 SKIP 1791860975374291062.in[materialize] oracle did not settle under replay: message_limit
+      1 SKIP 1791860975374291062.in[media] oracle did not settle under replay: message_limit
+      1 SKIP 1791860975374291062.in[none] oracle did not settle under replay: message_limit
+      1 SKIP 1791860975374291062.in[ptl_compact] oracle did not settle under replay: message_limit
+      1 SKIP 1791860975374291062.in[ptl_truncate] oracle did not settle under replay: message_limit
+      1 SKIP 1791860975374291062.in[repaired] oracle did not settle under replay: message_limit
+      1 SKIP 1791860975374291062.in[repaired_write] oracle did not settle under replay: message_limit
+      1 SKIP 1791860975374291062.in[routed] oracle did not settle under replay: message_limit
+      1 SKIP 1791860975374291062.in[write_error] oracle did not settle under replay: message_limit
+      1 SKIP 1791860975374291062.in[write_then_error] oracle did not settle under replay: message_limit
+
+# Concurrent-execute differential: rust/parity/agent_loop_concurrent_parity.py (two executes, different operations, one process; op A held until op B finished)
+pairs pass=32 fail=0 skip=3
+SKIP 1791860661300943554.in+1791860668898602704.in TS oracle did not settle: timeout
+SKIP 1791860842929699248.in+1791860852680213165.in TS oracle did not settle: timeout
+SKIP 1791860973898605698.in+1791860975374291062.in TS oracle did not settle: message_limit
+Negative control: previous (queued) Rust runtime on pair 1791860629655488744+1791860634593757958 -> FAIL ('status','ok','timeout').
+
+# Fixture differentials (cargo test): plan_todo 3000/3000 (gen_plan_todo_fixture.mjs), count_tokens 4001/4001, locale_compare 20000/20000
+
+# Corpus: 70 recordings produced by rust/parity/record_ts_sidecar.sh (see its header for the exact command; ~80 MB, not committed).

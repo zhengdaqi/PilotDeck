@@ -1,16 +1,43 @@
-run.py --comparison same-version --surface gateway --scenario all (53 scenarios), Linux
-TS sidecar baseline red: 26 ; Rust sidecar (PILOTDECK_AGENT_LOOP_SIDECAR_EXEC=release bin) red: 27
-Identical failure lines: 24
-DIFF permission_ask_approve/PilotDeck | TS: permission_ask_approve/PilotDeck: 4 semantic difference(s) | Rust: permission_ask_approve/PilotDeck: 2 semantic difference(s)
-DIFF sidecar_projected_request_compaction_budget/PilotDeck | TS: sidecar_projected_request_compaction_budget/PilotDeck: 2 semantic difference(s) | Rust: sidecar_projected_request_compaction_budget/PilotDeck: 4 semantic difference(s)
-DIFF sidecar_seed_read_state/PilotDeck | TS: None | Rust: sidecar_seed_read_state/PilotDeck: 2 semantic difference(s)
+run.py --comparison same-version --surface gateway --scenario all (53 scenarios), Linux, slice 8d release binary (2026-10-13 12:27 CST)
+TS sidecar baseline red: 26 ; Rust sidecar red: 26 ; blocked 0 ; oracleFailures 0 ; knownGaps 0
+Set differences in the full run (names): Rust-only red sidecar_seed_read_state; TS-only red sidecar_full_request_compaction_budget;
+count-only differences: denied_read_files, tool_retryable_error (Rust 4 vs TS 2), permission_ask_approve (flaky set).
 
-Triage of differing lines (re-runs, 2026-10-13):
-- permission_ask_approve: in the known-flaky exclusion set.
-- sidecar_projected_request_compaction_budget: Rust 4 vs TS 2 in the full run. 3 Rust re-runs and 3 TS re-runs all give 2.
-  The extra diffs were status-event vs module_call trace interleaving (timing).
-- sidecar_seed_read_state: Rust red in the full run. 3 Rust re-runs red; a TS-sidecar re-run is also red with the
-  identical 2 diffs (turn_continued/context_budget status vs model.request ordering). Pre-existing timing-dependent,
-  not a Rust regression; candidate for the flaky list (recorded, not removed from the oracle).
-No scenario that was green on TS is deterministically red on Rust. Oracles/comparators unchanged.
-Control-plane parity: rust/parity/agent_loop_control_parity.py 18/18 (release build).
+Repeated isolated runs (per user decision: sidecar_seed_read_state stays in the comparison, no exclusion list change).
+Each scenario 3x TS sidecar and 3x Rust sidecar, run.py --scenario <name>:
+tool_retryable_error ts 1 exit=1 FAIL: 2 semantic
+tool_retryable_error rust 1 exit=1 FAIL: 2 semantic
+tool_retryable_error ts 2 exit=1 FAIL: 2 semantic
+tool_retryable_error rust 2 exit=1 FAIL: 2 semantic
+tool_retryable_error ts 3 exit=1 FAIL: 2 semantic
+tool_retryable_error rust 3 exit=1 FAIL: 2 semantic
+denied_read_files ts 1 exit=1 FAIL: 2 semantic
+denied_read_files rust 1 exit=1 FAIL: 2 semantic
+denied_read_files ts 2 exit=1 FAIL: 2 semantic
+denied_read_files rust 2 exit=1 FAIL: 2 semantic
+denied_read_files ts 3 exit=1 FAIL: 2 semantic
+denied_read_files rust 3 exit=1 FAIL: 2 semantic
+sidecar_seed_read_state ts 1 exit=1 FAIL: 2 semantic
+sidecar_seed_read_state rust 1 exit=1 FAIL: 2 semantic
+sidecar_seed_read_state ts 2 exit=1 FAIL: 2 semantic
+sidecar_seed_read_state rust 2 exit=1 FAIL: 2 semantic
+sidecar_seed_read_state ts 3 exit=1 FAIL: 2 semantic
+sidecar_seed_read_state rust 3 exit=1 FAIL: 2 semantic
+sidecar_projected_request_compaction_budget ts 1 exit=1 FAIL: 2 semantic
+sidecar_projected_request_compaction_budget rust 1 exit=1 FAIL: 2 semantic
+sidecar_projected_request_compaction_budget ts 2 exit=1 FAIL: 2 semantic
+sidecar_projected_request_compaction_budget rust 2 exit=1 FAIL: 2 semantic
+sidecar_projected_request_compaction_budget ts 3 exit=1 FAIL: 2 semantic
+sidecar_projected_request_compaction_budget rust 3 exit=1 FAIL: 2 semantic
+sidecar_full_request_compaction_budget ts 1 exit=1 FAIL: 2 semantic
+sidecar_full_request_compaction_budget rust 1 exit=1 FAIL: 2 semantic
+sidecar_full_request_compaction_budget ts 2 exit=1 FAIL: 2 semantic
+sidecar_full_request_compaction_budget rust 2 exit=1 FAIL: 2 semantic
+sidecar_full_request_compaction_budget ts 3 exit=1 FAIL: 2 semantic
+sidecar_full_request_compaction_budget rust 3 exit=1 FAIL: 2 semantic
+
+Diff locations are identical TS vs Rust in every repeated run (e.g. seed_read_state trace[7]/trace[9], projected trace[6]/[8],
+full trace[2]/[4]): all are status-event vs model.request/response trace interleaving recorded host-side. Both TS and Rust
+are red 3/3 in isolation for these five scenarios; the full-run green/red split is timing. No scenario is deterministically
+red on Rust and green on TS. Oracles/comparators unchanged.
+Control-plane parity: rust/parity/agent_loop_control_parity.py 18/18. cargo test --workspace: all ok.
