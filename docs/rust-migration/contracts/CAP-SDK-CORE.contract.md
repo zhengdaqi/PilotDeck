@@ -33,3 +33,18 @@ order, which is always one of them.
 Still to do: `createSessionStoreFromAdapter` (host adapter), the `importSessionToStore` path through adapter stores,
 client.ts, transport.ts, hook-server.
 - transport.ts: sans-IO `TransportCore` (handleMessage, close mapping, client close, send-when-disconnected, mapError, normalizeGatewayCode, retry delay, AsyncEventQueue). Oracle `gen_transport.mjs` covers 600 random scripts through a mock WebSocket. SRC-DEFECT-015 is fixed. Pending: async IO adapters (native tokio/tungstenite, browser WebSocket via sdk-wasm), connect/hello timers, retry loop.
+
+## Slice 25: transport network layer (native and wasm)
+- Native (`crates/sdk/src/net.rs`, feature `net`, on by default):
+  - A blocking `GatewayTransport` over `TransportCore`, with one tungstenite IO thread per socket.
+  - API: `connect` (open → hello timer → retry backoff with jitter), `request` (timer), `stream` (blocking iterator), `on_notification`/`off_notification`, `close`.
+- wasm (`sdk-wasm`):
+  - `WasmTransportCore` plus `serverInfo`, `helloFrame`, `closeError`, `retryDelayMs` and `mapError` exports.
+  - `npm/transport.js` is the WebSocket host (browser, or the Node 22 global) with the same API, timers and Error shape as TS.
+- Live parity (`rust/parity/sdk/net_transport_parity.mjs`):
+  - Real ws@8 servers drive 27 scenarios: hello variants, 4003/auth_failed/protocol_mismatch, drop before hello, refused port, retries with connection counts, request errors/timeouts, invalid frames, server close mid-stream, stream seq rules, notifications, client close, invalid URLs.
+  - The TS dist, the native Rust probe and the wasm wrapper are identical: 27/27 three ways, stable over 3 runs.
+  - Mutations caught: retry-on-auth, close-error mapping, close code on IO error, notification delivery.
+  - Two mutations survive by design: the default connectTimeout (scenarios always pass it) and the close check in `open()` (unreachable sequentially).
+- Intended difference: a socket that TS drops after a failure is left open (leaked); Rust/wasm closes it.
+- `wss://` still needs TLS (unchanged gap).

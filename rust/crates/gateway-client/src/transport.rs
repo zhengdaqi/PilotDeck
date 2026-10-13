@@ -34,7 +34,7 @@ pub enum StreamItem {
 }
 
 /// WHATWG-ish URL checks performed by Node's `new WebSocket(url)`; returns (host:port, ws-url).
-fn parse_ws_url(url: &str) -> Result<(String, String), String> {
+pub fn parse_ws_url(url: &str) -> Result<(String, String), String> {
     let invalid = || "TypeError: Invalid URL".to_string();
     let Some(colon) = url.find(':') else { return Err(invalid()) };
     let scheme = &url[..colon];

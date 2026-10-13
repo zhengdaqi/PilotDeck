@@ -2,8 +2,8 @@
   "name": "@pilotdeck/sdk-wasm",
   "version": "0.0.0",
   "private": true,
-  "description": "Rust/wasm build of the PilotDeck SDK core (session store slice). Not published.",
+  "description": "Rust/wasm build of the PilotDeck SDK core (session store + gateway transport). Not published.",
   "type": "module",
   "exports": { ".": "./index.js" },
-  "files": ["index.js", "pkg"]
+  "files": ["index.js", "transport.js", "pkg"]
 }
