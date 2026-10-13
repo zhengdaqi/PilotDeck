@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "template_only": false,
+  "scope_id": "pilotdeck-standalone_alpha1-b243fa00/CAP-SDK-CORE",
+  "facts": {
+    "baseline_runnable": true,
+    "oracle_ready": true,
+    "target_integration": "native",
+    "boundary_separable": true,
+    "atomic_cutover_required": false,
+    "bridge_scope_allowed": "unknown",
+    "wasm_host_probe_passed": true,
+    "native_entry_probe_passed": true,
+    "bounded_batch_defined": "unknown",
+    "rule_stress_test_passed": "unknown",
+    "serial_build_budget_measured": "unknown",
+    "rollback_artifact_ready": "unknown",
+    "deterministic_core": true,
+    "replay_corpus_ready": true,
+    "is_compiler": false,
+    "conformance_corpus_ready": "unknown",
+    "shadow_requested": false,
+    "shadow_effects_isolated": "unknown"
+  },
+  "evidence_refs": [
+    {
+      "path": "baseline.json",
+      "sha256": "c24602c1dbb40785298f3ab5d2d52db8eb70d471c550e13b69ba57f885817214"
+    },
+    {
+      "path": "evidence/sdk-session-store.txt",
+      "sha256": "21395c69bf801bd51ac474c307fbe942f25910f2e4e0113f499b60448cc03f4e"
+    },
+    {
+      "path": "contracts/CAP-SDK-CORE.contract.md",
+      "sha256": "99c0d2ef7cdf9a01b2a35cec2e73f7620c5beb11a7837a7ddcce4ec3ce0ffd1b"
+    },
+    {
+      "path": "../../rust/crates/sdk/tests/fixtures/session_store.json",
+      "sha256": "6d31a14e955cd867dfe18f78505a9479c8b4b4e06b0fb2068f3f74216e887f49"
+    }
+  ],
+  "frozen_by": "grokbot-executor (session 2026-10-13, standard profile; not independent of author)"
+}

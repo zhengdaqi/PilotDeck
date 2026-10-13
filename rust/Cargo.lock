@@ -660,6 +660,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "pilotdeck-sdk"
+version = "0.0.0"
+dependencies = [
+ "serde_json",
+]
+
+[[package]]
 name = "pilotdeck-session-search"
 version = "0.1.0"
 dependencies = [

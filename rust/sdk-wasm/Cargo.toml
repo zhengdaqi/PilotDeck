@@ -1,0 +1,21 @@
+# wasm-bindgen build of pilotdeck-sdk for the npm wrapper in npm/ (never published from here).
+[package]
+name = "pilotdeck-sdk-wasm"
+version = "0.0.0"
+edition = "2021"
+rust-version = "1.85"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+wasm-bindgen = "=0.2.129"
+serde_json = { version = "1", features = ["preserve_order"] }
+pilotdeck-sdk = { path = "../crates/sdk" }
+
+[profile.release]
+opt-level = "z"
+lto = true
+
+[workspace]

@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "scope_id": "pilotdeck-standalone_alpha1-b243fa00/CAP-SDK-CORE",
+  "status": "SELECTED",
+  "selected_branches": [
+    "S03",
+    "V01"
+  ],
+  "provisional_branches": [],
+  "reasons": [
+    "S03: target_integration=native",
+    "V01: deterministic observable core"
+  ],
+  "blocking_checks": [],
+  "probe_checks": [],
+  "required_gates": [
+    "G03",
+    "G05",
+    "G06",
+    "G07",
+    "G09",
+    "G11",
+    "G17"
+  ],
+  "exit_checks": [
+    "architecture_dependency_constraints",
+    "complete_case_and_seed_sets",
+    "external_contract_parity",
+    "feedback_window",
+    "formal_entrypoint",
+    "full_observable_trace",
+    "full_scope_native_ownership",
+    "minimized_divergence_regressions",
+    "rng_algorithm_and_consumption",
+    "unsupported_capabilities_reported"
+  ],
+  "evidence_refs": [
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/baseline.json",
+      "sha256": "c24602c1dbb40785298f3ab5d2d52db8eb70d471c550e13b69ba57f885817214"
+    },
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/evidence/sdk-session-store.txt",
+      "sha256": "21395c69bf801bd51ac474c307fbe942f25910f2e4e0113f499b60448cc03f4e"
+    },
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/contracts/CAP-SDK-CORE.contract.md",
+      "sha256": "99c0d2ef7cdf9a01b2a35cec2e73f7620c5beb11a7837a7ddcce4ec3ce0ffd1b"
+    },
+    {
+      "path": "/workspace/PilotDeck/rust/crates/sdk/tests/fixtures/session_store.json",
+      "sha256": "6d31a14e955cd867dfe18f78505a9479c8b4b4e06b0fb2068f3f74216e887f49"
+    }
+  ],
+  "phase_bindings": {
+    "P03": "provisional_decision_and_ADR",
+    "P04": "branch_contract",
+    "P07": "branch_adapters",
+    "P08": "selection_confirmed",
+    "P09": "first_real_slice",
+    "P12": "recalibrate",
+    "P26": "branch_exit_audit"
+  },
+  "meaning": "selection only; not implementation, deployment approval, or product PASS",
+  "facts_sha256": "1aa3f8200adff9e2810b74eec6798e23412e7770abc0f4676bfe239d98145d9d",
+  "catalog_sha256": "1eb0fd94be42b40d4c075d7e80831a88e07e36bcc2d9b8f7c74958e9911cf375",
+  "selector_sha256": "1494d06c53c669aa990c2ba4337185aef9d6e8782fea505856cfde30e2e6d3fe"
+}
