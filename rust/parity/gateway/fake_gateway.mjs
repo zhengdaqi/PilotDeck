@@ -77,5 +77,6 @@ export function createFakeGateway(variant = "full") {
     return { projectKey: input.projectKey, name: "Project " + input.projectKey };
   };
   full.listProjects = async (...args) => { log.push(args.length ? ["listProjects", args[0]] : ["listProjects"]); return { projects: [{ projectKey: "p1" }] }; };
+  Object.defineProperty(full, "__log", { value: log, enumerable: false });
   return full;
 }

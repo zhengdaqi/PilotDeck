@@ -55,6 +55,11 @@ pub trait GatewayBackend: Send + Sync {
     fn call(&self, method: &str, params: Option<JsValue>) -> GwResult;
     /// `submitTurn` async iterator: `on_event` is invoked per event, in order.
     fn submit_turn(&self, params: JsValue, on_event: &mut dyn FnMut(JsValue)) -> Result<(), GwError>;
+    /// A call whose host streams intermediate events before the result (public host transport).
+    fn call_events(&self, method: &str, params: JsValue, on_event: &mut dyn FnMut(JsValue)) -> GwResult {
+        let _ = on_event;
+        self.call(method, Some(params))
+    }
 }
 
 enum Msg {
@@ -163,5 +168,8 @@ impl GatewayBackend for ProcessGateway {
     }
     fn submit_turn(&self, params: JsValue, on_event: &mut dyn FnMut(JsValue)) -> Result<(), GwError> {
         self.request("submitTurn", Some(params), on_event).map(|_| ())
+    }
+    fn call_events(&self, method: &str, params: JsValue, on_event: &mut dyn FnMut(JsValue)) -> GwResult {
+        self.request(method, Some(params), on_event)
     }
 }

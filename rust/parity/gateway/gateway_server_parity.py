@@ -242,6 +242,40 @@ def make_project(base):
     os.mkfifo(os.path.join(root, "fifo"))
     return root
 
+def public_cases(srv):
+    a = {"Authorization": "Bearer " + TOKEN}
+    def ap(op, body, headers=None, raw=False):
+        return get("/api/module-host/approvals/" + op, dict(a, **(headers or {})), "POST", body if raw else json.dumps(body).encode())
+    P = {"pilotDeckUserId": "u1", "tenantId": "t1", "actorUserId": "x1", "agentId": "a1"}
+    def hc(op, body, raw=False): return get("/api/module-host/" + op, a, "POST", body if raw else json.dumps(body).encode())
+    base = {"tenantId": "t1", "agentId": "a1"}
+    seq = [("ap_status", ap("status", dict(base, sessionKey="s1"))), ("ap_status_auth", ap("status", dict(base, sessionKey="s1"), {"X-StaffDeck-Approver-Authorization": "Bearer appr"})),
+      ("ap_resume", ap("resume", dict(base, sessionKey="s2", requestId="r", message="m", slotUpdates={"a": 1}))),
+      ("ap_status_resume_key", ap("status", dict(base, requestId="r"))), ("ap_extra_key", ap("resume", dict(base, tenantIdX=1))),
+      ("ap_tenant_mismatch", ap("status", {"tenantId": "t2", "agentId": "a1"})), ("ap_agent_missing", ap("status", {"tenantId": "t1"})),
+      ("ap_num_tenant", ap("status", {"tenantId": 1, "agentId": "a1"})), ("ap_array", ap("status", [1])), ("ap_null", ap("status", b"null", raw=True)),
+      ("ap_empty", ap("status", b"", raw=True)), ("ap_badjson", ap("status", b"{x", raw=True)), ("ap_string", ap("status", "str")),
+      ("ap_too_large", ap("status", b"{" + b" " * (64 * 1024 + 10) + b"}", raw=True)), ("ap_fail_status", ap("status", dict(base, sessionKey="fail_status"))),
+      ("ap_conflict", ap("resume", dict(base, sessionKey="conflict"))), ("ap_plain", ap("resume", dict(base, sessionKey="plain"))),
+      ("ap_null_status", ap("status", dict(base, sessionKey="nullish"))), ("ap_undef_status", ap("status", dict(base, sessionKey="undef"))),
+      ("ap_undef_resume", ap("resume", dict(base, sessionKey="undef"))), ("ap_get", get("/api/module-host/approvals/status", a)),
+      ("ap_noauth", get("/api/module-host/approvals/status", None, "POST", b"{}")),
+      ("h_too_large", hc("describe", b'{"pad":"' + b"a" * (32 * 1024 * 1024 + 10) + b'"}', True)), ("h_describe", hc("describe", {"principal": P})), ("h_describe_noprincipal", hc("describe", {})), ("h_principal_blank", hc("describe", {"principal": dict(P, tenantId="  ")})),
+      ("h_principal_num", hc("describe", {"principal": dict(P, agentId=5)})), ("h_null", hc("describe", b"null", True)), ("h_badjson", hc("describe", b"{", True)),
+      ("h_empty", hc("describe", b"", True)), ("h_resolve_fail", hc("describe", {"principal": dict(P, agentId="resolve_fail")})),
+      ("h_resolve_plain", hc("call", {"principal": dict(P, agentId="resolve_plain"), "operation": "list_tools", "input": {}})),
+      ("h_call_ok", hc("call", {"principal": P, "operation": "list_tools", "input": {"q": 1}})), ("h_call_nonwire", hc("call", {"principal": P, "operation": "not_wire_op", "input": {}})),
+      ("h_call_unknown", hc("call", {"principal": P, "operation": "create_tool", "input": {}})), ("h_call_noinput", hc("call", {"principal": P, "operation": "list_tools"})),
+      ("h_call_arrinput", hc("call", {"principal": P, "operation": "list_tools", "input": []})), ("h_scope", hc("call", {"principal": P, "operation": "list_tools", "input": {"tenant_id": "x"}})),
+      ("h_scope_cred", hc("call", {"principal": P, "operation": "list_tools", "input": {"credentialId": None}}))]
+    for mode in ["throw", "badstatus", "floatstatus", "badheaders", "raw", "bytes", "text", "jsonstring", "undefbody", "ndjson", "sse", "stream_bad_item",
+                 "stream_sse_obj", "stream_throw", "stream_no_ct", "stream_json_ct"]:
+        seq.append(("h_mode_" + mode, hc("call", {"principal": P, "operation": "model_stream", "input": {"mode": mode}})))
+    out = {name: http(srv, raw) for name, raw in seq}
+    time.sleep(0.3)
+    w = WS(srv); hello(w); out["effects_log"] = [c for c in request(w, "log", "list_sessions", None, has_params=False)[-1]["text"]["result"]["calls"] if str(c[0]).startswith(("approvals.", "host."))]; w.close()
+    return out
+
 def files_cases(srv, root):
     from urllib.parse import quote
     a = {"Authorization": "Bearer " + TOKEN}; k = quote(root, safe="")
@@ -330,10 +364,11 @@ def main():
                     results[name] = {"http": http_cases(srv, with_static, variant == "full"), "ws": ws_cases(srv, variant) if not with_static else {}}
                     if variant == "full" and not with_static:
                         results[name]["files"] = files_cases(srv, make_project(tempfile.mkdtemp(prefix="gw-files-")))
+                        results[name]["public"] = public_cases(srv)
                 except Exception as e:
                     raise RuntimeError("%s server (%s): %s; stderr tail: %s" % (name, variant, e, srv.p.stderr.read()[-1500:] if not srv.alive() else "alive"))
                 finally: srv.stop()
-            for kind in ["http", "ws", "files"]:
+            for kind in ["http", "ws", "files", "public"]:
                 if kind not in results["ts"]: continue
                 for k in results["ts"][kind]:
                     total += 1

@@ -157,6 +157,28 @@ fn read_body(stream: &mut TcpStream, req: &Request) -> Option<Vec<u8>> {
     Some(buf)
 }
 
+fn stream_clone(s: &TcpStream) -> Option<TcpStream> {
+    s.try_clone().ok()
+}
+
+fn read_body_limited(stream: Option<TcpStream>, req: &Request, limit: usize) -> crate::public::BodyRead {
+    let Some(mut stream) = stream else { return crate::public::BodyRead::Failed };
+    match read_body(&mut stream, req) {
+        Some(b) if b.len() > limit => crate::public::BodyRead::TooLarge,
+        Some(b) => crate::public::BodyRead::Ok(b),
+        None => crate::public::BodyRead::Failed,
+    }
+}
+
+pub fn reason(status: u16) -> &'static str {
+    match status {
+        200 => "OK", 201 => "Created", 202 => "Accepted", 204 => "No Content", 400 => "Bad Request", 401 => "Unauthorized",
+        403 => "Forbidden", 404 => "Not Found", 405 => "Method Not Allowed", 409 => "Conflict", 413 => "Payload Too Large",
+        418 => "I'm a Teapot", 451 => "Unavailable For Legal Reasons", 500 => "Internal Server Error", 501 => "Not Implemented",
+        502 => "Bad Gateway", 503 => "Service Unavailable", _ => "",
+    }
+}
+
 fn respond(stream: &mut TcpStream, status: u16, content_type: &str, body: &[u8]) {
     let reason = match status {
         200 => "OK", 400 => "Bad Request", 401 => "Unauthorized", 403 => "Forbidden", 404 => "Not Found",
@@ -185,25 +207,18 @@ fn handle_connection(mut stream: TcpStream, ctx: Arc<Ctx>) {
 fn handle_http(stream: &mut TcpStream, req: &Request, ctx: &Ctx) {
     let pathname = url_pathname(&req.target);
     let auth = req.header("authorization");
-    // handlePublicApprovalHttpRequest (no approval bridge bound)
+    // handlePublicApprovalHttpRequest / handlePublicHostHttpRequest (bound through the Gateway host when it
+    // advertises `__approvals` / `__host`; unbound otherwise).
     if pathname == "/api/module-host/approvals/status" || pathname == "/api/module-host/approvals/resume" {
-        if ctx.token.is_empty() || auth != Some(format!("Bearer {}", ctx.token).as_str()) {
-            return send_json(stream, 401, obj(vec![("code", s("PUBLIC_HOST_TRANSPORT_UNAUTHORIZED"))]));
-        }
-        if req.method != "POST" {
-            return send_json(stream, 405, obj(vec![("code", s("PUBLIC_HOST_METHOD_NOT_ALLOWED"))]));
-        }
-        return send_json(stream, 503, obj(vec![("code", s("APPROVAL_BINDING_UNAVAILABLE"))]));
+        let approver = req.header("x-staffdeck-approver-authorization").map(str::to_string);
+        let clone = stream_clone(stream);
+        let mut read = move |limit: usize| read_body_limited(clone.as_ref().and_then(|c| c.try_clone().ok()), req, limit);
+        return crate::public::handle_approvals(stream, &*ctx.gateway, &ctx.token, &pathname, &req.method, auth, approver.as_deref(), &mut read);
     }
-    // handlePublicHostHttpRequest (no provider resolver bound)
     if pathname == "/api/module-host/describe" || pathname == "/api/module-host/call" {
-        if auth != Some(format!("Bearer {}", ctx.token).as_str()) {
-            return send_json(stream, 401, obj(vec![("code", s("PUBLIC_HOST_TRANSPORT_UNAUTHORIZED"))]));
-        }
-        if req.method != "POST" {
-            return send_json(stream, 405, obj(vec![("code", s("PUBLIC_HOST_METHOD_NOT_ALLOWED"))]));
-        }
-        return send_json(stream, 501, obj(vec![("code", s("PUBLIC_HOST_PORT_UNAVAILABLE"))]));
+        let clone = stream_clone(stream);
+        let mut read = move |limit: usize| read_body_limited(clone.as_ref().and_then(|c| c.try_clone().ok()), req, limit);
+        return crate::public::handle_host(stream, &*ctx.gateway, &ctx.token, &pathname, &req.method, auth, &mut read);
     }
     if pathname == "/health" {
         return respond(stream, 200, "application/json", br#"{"ok":true}"#);
