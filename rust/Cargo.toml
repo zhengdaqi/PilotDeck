@@ -1,7 +1,7 @@
 [workspace]
 resolver = "2"
 members = [
-    "crates/setup","crates/agent-loop-sidecar","crates/session-search", "crates/skills", "crates/gateway-client", "crates/cli", "crates/gateway-server", "crates/tui-core"]
+    "crates/setup","crates/agent-loop-sidecar","crates/session-search", "crates/skills", "crates/gateway-client", "crates/cli", "crates/gateway-server", "crates/tui-core", "crates/tui-app", "crates/tui-term"]
 
 [workspace.package]
 version = "0.1.0"

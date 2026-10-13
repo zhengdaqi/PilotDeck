@@ -35,6 +35,6 @@ Domain limits. These are approximations and are recorded, not claimed as parity:
 - The gateway event fields the reducer reads are taken as strings or booleans, as the TS types declare. Non-string
   values are treated as absent.
 
-PENDING (not dropped). The interactive Ink application is not ported: TuiApp, the components, keyboard handling, the
-pager hand-off, and the remote/in-process gateway probe. `pilotdeck tui` on a TTY is still forwarded to the TS entry.
+PENDING (not dropped). The interactive Ink application is ported as a state machine in CAP-TUI-APP (slice 11). Still
+not ported: the Ink components' visual layout, the pager hand-off, and the remote/in-process gateway probe. `pilotdeck tui` on a TTY is still forwarded to the TS entry.
 The no-TTY path is native (CAP-CLI-MISC).

@@ -1,0 +1,951 @@
+{
+ "fake": {
+  "sessions": [
+   {
+    "sessionId": "s1",
+    "sessionKey": "tui:project=/p/alpha:default",
+    "summary": "alpha main",
+    "cwd": "/p/alpha",
+    "lastModified": 300,
+    "tag": "running"
+   },
+   {
+    "sessionId": "s2",
+    "sessionKey": "tui:s2",
+    "summary": "alpha side",
+    "cwd": "/p/alpha",
+    "lastModified": 200,
+    "tag": "idle"
+   },
+   {
+    "sessionId": "s3",
+    "summary": "beta work",
+    "cwd": "/p/beta",
+    "lastModified": 250,
+    "tag": "done"
+   },
+   {
+    "sessionId": "s4",
+    "sessionKey": "tui:s4",
+    "cwd": "/p/gamma",
+    "lastModified": 100
+   }
+  ],
+  "newSessionKey": "tui:new-1",
+  "messages": {
+   "tui:s2": [
+    {
+     "role": "user",
+     "kind": "text",
+     "text": "hi there"
+    },
+    {
+     "role": "assistant",
+     "kind": "text",
+     "text": "hello"
+    },
+    {
+     "role": "assistant",
+     "kind": "thinking",
+     "text": "pondering"
+    },
+    {
+     "role": "tool",
+     "kind": "tool_result",
+     "toolCallId": "c1",
+     "toolName": "bash",
+     "ok": true,
+     "text": "out"
+    },
+    {
+     "role": "tool",
+     "kind": "tool_result",
+     "toolCallId": "c2",
+     "toolName": "grep",
+     "ok": false
+    },
+    {
+     "role": "error",
+     "kind": "text"
+    },
+    {
+     "role": "user",
+     "kind": "image"
+    }
+   ],
+   "s3": []
+  },
+  "turns": {
+   "tools": [
+    {
+     "type": "turn_started"
+    },
+    {
+     "type": "tool_call_started",
+     "toolCallId": "t1",
+     "name": "bash"
+    },
+    {
+     "type": "tool_call_finished",
+     "toolCallId": "t1",
+     "toolName": "bash",
+     "ok": true,
+     "resultPreview": "l1\nl2\nl3\nl4\nl5\nl6",
+     "resultLineCount": 6
+    },
+    {
+     "type": "tool_call_finished",
+     "toolCallId": "t2",
+     "toolName": "read_file",
+     "ok": true,
+     "resultPreview": "short",
+     "resultLineCount": 1
+    },
+    {
+     "type": "tool_call_finished",
+     "toolCallId": "t3",
+     "toolName": "grep",
+     "ok": false,
+     "resultPreview": "",
+     "resultLineCount": 0
+    },
+    {
+     "type": "tool_result_detail_available",
+     "toolCallId": "t3",
+     "resultPath": "@BIG@"
+    },
+    {
+     "type": "assistant_text_delta",
+     "text": "done with tools"
+    },
+    {
+     "type": "turn_completed"
+    }
+   ],
+   "perm": [
+    {
+     "type": "turn_started"
+    },
+    {
+     "type": "permission_request",
+     "requestId": "r1",
+     "toolName": "bash",
+     "payload": {
+      "command": "git status --short"
+     }
+    },
+    {
+     "type": "permission_request",
+     "requestId": "r2",
+     "toolName": "bash",
+     "payload": {
+      "command": "  ls -la  "
+     }
+    },
+    {
+     "type": "permission_request",
+     "requestId": "r3",
+     "toolName": "write_file",
+     "payload": {
+      "path": "a"
+     }
+    },
+    {
+     "type": "permission_request",
+     "requestId": "r4",
+     "toolName": "bash",
+     "payload": {
+      "command": ""
+     }
+    }
+   ],
+   "plan": [
+    {
+     "type": "turn_started"
+    },
+    {
+     "type": "assistant_thinking_delta",
+     "text": "hmm"
+    },
+    {
+     "type": "plan_mode_changed",
+     "mode": "plan"
+    },
+    {
+     "type": "structured_output",
+     "payload": {
+      "a": [
+       1,
+       2
+      ]
+     }
+    },
+    {
+     "type": "error",
+     "message": "model exploded"
+    }
+   ],
+   "hang": [
+    {
+     "type": "turn_started"
+    },
+    {
+     "type": "assistant_text_delta",
+     "text": "partial"
+    }
+   ]
+  },
+  "throwTurn": "boom",
+  "files": {
+   "@BIG@": 60,
+   "@SMALL@": 3
+  }
+ },
+ "scenarios": [
+  {
+   "name": "typing_edit",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "hello",
+    "\u001b[D",
+    "\u001b[D",
+    "X",
+    "",
+    "\u001b[C",
+    "\u001b[D",
+    "\u001b[D",
+    "\u001b[D",
+    "\u001b[D",
+    "\u001b[D",
+    "\u001b[D",
+    "\u001b[D",
+    "Z",
+    "\u001b[3~",
+    "abc"
+   ]
+  },
+  {
+   "name": "help_panel",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "?",
+    "\t",
+    "\t",
+    "\t",
+    "\u001b[Z",
+    "\u001b[D",
+    "2",
+    "\u001b[B",
+    "\u001b[B",
+    "\u001b[B",
+    "\u001b[A",
+    "\u001b[A",
+    "\r",
+    " ",
+    "\r",
+    "\u001b[C",
+    "1",
+    "\u001b[C",
+    "3",
+    "q",
+    "\u0015",
+    "/help\r",
+    "\u001b",
+    "\u001b"
+   ]
+  },
+  {
+   "name": "settings_mode_cycle",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "?",
+    "2",
+    "\r",
+    "\r",
+    "\r",
+    "\r",
+    "q"
+   ]
+  },
+  {
+   "name": "echo_turn",
+   "props": {
+    "projectKey": "/p/alpha",
+    "sessionKey": "tui:fixed"
+   },
+   "steps": [
+    "say hi\r",
+    "  \r",
+    "again\r"
+   ]
+  },
+  {
+   "name": "tools_focus_view",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "tools\r",
+    "\t",
+    "\t",
+    "\t",
+    "\t",
+    "\u001b[Z",
+    "\u001b[Z",
+    "\u001b[Z",
+    "\r",
+    "\r",
+    "\t",
+    "\r",
+    "\u001b",
+    "\r",
+    "/view 1\r",
+    "/view 2\r",
+    "/view 9\r",
+    "/view\r"
+   ]
+  },
+  {
+   "name": "viewer_keys",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "tools\r",
+    "/view\r",
+    "j",
+    "j",
+    "\u001b[B",
+    "k",
+    "\u001b[6~",
+    "\u001b[6~",
+    "\u001b[5~",
+    "G",
+    "g",
+    "x",
+    "q",
+    "/view 3\r",
+    "\u001b"
+   ]
+  },
+  {
+   "name": "scrolling",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "tools\r",
+    "tools\r",
+    "\u001b[5~",
+    "\u001b[5~",
+    "\u001b[6~",
+    "\u001b[1;2A",
+    "\u001b[1;2B",
+    "\u001b[1;2B",
+    "\u001b[5~",
+    "\u001b"
+   ]
+  },
+  {
+   "name": "permissions_flow",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "perm\r",
+    "x",
+    "y",
+    "a",
+    "a",
+    "\u001b[A",
+    "n",
+    "hello\r"
+   ]
+  },
+  {
+   "name": "permissions_escape",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "perm\r",
+    "\u001b",
+    "abc"
+   ]
+  },
+  {
+   "name": "running_keys",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "hang\r",
+    "more\r",
+    "\u001b",
+    "?",
+    "\u0003"
+   ]
+  },
+  {
+   "name": "plan_error",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "plan\r",
+    "boom\r",
+    "/clear\r",
+    "/nope arg\r",
+    "/view\r"
+   ]
+  },
+  {
+   "name": "commands_misc",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "/new\r",
+    "/mode plan\r",
+    "/mode bypassPermissions\r",
+    "/mode\r",
+    "/mode weird\r",
+    "/permissions\r",
+    "/permissions allow Bash(npm test)\r",
+    "/permissions deny Read\r",
+    "/permissions allow\r",
+    "/permissions clear read_file\r",
+    "/permissions bypass\r",
+    "/permissions zap x\r",
+    "/permissions\r",
+    "/exit\r"
+   ]
+  },
+  {
+   "name": "switch_cmd",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "/switch 2\r",
+    "/switch 3\r",
+    "/switch 4\r",
+    "/switch 1\r",
+    "/switch 99\r",
+    "\u001b"
+   ]
+  },
+  {
+   "name": "sidebar_nav",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "\u0005",
+    "\u001b[B",
+    "\u001b[B",
+    "\u001b[B",
+    "\u001b[B",
+    "\u001b[B",
+    "\u001b[B",
+    "\u001b[B",
+    "\u001b[B",
+    "\u001b[A",
+    "\u001b[D",
+    "\u001b[D",
+    "\u001b[C",
+    "\u001b[C",
+    "\u0013",
+    "\u001b[B",
+    "\r",
+    "\r",
+    "\u0013",
+    "\u0005"
+   ]
+  },
+  {
+   "name": "sidebar_switch",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "\u0005",
+    "\u001b[B",
+    "\u001b[B",
+    "\r",
+    "\u0005",
+    "\u001b[B",
+    "\u001b[C",
+    "\u0005",
+    "q",
+    "\u001b[B",
+    "\u0005",
+    "/sessions\r",
+    "\u0003"
+   ]
+  },
+  {
+   "name": "sidebar_typing",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "\u0005",
+    "ab",
+    "\u001b[B",
+    "\u001b[D",
+    "say\r",
+    "\u001b"
+   ]
+  },
+  {
+   "name": "ctrl_c_exit",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "\u0003",
+    "x"
+   ]
+  },
+  {
+   "name": "initial_bypass",
+   "props": {
+    "projectKey": "/p/beta"
+   },
+   "permissions": {
+    "skipPermissions": 1,
+    "allowedTools": [
+     "Bash(git log)",
+     "Read",
+     "Read",
+     5,
+     " "
+    ],
+    "disallowedTools": "x"
+   },
+   "steps": [
+    "?",
+    "2",
+    "\r",
+    "q",
+    "perm\r",
+    "a",
+    "a",
+    "a",
+    "a"
+   ]
+  },
+  {
+   "name": "no_project",
+   "props": {},
+   "steps": [
+    "hi\r"
+   ]
+  },
+  {
+   "name": "bad_permissions_file",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "permissionsRaw": "{not json",
+   "steps": [
+    "/permissions\r",
+    "/permissions allow x\r"
+   ]
+  },
+  {
+   "name": "paste_newline",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    {
+     "raw": "/help\r"
+    },
+    "\u0015",
+    "\r"
+   ]
+  },
+  {
+   "name": "cursor_negative_insert",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "ab",
+    "\u001b[D",
+    "\u001b[D",
+    "\u001b[D",
+    "X",
+    "",
+    "",
+    "",
+    "\u001b[C",
+    "\u001b[C",
+    "\u001b[C",
+    "\u001b[C",
+    "\u001b[C",
+    "Y",
+    "\u001b[D",
+    "\u001b[D",
+    "\u001b[D",
+    "\u001b[D",
+    "\u001b[D",
+    "\u001b[D",
+    "\u001b[D",
+    "Q"
+   ]
+  },
+  {
+   "name": "random_0",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "perm\r",
+    "3",
+    "/mode plan\r",
+    "\u001b[D",
+    "/view\r",
+    "k",
+    "\u0005",
+    "y",
+    "\u001b[Z",
+    "x y\r",
+    "n",
+    "q",
+    "\t",
+    "/mode plan\r",
+    "/help\r",
+    "k",
+    "\u001b[Z",
+    "G",
+    "3",
+    "tools\r",
+    "/clear\r",
+    " ",
+    "?",
+    "G",
+    "\t",
+    "2",
+    "x y\r",
+    "\u001b[D",
+    "",
+    "\u0005",
+    "\u001b[5~",
+    "/view\r",
+    "x y\r",
+    "/help\r",
+    "/view\r"
+   ]
+  },
+  {
+   "name": "random_1",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "/view\r",
+    "\u0013",
+    "perm\r",
+    "",
+    "\u001b[Z",
+    "\u001b[C",
+    "a",
+    " ",
+    "\u0005",
+    "\u001b[Z",
+    "k",
+    "?",
+    "tools\r",
+    "n",
+    "/view\r",
+    "plan\r",
+    "tools\r",
+    " ",
+    "hang\r",
+    "q",
+    "\u0013",
+    "q",
+    "\u0005",
+    "\r",
+    "\u001b[1;2A",
+    "3",
+    "\t",
+    "?",
+    "/view\r",
+    "n",
+    "\u001b[B",
+    "?",
+    "\r",
+    "\u001b[B",
+    " "
+   ]
+  },
+  {
+   "name": "random_2",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "/switch 2\r",
+    "perm\r",
+    " ",
+    "/help\r",
+    "\u001b[1;2A",
+    "",
+    " ",
+    "j",
+    "plan\r",
+    "plan\r",
+    "a",
+    "tools\r",
+    "3",
+    "x y\r",
+    "perm\r",
+    "n",
+    "plan\r",
+    "x y\r",
+    "",
+    "g",
+    "tools\r",
+    "x y\r",
+    "\u001b[D",
+    "\u001b[B",
+    "/switch 2\r",
+    "/mode plan\r",
+    "\u001b[6~",
+    "perm\r",
+    "/view\r",
+    "\u001b[1;2B",
+    "?",
+    "\u001b[A",
+    "\r",
+    "\t",
+    "\u001b[1;2A"
+   ]
+  },
+  {
+   "name": "random_3",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "\u001b[B",
+    "\u001b[A",
+    "plan\r",
+    "\u001b",
+    "1",
+    "/mode plan\r",
+    "\u001b[6~",
+    "x y\r",
+    "/mode plan\r",
+    "\u001b[A",
+    "3",
+    "\t",
+    "x y\r",
+    "\u001b[D",
+    "3",
+    "\r",
+    "\t",
+    "q",
+    "g",
+    "\u001b[D",
+    "/help\r",
+    "j",
+    "\u001b[A",
+    "tools\r",
+    "\u001b[1;2B",
+    "\u001b[1;2A",
+    "plan\r",
+    "tools\r",
+    "1",
+    "\u001b[Z",
+    "\u001b[6~",
+    "\u001b[6~",
+    "G",
+    "\u001b[D",
+    "\u001b[5~"
+   ]
+  },
+  {
+   "name": "random_4",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "\u0005",
+    "a",
+    "x y\r",
+    "\u001b[5~",
+    "3",
+    "j",
+    "\u001b[1;2B",
+    "hang\r",
+    "\u001b[1;2A",
+    "q",
+    "n",
+    "\u0005",
+    "n",
+    "hang\r",
+    "/help\r",
+    "\r",
+    "\u001b[5~",
+    " ",
+    "/help\r",
+    "?",
+    "\u001b[1;2B",
+    "y",
+    "\u001b[5~",
+    "q",
+    "perm\r",
+    "\u001b[B",
+    "plan\r",
+    "plan\r",
+    "\u001b[Z",
+    "\t",
+    "2",
+    "\u0013",
+    "x y\r",
+    "k",
+    "k"
+   ]
+  },
+  {
+   "name": "random_5",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "/switch 2\r",
+    "\u0005",
+    "",
+    "\u001b[5~",
+    "\u001b",
+    "1",
+    "\u001b[1;2A",
+    "\u001b[Z",
+    "2",
+    "/switch 2\r",
+    "k",
+    "perm\r",
+    "plan\r",
+    "\u001b[A",
+    "q",
+    "\u001b[C",
+    "a",
+    "\u0005",
+    "\u001b[1;2A",
+    "?",
+    "\u001b[Z",
+    "n",
+    "tools\r",
+    "\u001b[C",
+    "1",
+    "hang\r",
+    "/view\r",
+    "/clear\r",
+    "\u001b[C",
+    "n",
+    "n",
+    "n",
+    "?",
+    "plan\r",
+    "k"
+   ]
+  },
+  {
+   "name": "random_6",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "?",
+    "?",
+    "q",
+    "perm\r",
+    "/mode plan\r",
+    "k",
+    "\u001b[C",
+    "perm\r",
+    "\u001b[1;2A",
+    "\u001b[D",
+    "G",
+    "/help\r",
+    "\u001b[5~",
+    "/clear\r",
+    "\u001b[6~",
+    "tools\r",
+    "n",
+    "\u001b[1;2B",
+    "1",
+    "/clear\r",
+    "x y\r",
+    "\u001b[B",
+    "hang\r",
+    "x y\r",
+    "/clear\r",
+    "\u001b[Z",
+    "\u001b[B",
+    "1",
+    "2",
+    "\u001b",
+    "\u001b",
+    "perm\r",
+    "\u001b[D",
+    "g",
+    "?"
+   ]
+  },
+  {
+   "name": "random_7",
+   "props": {
+    "projectKey": "/p/alpha"
+   },
+   "steps": [
+    "\u001b[C",
+    "\u0013",
+    "x y\r",
+    "/clear\r",
+    "\u001b[6~",
+    "3",
+    "\u001b[1;2B",
+    "\u001b[D",
+    "q",
+    "\u001b[1;2A",
+    "\u001b[C",
+    "\t",
+    "tools\r",
+    "1",
+    "x y\r",
+    "",
+    "",
+    "/view\r",
+    "1",
+    "\u001b[D",
+    "\u001b[A",
+    "\u0013",
+    "g",
+    "hang\r",
+    "\u001b[Z",
+    "\u001b[1;2B",
+    "n",
+    "hang\r",
+    "/view\r",
+    "tools\r",
+    "y",
+    "?",
+    "\u001b[D",
+    "a",
+    "?"
+   ]
+  }
+ ]
+}

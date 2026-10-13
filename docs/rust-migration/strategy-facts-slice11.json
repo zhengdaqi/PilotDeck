@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "template_only": false,
+  "scope_id": "pilotdeck-standalone_alpha1-b243fa00/CAP-TUI-APP",
+  "facts": {
+    "baseline_runnable": true,
+    "oracle_ready": true,
+    "target_integration": "native",
+    "boundary_separable": true,
+    "atomic_cutover_required": false,
+    "bridge_scope_allowed": "unknown",
+    "wasm_host_probe_passed": "unknown",
+    "native_entry_probe_passed": true,
+    "bounded_batch_defined": "unknown",
+    "rule_stress_test_passed": "unknown",
+    "serial_build_budget_measured": "unknown",
+    "rollback_artifact_ready": "unknown",
+    "deterministic_core": true,
+    "replay_corpus_ready": true,
+    "is_compiler": false,
+    "conformance_corpus_ready": "unknown",
+    "shadow_requested": false,
+    "shadow_effects_isolated": "unknown"
+  },
+  "evidence_refs": [
+    {
+      "path": "baseline.json",
+      "sha256": "c24602c1dbb40785298f3ab5d2d52db8eb70d471c550e13b69ba57f885817214"
+    },
+    {
+      "path": "evidence/tui-app-oracle.txt",
+      "sha256": "a212377c8f7eab24775496f06022780bd71b06b318e6d2bece1882c76f80899b"
+    },
+    {
+      "path": "contracts/CAP-TUI-APP.contract.md",
+      "sha256": "7cbca85fc355000c814816f1f4abb88e862c442ff606cab7090f6368bbbdb4e6"
+    },
+    {
+      "path": "../../rust/crates/tui-app/tests/fixtures/tui_app.json",
+      "sha256": "e2a07371eeffd5794a9530ed217da32e913a6c206c53ae3635c2f64656003ac1"
+    },
+    {
+      "path": "../../rust/parity/tui/tui_app_spec.json",
+      "sha256": "2d15d668efc946bd0b906ad67bab5aee056d8da28d0daa1ad855abd508e7bc58"
+    }
+  ],
+  "frozen_by": "grokbot-executor (session 2026-10-13, standard profile; not independent of author)"
+}
