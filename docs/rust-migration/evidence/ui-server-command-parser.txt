@@ -1,0 +1,8 @@
+slice 19 commandParser evidence 2026-10-13 14:15:55 CST
+fixture stable
+test replace_arguments_matches_fixed_reference ... ok
+test file_includes_match_ts_except_fixed_defects ... ok
+test path_safe_sanitize_and_validate_match_ts ... ok
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+mutations (realpath check, allowlist, CR keep, whitespace prefix, shell-quote constructor): each fails 2/3 tests
+fixture: replace 1500 (1230 exact, 270 intended SRC-010), pathSafe 48, validate 3000 byte-exact, sanitize 8, includes 27 (19 exact, 8 intended SRC-010/011/012)

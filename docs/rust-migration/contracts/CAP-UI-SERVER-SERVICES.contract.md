@@ -16,3 +16,4 @@ Mutation checks: 6 and 93 mismatches.
 Not yet ported: the rest of ui/server, about 48k LOC, including index.js, pilotdeck-bridge.js, the routes, and the
 other services. Next: commandParser, pilotdeckConfig, modelConfigurationState, spreadsheetPreview, then the HTTP
 routes (the axum host is to be decided in the routes slice).
+- commandParser (replaceArguments, isPathSafe, validateCommand via shell-quote port, sanitizeOutput, processFileIncludes) ported; SRC-DEFECT-010/011/012 fixed (intended, ADR-0004). parseCommand (gray-matter) and processBashCommands pending.

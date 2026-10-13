@@ -52,3 +52,11 @@ with product or behaviour impact are escalated to the user.
 ("Provider \"<id>\" is not configured."). Rust looks up own keys only; `serde_json::Map` has no prototype chain.
 TS returns success or blames the model instead. Evidence: the `model_references_oracle` test checks 167 intended
 cases (TS shows the defect, Rust the fix) and 7878 byte-exact cases.
+
+## SRC-DEFECT-010/011/012 (2026-10-13: fixed under the source-defect policy, intended differences)
+These defects are in `ui/server/utils/commandParser.js`; see `feedback/SRC-DEFECT-01{0,1,2}.md`.
+- 010: argument values and included contents are inserted literally, with no `$&`/`$'`/`` $` ``/`$$` expansion and no second substitution.
+- 011: `@file` includes are refused when the real path leaves the real base, which closes the symlink escape. The error text is TS's traversal error.
+- 012: the whitespace in front of `@file` is kept.
+
+Evidence: the `command_parser_oracle` test. TS must still show each defect, and the Rust port must match the fixed reference.

@@ -8,4 +8,9 @@ description = "Pure service layer of ui/server (Node web backend) ported to Rust
 
 [dependencies]
 serde_json = { workspace = true, features = ["preserve_order"] }
+regex.workspace = true
 pilotdeck-web-ui-core = { path = "../web-ui-core" }
+pilotdeck-session-search = { path = "../session-search" }
+
+[dev-dependencies]
+tempfile = "3"
