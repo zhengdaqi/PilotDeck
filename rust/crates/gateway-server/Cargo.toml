@@ -1,0 +1,19 @@
+[package]
+name = "pilotdeck-gateway-server"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Native port of the PilotDeck Gateway server edge (src/gateway/server/*): HTTP routes, WebSocket transport, GatewayWsConnection protocol"
+
+[dependencies]
+pilotdeck-skills = { path = "../skills" }
+pilotdeck-session-search = { path = "../session-search" }
+pilotdeck-gateway-client = { path = "../gateway-client" }
+sha1 = "0.10"
+base64 = "0.22"
+httparse = "1"
+chrono = { workspace = true }
+
+[[bin]]
+name = "pilotdeck-gateway-server"
+path = "src/main.rs"

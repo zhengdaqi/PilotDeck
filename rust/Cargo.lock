@@ -555,6 +555,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "pilotdeck-gateway-server"
+version = "0.1.0"
+dependencies = [
+ "base64",
+ "chrono",
+ "httparse",
+ "pilotdeck-gateway-client",
+ "pilotdeck-session-search",
+ "pilotdeck-skills",
+ "sha1",
+]
+
+[[package]]
 name = "pilotdeck-session-search"
 version = "0.1.0"
 dependencies = [
