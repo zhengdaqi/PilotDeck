@@ -28,3 +28,15 @@ The Leptos app now has an IME-aware Enter-to-send composer, a time-ago label and
 Chrome DOM checks: Enter sends; Enter during composition does not; "3 hours ago"; " LibreOffice " -> libreoffice.
 Not yet ported: `readExternalFileDropTarget` and `useRejectExternalFileDropOutsideTargets` (DOM; they go with the
 file-tree component), `readOfficePreviewStatus` (fetch; with the api client), and the remaining UI.
+
+## Batch 3 (slice 32)
+Sources: `ui/src/utils/reloadOnChunkError.ts` (isDynamicImportLoadError, reloadOnceForDynamicImportError,
+clearDynamicImportReloadMarker), `frameBatcher.ts`, `uploadFormData.ts` (postFormDataWithProgress callback logic:
+progress math, onload, Authorization, response/token), `desktopUpdates.ts`.
+Targets: `web-ui-core::{chunk_reload, frame_batcher, upload_form_data, desktop_updates}`. Host boundary: sessionStorage +
+location.reload (`ReloadWindow`), requestAnimationFrame (`FrameHost`), the XMLHttpRequest itself.
+Oracle: `rust/parity/web_ui/gen_batch3.mjs`, 3506 checks (fake storage/rAF/XHR logs). Native, Chrome 154 and
+Tauri/WebKitGTK all show 0 mismatches (self-test total 21036). web-ui-core serde_json now enables preserve_order
+explicitly so response bodies keep JS key order in the standalone web-ui build too.
+Not yet ported: registerDynamicImportReloadHandler (window listeners; goes with the app shell), clipboard.ts
+(DOM/Clipboard API), restartUi.ts, api.js, and the React components.
