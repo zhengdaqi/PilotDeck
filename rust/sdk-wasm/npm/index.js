@@ -28,3 +28,5 @@ export async function importSessionToStore(sessionId, store, entries, options) {
     await store.append(key, entries.slice(offset, offset + size));
   }
 }
+
+export { GatewayTransport, AsyncEventQueue, PilotDeckError, mapError } from "./transport.js";

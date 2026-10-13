@@ -339,15 +339,7 @@ impl TransportCore {
         if !self.connected {
             return out;
         }
-        let error_code = if code == 4003 || reason == "auth_failed" {
-            "authentication_error"
-        } else if reason == "protocol_mismatch" {
-            "protocol_version_error"
-        } else {
-            "transport_error"
-        };
-        let message = if reason.is_empty() { "Gateway WebSocket closed." } else { reason };
-        self.fail_pending(SdkError::new(error_code, message, error_code == "transport_error"), &mut out);
+        self.fail_pending(close_error(code, reason), &mut out);
         out
     }
 
@@ -374,6 +366,19 @@ impl TransportCore {
         }
         Value::Object(m)
     }
+}
+
+/// The error a socket `close` event rejects everything with.
+pub fn close_error(code: u16, reason: &str) -> SdkError {
+    let error_code = if code == 4003 || reason == "auth_failed" {
+        "authentication_error"
+    } else if reason == "protocol_mismatch" {
+        "protocol_version_error"
+    } else {
+        "transport_error"
+    };
+    let message = if reason.is_empty() { "Gateway WebSocket closed." } else { reason };
+    SdkError::new(error_code, message, error_code == "transport_error")
 }
 
 pub fn request_frame(id: &str, method: &str, params: &Value) -> String {

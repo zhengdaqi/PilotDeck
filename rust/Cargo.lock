@@ -688,8 +688,11 @@ name = "pilotdeck-sdk"
 version = "0.0.0"
 dependencies = [
  "base64",
+ "getrandom 0.2.17",
  "pilotdeck-agent-loop-sidecar",
+ "pilotdeck-gateway-client",
  "serde_json",
+ "tungstenite",
 ]
 
 [[package]]

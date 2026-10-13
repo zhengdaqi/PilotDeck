@@ -1,0 +1,29 @@
+PASS basic
+PASS errors
+PASS timeout
+PASS streams
+PASS streamkill
+PASS notify
+PASS kill
+PASS kill4003
+PASS killmismatch
+PASS badframe
+PASS close
+PASS hello-silent
+PASS hello-4003
+PASS hello-auth-reason
+PASS hello-mismatch
+PASS hello-drop
+PASS hello-drop-retry
+PASS flaky-then-ok
+PASS auth-no-retry
+PASS refused
+PASS refused-retry
+PASS not-connected
+PASS hello-fields
+PASS url http://127.0.0.1:1/ws
+PASS url ftp://x/
+PASS url ws://h/#frag
+PASS url not a url
+27/27 scenarios identical
+sdk-wasm check.mjs: sdk-wasm npm wrapper: 2440 ops, 0 mismatches

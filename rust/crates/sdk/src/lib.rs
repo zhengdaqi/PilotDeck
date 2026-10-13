@@ -6,3 +6,5 @@ pub mod file_store;
 pub mod js;
 pub mod snapshot;
 pub mod transport_core;
+#[cfg(feature = "net")]
+pub mod net;
