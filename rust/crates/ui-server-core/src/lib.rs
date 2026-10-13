@@ -12,6 +12,7 @@ pub mod settings_files;
 pub mod services;
 pub mod model_probe;
 pub mod network_fetch;
+pub mod web_update_command;
 pub mod connection_test_tasks;
 pub mod terminal_runtime;
 
