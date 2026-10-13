@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "template_only": false,
+  "scope_id": "pilotdeck-standalone_alpha1-b243fa00/CAP-CLI-CRON",
+  "facts": {
+    "baseline_runnable": true,
+    "oracle_ready": true,
+    "target_integration": "native",
+    "boundary_separable": true,
+    "atomic_cutover_required": false,
+    "bridge_scope_allowed": "unknown",
+    "wasm_host_probe_passed": "unknown",
+    "native_entry_probe_passed": true,
+    "bounded_batch_defined": "unknown",
+    "rule_stress_test_passed": "unknown",
+    "serial_build_budget_measured": "unknown",
+    "rollback_artifact_ready": "unknown",
+    "deterministic_core": false,
+    "replay_corpus_ready": "unknown",
+    "is_compiler": false,
+    "conformance_corpus_ready": "unknown",
+    "shadow_requested": false,
+    "shadow_effects_isolated": "unknown"
+  },
+  "evidence_refs": [
+    {
+      "path": "baseline.json",
+      "sha256": "c24602c1dbb40785298f3ab5d2d52db8eb70d471c550e13b69ba57f885817214"
+    },
+    {
+      "path": "evidence/parity-cron.json",
+      "sha256": "10af66122d0f99b643953b70a3ca6064e3bd9bba601bdcf144ee758cab02bd96"
+    },
+    {
+      "path": "ADR-0001-rust-architecture.md",
+      "sha256": "ee0f99372dbaf47a8a8fe268e81ebfe4e4be28a1223a0b7c0e746ffac922ed2e"
+    },
+    {
+      "path": "ADR-0002-user-decisions.md",
+      "sha256": "afcd5d6023e22b8f4f686859427261aa37545cbb2567ff1ac84bdd0c43c305d7"
+    },
+    {
+      "path": "contracts/CAP-CLI-CRON.contract.md",
+      "sha256": "70a9ec6a9c0cd13e36e65d42a951532991faef07e2a700c49aa3f1cb2be7a792"
+    },
+    {
+      "path": "feedback/SRC-DEFECT-001.md",
+      "sha256": "54c8ec9c2900df8e2802d5d22be6561e437ab5b06814c7c2edf187d12a2ba24b"
+    }
+  ],
+  "frozen_by": "grokbot-executor (session 2026-10-13, light profile; not independent of author)"
+}
