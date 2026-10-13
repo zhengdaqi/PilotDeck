@@ -13,3 +13,18 @@ The same Rust runner (`vectors::run_workspace_file_mention`) executes them in th
 - wasm32 in Tauri v2 / WebKitGTK 2.54 under xvfb — 9011/9011
 Negative control: changing one expected value in the fixture makes the test fail (1 mismatch).
 Remaining UI: the rest of ui/src (~150k LOC), React components -> Leptos components, slice by slice.
+
+## Batch 2 (slice 16)
+Sources: `ui/src/utils/officePreviewStatus.ts` (normalize, signature, signatureFromConfig), `ime.ts` (both),
+`externalFileDrop.ts` (isExternalFileDrag, resolveExternalFileDropTargetPath), `dateUtils.ts` (formatTimeAgo).
+Targets: `web-ui-core::{office_preview, ime, external_file_drop, date_utils, js_value}`.
+Host boundary: `formatTimeAgo` gets `Date.parse` and `toLocaleDateString` from the host. In the browser, `js_sys::Date`
+is checked against the value TS recorded for all 400 inputs, in both Chrome and WebKitGTK.
+Oracle: `rust/parity/web_ui/gen_batch2.mjs`, 8119 checks. Native, Chrome and Tauri/WebKitGTK all show 0 mismatches.
+Mutation check: 42 mismatches.
+Generator note: two imports are swapped in temporary copies, because strip-types cannot run them: the i18next
+`TFunction` type, and React `useEffect`, which is only used by the hook that is not under test. No logic is changed.
+The Leptos app now has an IME-aware Enter-to-send composer, a time-ago label and Office service normalization.
+Chrome DOM checks: Enter sends; Enter during composition does not; "3 hours ago"; " LibreOffice " -> libreoffice.
+Not yet ported: `readExternalFileDropTarget` and `useRejectExternalFileDropOutsideTargets` (DOM; they go with the
+file-tree component), `readOfficePreviewStatus` (fetch; with the api client), and the remaining UI.

@@ -42,8 +42,19 @@ results.afterClick1 = await evalJs("JSON.stringify(document.getElementById('comp
 await evalJs("document.getElementById('mention').click()"); await sleep(100);
 results.afterClick2 = await evalJs("JSON.stringify(document.getElementById('composer').value)");
 results.status = await evalJs("document.getElementById('status').innerText");
+const key = (opts) => evalJs(`(()=>{const t=document.getElementById('ime-composer');t.value=${JSON.stringify(opts.value)};t.dispatchEvent(new KeyboardEvent('keydown',${JSON.stringify({ bubbles: true, cancelable: true, ...opts.init })}));})()`);
+await key({ value: "hello", init: { key: "Enter" } });
+await key({ value: "composing", init: { key: "Enter", isComposing: true } });
+await key({ value: "shiftless a", init: { key: "a" } });
+await sleep(100);
+results.sent = await evalJs("[...document.querySelectorAll('#sent li')].map(x=>x.innerText)");
+results.timeAgo = await evalJs("document.getElementById('time-ago').innerText");
+await evalJs(`(()=>{const i=document.getElementById('office-service');i.value=' LibreOffice ';i.dispatchEvent(new Event('input',{bubbles:true}));})()`);
+await sleep(100);
+results.officeNormalized = await evalJs("document.getElementById('office-normalized').innerText");
 console.log(JSON.stringify(results, null, 2));
-const ok = results.selftest?.checked > 0 && results.selftest.mismatches === 0 && results.status === "already present";
+const ok = results.selftest?.checked > 0 && results.selftest.mismatches === 0 && results.status === "already present"
+  && JSON.stringify(results.sent) === JSON.stringify(["hello"]) && results.timeAgo === "3 hours ago" && results.officeNormalized === "libreoffice";
 browser.close(); server.close();
 const exited = new Promise((r) => chrome.once("exit", r));
 chrome.kill();
