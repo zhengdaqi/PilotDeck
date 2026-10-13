@@ -1,0 +1,5 @@
+sdk file-store oracle: 2460 checks (ops + trees), 0 mismatches
+sdk session-store oracle: 2440 ops, 0 mismatches
+sdk-wasm npm wrapper: 2440 ops, 0 mismatches
+mutation checks: no trailing newline -> 60 mismatches (on-disk bytes); reject even when empty -> 82 mismatches
+TS nondeterminism: 289 list ops record __errorOneOf (Promise.all rejects with whichever failing read settles first); Rust deterministically returns the first in sorted readdir order, which is always one of them
