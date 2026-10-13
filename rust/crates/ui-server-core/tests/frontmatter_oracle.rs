@@ -17,13 +17,14 @@ fn fixed(input: &str, ts: &Value, date_str: &Regex, prefix: &str) -> Value {
     f
 }
 
-/// YAML errors are compared by kind only; gray-matter's own errors are compared exactly.
+/// gray-matter's own errors are compared exactly. YAML errors compare js-yaml's reason; the
+/// " at line L, column C:\n<snippet>" mark that js-yaml appends is not reproduced.
 fn same(ts: &Value, got: &Value, err_kind: &mut usize) -> bool {
     match (ts.get("err").and_then(Value::as_str), got.get("err").and_then(Value::as_str)) {
         (Some(t), Some(g)) if t.contains("gray-matter engine") || g.contains("gray-matter engine") => t == g,
         (Some(t), Some(g)) => {
             *err_kind += 1;
-            t.starts_with("Failed to parse command: ") == g.starts_with("Failed to parse command: ")
+            t.split(" at line ").next().unwrap() == g
         }
         _ => ts.to_string() == got.to_string(), // string compare: key order matters
     }
@@ -33,7 +34,7 @@ fn same(ts: &Value, got: &Value, err_kind: &mut usize) -> bool {
 fn frontmatter_and_parse_command_match_ts() {
     let cases: Vec<Value> = serde_json::from_str(include_str!("fixtures/frontmatter.json")).unwrap();
     let date_str = Regex::new(r"[A-Z][a-z]{2} [A-Z][a-z]{2} \d\d \d{4} \d\d:\d\d:\d\d GMT[+-]\d{4} \([^)]*\)").unwrap();
-    let (mut exact, mut err_kind, mut intended, mut known_gap, mut bad) = (0, 0, 0, 0, vec![]);
+    let (mut exact, mut err_kind, mut intended, mut bad) = (0, 0, 0, vec![]);
     for c in &cases {
         let input = c["input"].as_str().unwrap();
         let got = match parse_frontmatter(input) {
@@ -49,12 +50,6 @@ fn frontmatter_and_parse_command_match_ts() {
         if ts != c["out"] {
             intended += 1;
         }
-        // YAML-GAP-001 (pending, see docs/rust-migration/feedback/YAML-GAP-001.md): js-yaml accepts some lenient
-        // single-line explicit-key forms (`? k: v`) that yaml-rust2 rejects. The count is pinned so it cannot grow.
-        if ts.get("ok").is_some() && got.get("err").is_some() && input.lines().any(|l| l.starts_with("? ") && l.contains(": ")) {
-            known_gap += 1;
-            continue;
-        }
         if same(&ts, &got, &mut err_kind) && same(&tsc, &cmd, &mut err_kind) {
             exact += 1;
         } else {
@@ -62,8 +57,7 @@ fn frontmatter_and_parse_command_match_ts() {
             bad.push(format!("{input:?}\n ts {}\n rs {}\n tsc {}\n rsc {}", cut(&ts), cut(&got), cut(&tsc), cut(&cmd)));
         }
     }
-    eprintln!("exact {exact} (yaml error kind only: {err_kind}) intended {intended} known-gap {known_gap} bad {}", bad.len());
+    eprintln!("exact {exact} (yaml error reason only: {err_kind}) intended {intended} bad {}", bad.len());
     assert!(bad.is_empty(), "{} mismatches:\n{}", bad.len(), bad.iter().take(20).cloned().collect::<Vec<_>>().join("\n"));
-    assert_eq!(known_gap, 5);
     assert!(exact > 3900 && intended > 300, "{exact} {intended}");
 }
