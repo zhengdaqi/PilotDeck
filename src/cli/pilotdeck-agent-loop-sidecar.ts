@@ -8,6 +8,22 @@ import {
   type SidecarExecutionFactory,
 } from "../agent/modules/index.js";
 
+// Rust migration (CAP-AGENT-LOOP-SIDECAR): delegate the whole stdio sidecar
+// process to a native implementation when one is configured. Logic-free shim.
+const nativeSidecar = process.env.PILOTDECK_AGENT_LOOP_SIDECAR_EXEC?.trim();
+if (nativeSidecar) {
+  const { spawn } = await import("node:child_process");
+  const child = spawn(nativeSidecar, process.argv.slice(2), { stdio: "inherit" });
+  const code = await new Promise<number>((done) => {
+    child.on("error", (error) => {
+      process.stderr.write(`${error.message}\n`);
+      done(1);
+    });
+    child.on("exit", (status, signal) => done(status ?? (signal ? 1 : 0)));
+  });
+  process.exit(code);
+}
+
 const factoryPath = process.env.PILOTDECK_AGENT_LOOP_FACTORY;
 let factory: SidecarExecutionFactory | undefined;
 if (factoryPath) {
