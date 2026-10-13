@@ -6,4 +6,4 @@ license.workspace = true
 description = "Pure, wasm-compatible view logic for the Leptos Web UI (ports of ui/src utils), shared by native tests and the browser build"
 
 [dependencies]
-serde_json.workspace = true
+serde_json = { workspace = true, features = ["preserve_order"] }

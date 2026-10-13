@@ -1,0 +1,16 @@
+{
+  "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+  "selftest": {
+    "checked": 21036,
+    "mismatches": 0
+  },
+  "detail": "",
+  "afterClick1": "\"src/a.ts \"",
+  "afterClick2": "\"src/a.ts \"",
+  "status": "already present",
+  "sent": [
+    "hello"
+  ],
+  "timeAgo": "3 hours ago",
+  "officeNormalized": "libreoffice"
+}

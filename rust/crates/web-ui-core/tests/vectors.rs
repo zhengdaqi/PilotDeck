@@ -18,3 +18,13 @@ fn batch2_matches_ts() {
     }
     assert!(bad.is_empty());
 }
+
+#[test]
+fn batch3_matches_ts() {
+    let (n, bad) = pilotdeck_web_ui_core::vectors::run_batch3(include_str!("fixtures/batch3.json"));
+    eprintln!("web-ui-core batch3: {n} checks, {} mismatches", bad.len());
+    for b in bad.iter().take(8) {
+        eprintln!("{b}");
+    }
+    assert!(bad.is_empty());
+}

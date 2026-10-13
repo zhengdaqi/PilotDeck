@@ -7,3 +7,7 @@ pub mod external_file_drop;
 pub mod ime;
 pub mod js_value;
 pub mod office_preview;
+pub mod chunk_reload;
+pub mod desktop_updates;
+pub mod frame_batcher;
+pub mod upload_form_data;

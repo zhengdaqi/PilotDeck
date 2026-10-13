@@ -4,6 +4,7 @@ use leptos::prelude::*;
 use pilotdeck_web_ui_core::{date_utils, ime, office_preview, vectors, workspace_file_mention as wfm};
 
 const BATCH2: &str = include_str!("../../../crates/web-ui-core/tests/fixtures/batch2.json");
+const BATCH3: &str = include_str!("../../../crates/web-ui-core/tests/fixtures/batch3.json");
 const FIXTURE: &str = include_str!("../../../crates/web-ui-core/tests/fixtures/workspace_file_mention.json");
 
 #[component]
@@ -20,8 +21,9 @@ fn App() -> impl IntoView {
     // Batch 2 runs with the browser's own Date.parse, which is checked against the value TS recorded.
     let parse = |s: &str| js_sys::Date::parse(s);
     let (n2, bad2) = vectors::run_batch2(BATCH2, Some(&parse));
-    let n = n1 + n2;
-    let bad: Vec<String> = bad1.into_iter().chain(bad2).collect();
+    let (n3, bad3) = vectors::run_batch3(BATCH3);
+    let n = n1 + n2 + n3;
+    let bad: Vec<String> = bad1.into_iter().chain(bad2).chain(bad3).collect();
     let (sent, set_sent) = signal(Vec::<String>::new());
     let (service, set_service) = signal(String::from("builtin"));
     let since = js_sys::Date::now() - 3.0 * 3_600_000.0;
