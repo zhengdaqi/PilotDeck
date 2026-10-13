@@ -1,0 +1,13 @@
+Slice 41 — pilotdeckConfig write-side pure pipeline
+Oracle: env HOME=/tmp/pdhome PILOT_HOME=/tmp/pdhome/.pd node --experimental-transform-types rust/parity/ui_server/gen_pilotdeck_config_write.mjs [--check]
+  1500 cases (seed 4141; 1/3 bootstrap-placeholder configs), 8 functions per case. writePilotDeckConfig really
+  writes to /tmp/pd-write-oracle/c<i>/pilotdeck.yaml; the bytes on disk are compared with the Rust YAML text.
+  Private helpers are exposed through a module load hook (export appended). --check: "fixture stable".
+  Coverage: write ok 204 / Invalid config ~1215 / TypeErrors; finalize changes 192 configs; purge removes drafts in 153.
+Test: cargo test -p pilotdeck-ui-server-core --test pilotdeck_config_write -> ok.
+Mutation: 20/22 killed.
+  Equivalent: (1) dropping the `subagentDefault && !== 'inherit'` guard ('' and 'inherit' contain no '/', so
+  referencesRemovedProvider is already false); (2) not stripping '\r' before measuring indentation (a trailing CR
+  never changes the leading-space count or the trimmed emptiness/'#' check).
+  Initially surviving, killed by added inputs: provider id "" + ref "/m1"; non-empty array rawYaml; parseError "";
+  valueAtPath through router.fallback.default[i].

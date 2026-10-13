@@ -85,7 +85,7 @@ pub fn path_join(parts: &[&str]) -> String {
     if abs { format!("/{s}") } else { s }
 }
 
-fn normalize_string(v: Option<&Value>) -> String {
+pub(crate) fn normalize_string(v: Option<&Value>) -> String {
     match v {
         Some(Value::String(s)) => js_trim(s).to_string(),
         _ => String::new(),
@@ -182,7 +182,7 @@ pub fn normalize_pilotdeck_config(input: Option<&Value>, ctx: &PilotDeckEnv) -> 
     Ok(js_order(n))
 }
 
-fn allows_missing_api_key(id: &str) -> bool {
+pub(crate) fn allows_missing_api_key(id: &str) -> bool {
     id == "ollama"
 }
 
@@ -206,7 +206,7 @@ pub fn sanitize_provider_credentials(config: &mut Value) {
     }
 }
 
-fn split_model_ref(text: &str) -> Option<(&str, &str)> {
+pub(crate) fn split_model_ref(text: &str) -> Option<(&str, &str)> {
     let text = js_trim(text);
     if text.is_empty() {
         return None;

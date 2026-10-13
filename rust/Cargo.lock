@@ -927,6 +927,7 @@ dependencies = [
  "base64",
  "miniz_oxide",
  "pilotdeck-session-search",
+ "pilotdeck-setup",
  "pilotdeck-skills",
  "pilotdeck-web-ui-core",
  "regex",
