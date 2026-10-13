@@ -1,0 +1,9 @@
+slice 21 SDK transport core evidence 2026-10-13 14:26:35 CST
+fixture stable
+test retry_delay_matches_formula ... ok
+test malformed_frames_do_not_crash_src_defect_015 ... ok
+test transport_core_matches_ts ... ok
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.37s
+600 scripts, ~8000 op logs byte-compared (string compare, key order included); 4 intended SRC-015 scripts
+mutations: session_busy code, seq duplicate rule, error message String(), sequence key position -> each fails
+MIGRATION-AUDIT-002: Value equality ignores key order -> oracles switched to string compare; all pass

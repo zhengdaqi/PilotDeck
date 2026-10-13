@@ -32,3 +32,4 @@ The oracle records every error TS could give (`__errorOneOf`, 289 ops); Rust ret
 order, which is always one of them.
 Still to do: `createSessionStoreFromAdapter` (host adapter), the `importSessionToStore` path through adapter stores,
 client.ts, transport.ts, hook-server.
+- transport.ts: sans-IO `TransportCore` (handleMessage, close mapping, client close, send-when-disconnected, mapError, normalizeGatewayCode, retry delay, AsyncEventQueue). Oracle `gen_transport.mjs` covers 600 random scripts through a mock WebSocket. SRC-DEFECT-015 is fixed. Pending: async IO adapters (native tokio/tungstenite, browser WebSocket via sdk-wasm), connect/hello timers, retry loop.

@@ -25,7 +25,7 @@ fn same(ts: &Value, got: &Value, err_kind: &mut usize) -> bool {
             *err_kind += 1;
             t.starts_with("Failed to parse command: ") == g.starts_with("Failed to parse command: ")
         }
-        _ => ts == got,
+        _ => ts.to_string() == got.to_string(), // string compare: key order matters
     }
 }
 
