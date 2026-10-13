@@ -1,0 +1,6 @@
+slice 28 connectionTestTasks evidence 2026-10-13 15:16:05 CST
+fixture stable
+test connection_test_tasks_match_ts ... ok
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+cases: 612 op scripts (12 fixed status-path scenarios + 600 random, mulberry32) on the real module with mocked Date.now/setInterval, deferred run/persist promises, getRecord/applyImage/isCurrent; event logs (prepare/run/persist/getRecord calls, returned public tasks, thrown message/status/code) compared line by line
+mutations: 11/12 killed (10-min expiry boundary, 60-min deletion, busy guard, aborted-run skip, CONFIGURATION_MISMATCH result reset, TEST_EXPIRED save branch, cancel of manual/saveError, key re-set keeps slot, default failure message, success filter, falsy modelId). Survivor (equivalent): skipping removal of an empty per-user map is not observable through the API.
