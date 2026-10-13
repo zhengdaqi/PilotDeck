@@ -26,7 +26,7 @@ fn same(ts: &Value, got: &Value, err_kind: &mut usize) -> bool {
             *err_kind += 1;
             t.split(" at line ").next().unwrap() == g
         }
-        _ => ts.to_string() == got.to_string(), // string compare: key order matters
+        _ => *ts == *got, // string compare: key order matters
     }
 }
 

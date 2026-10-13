@@ -46,7 +46,7 @@ impl TuiGateway for Fake {
     fn submit_turn(&mut self, p: Value, on: &mut dyn FnMut(&Value)) -> Result<(), String> {
         self.log("submitTurn", &p);
         let msg = p["message"].as_str().unwrap_or("").to_string();
-        if self.spec["throwTurn"] == Value::from(msg.clone()) {
+        if self.spec["throwTurn"] == msg.clone() {
             return Err(format!("{msg} failed"));
         }
         let evs = match self.spec["turns"].get(&msg) {
@@ -66,7 +66,7 @@ impl TuiGateway for Fake {
     }
 }
 
-fn read_perms(home: &PathBuf) -> Value {
+fn read_perms(home: &std::path::Path) -> Value {
     match std::fs::read_to_string(home.join("permissions.json")).ok().and_then(|s| serde_json::from_str::<Value>(&s).ok()) {
         Some(mut v) => {
             v.as_object_mut().map(|o| o.remove("lastUpdated"));

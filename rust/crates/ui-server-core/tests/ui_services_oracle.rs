@@ -1,3 +1,4 @@
+#![allow(clippy::cmp_owned)] // compare against the serialized TS log text, not a JSON value.
 //! Oracle test against `rust/parity/ui_server/gen_ui_services.mjs` (uploadLimits, gatewayConnectionCache,
 //! regenerateLastMessage). Logs and values compare as serialized JSON strings.
 use pilotdeck_ui_server_core::services::*;

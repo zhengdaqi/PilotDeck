@@ -8,6 +8,7 @@
 //! The `Gateway` itself (InProcessGateway: sessions, agent loop host, tools...) is NOT ported:
 //! it sits behind [`backend::GatewayBackend`], served today by a host process over JSON lines
 //! (`backend::ProcessGateway`). See docs/rust-migration/contracts/CAP-GATEWAY-SERVER.contract.md.
+#![allow(clippy::too_many_arguments)] // Handlers mirror the TS call signatures one-to-one.
 pub mod backend;
 pub mod conn;
 pub mod files;

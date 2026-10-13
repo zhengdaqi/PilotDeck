@@ -188,24 +188,6 @@ pub fn s(v: impl Into<String>) -> JsValue {
     JsValue::Str(v.into())
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn key_order_and_numbers() {
-        let o = JsObject::new()
-            .with("b", JsValue::Num(1.0))
-            .with("10", JsValue::Num(0.1))
-            .with("2", JsValue::Num(1e21))
-            .with("a", JsValue::Arr(vec![]));
-        assert_eq!(
-            stringify_pretty(&JsValue::Obj(o)),
-            "{\n  \"2\": 1e+21,\n  \"10\": 0.1,\n  \"b\": 1,\n  \"a\": []\n}"
-        );
-    }
-}
-
 fn write_compact(v: &JsValue, out: &mut String) -> bool {
     match v {
         JsValue::Undefined => return false,
@@ -251,4 +233,22 @@ pub fn stringify_compact(v: &JsValue) -> String {
     let mut out = String::new();
     write_compact(v, &mut out);
     out
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn key_order_and_numbers() {
+        let o = JsObject::new()
+            .with("b", JsValue::Num(1.0))
+            .with("10", JsValue::Num(0.1))
+            .with("2", JsValue::Num(1e21))
+            .with("a", JsValue::Arr(vec![]));
+        assert_eq!(
+            stringify_pretty(&JsValue::Obj(o)),
+            "{\n  \"2\": 1e+21,\n  \"10\": 0.1,\n  \"b\": 1,\n  \"a\": []\n}"
+        );
+    }
 }

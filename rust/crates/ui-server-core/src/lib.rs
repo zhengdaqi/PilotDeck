@@ -1,4 +1,5 @@
 //! Pure service layer of `ui/server` (the Node web backend), ported service by service.
+#![allow(clippy::result_large_err, clippy::result_unit_err, clippy::type_complexity, clippy::comparison_chain)] // JsError mirrors thrown JS values; host traits report bare failure like a JS catch; JS-ordered if-chains kept for review against the source.
 pub mod js_object;
 pub mod js_number;
 pub mod frontmatter;

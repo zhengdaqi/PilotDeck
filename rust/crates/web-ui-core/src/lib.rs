@@ -1,4 +1,5 @@
 //! Pure UI logic ported from `ui/src` (ADR-0003: shared by the Leptos UI). No I/O, no wasm-only deps.
+#![allow(clippy::result_unit_err)] // Storage host methods mirror DOM calls that may throw without a payload.
 pub mod js;
 pub mod workspace_file_mention;
 pub mod vectors;

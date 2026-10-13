@@ -151,7 +151,7 @@ impl InMemorySessionStore {
         let now = now.max(self.last_mtime + 1);
         self.last_mtime = now;
         self.mtimes.set(composite.clone(), now);
-        if !key.subpath.as_deref().is_some_and(|s| !s.is_empty()) {
+        if key.subpath.as_deref().is_none_or(|s| s.is_empty()) {
             let previous = self.summaries.get(&composite).cloned();
             let folded = fold_session_summary(previous.as_ref(), key, entries, Some(now));
             self.summaries.set(composite, folded);

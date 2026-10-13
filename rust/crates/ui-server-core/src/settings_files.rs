@@ -151,7 +151,7 @@ pub fn normalize_mcp_config(input: &JsValue) -> Result<JsValue, String> {
         None | Some(JsValue::Undefined) => {
             let mut c = o.clone();
             c.set("mcpServers", JsValue::Obj(JsObject::new()));
-            return Ok(JsValue::Obj(c));
+            Ok(JsValue::Obj(c))
         }
         Some(JsValue::Obj(servers)) => {
             for (name, server) in servers.iter() {

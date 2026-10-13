@@ -5,6 +5,7 @@ use serde_json::{json, Value};
 use std::io::{BufRead, BufReader, Write};
 
 #[test]
+#[allow(clippy::zombie_processes)] // killed and reaped at the end; an assertion panic ends the test process anyway.
 fn funasr_mcp_runs_as_node_subprocess() {
     let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../..").canonicalize().unwrap();
     let module_dir = root.join("dist/src/mcp/runtime");
@@ -48,5 +49,6 @@ fn funasr_mcp_runs_as_node_subprocess() {
     eprintln!("funasr tools via Node subprocess: {names:?}");
     assert!(!names.is_empty());
     let _ = child.kill();
+    let _ = child.wait();
     let _ = std::fs::remove_dir_all(&proj);
 }

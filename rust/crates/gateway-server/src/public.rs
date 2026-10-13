@@ -200,7 +200,7 @@ pub fn handle_host(stream: &mut TcpStream, gw: &dyn GatewayBackend, token: &str,
                 return;
             }
             let ct = match get(head, "contentType") { JsValue::Str(c) => Some(c.clone()), _ => None };
-            let streaming_ct = ct.as_deref().map_or(false, |c| c.starts_with("application/x-ndjson") || c.starts_with("text/event-stream"));
+            let streaming_ct = ct.as_deref().is_some_and(|c| c.starts_with("application/x-ndjson") || c.starts_with("text/event-stream"));
             if get(head, "isStream") == &JsValue::Bool(true) && !streaming_ct {
                 transport_fail(stream, &obj(vec![("status", JsValue::Num(502.0)), ("code", s("PILOTDECK_HOST_RESPONSE_INVALID")),
                     ("message", s("Host stream content-type is required."))]));

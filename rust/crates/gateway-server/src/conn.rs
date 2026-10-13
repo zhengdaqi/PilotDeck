@@ -97,7 +97,7 @@ impl GatewayWsConnection {
                 None
             };
             let in_flight = set_has(&self.st().in_flight, &session_key);
-            let preserve = disconnected.as_ref().map_or(false, |d| truthy(get(d, "preserveTurn")));
+            let preserve = disconnected.as_ref().is_some_and(|d| truthy(get(d, "preserveTurn")));
             if in_flight && !preserve {
                 let _ = self.gateway.call("abortTurn", Some(obj(vec![("sessionKey", session_key.clone())])));
             }

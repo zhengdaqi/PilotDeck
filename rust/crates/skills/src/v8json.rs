@@ -9,7 +9,7 @@ struct P<'a> {
 
 const MAX_CTX: usize = 10;
 
-impl<'a> P<'a> {
+impl P<'_> {
     fn peek(&self) -> Option<u16> {
         self.s.get(self.i).copied()
     }

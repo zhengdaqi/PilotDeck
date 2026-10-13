@@ -70,7 +70,7 @@ fn byte_pair_count(piece: &[u8], ranks: &HashMap<&'static [u8], u32>) -> usize {
         let mut best: Option<(u32, usize)> = None;
         for i in 0..bounds.len() - 2 {
             if let Some(&r) = ranks.get(&piece[bounds[i]..bounds[i + 2]]) {
-                if best.map_or(true, |(b, _)| r < b) {
+                if best.is_none_or(|(b, _)| r < b) {
                     best = Some((r, i));
                 }
             }

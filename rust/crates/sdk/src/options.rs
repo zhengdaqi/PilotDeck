@@ -645,7 +645,7 @@ pub fn validate_options(options: &Js) -> R {
     if !scope.is_undef() && !scope.strict_eq_str("session") && !scope.strict_eq_str("project") {
         return Err(verr("taskBudget.scope must be session or project when provided."));
     }
-    if !retention.is_undef() && !(is_integer(retention) && retention.num().is_some_and(|r| r.abs() <= 9007199254740991.0 && r > 0.0)) {
+    if !(retention.is_undef() || is_integer(retention) && retention.num().is_some_and(|r| r.abs() <= 9007199254740991.0 && r > 0.0)) {
         return Err(verr("taskBudget.projectRetentionMs must be a positive safe integer in milliseconds."));
     }
     if !retention.is_undef() && !scope.strict_eq_str("project") {

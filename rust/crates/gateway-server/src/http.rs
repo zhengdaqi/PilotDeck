@@ -50,7 +50,7 @@ pub fn start_gateway_server(options: ServerOptions, gateway: Arc<dyn GatewayBack
         if !options.allow_remote_host {
             return Err("GatewayServer remote binding requires allowRemoteHost=true.".into());
         }
-        if options.token.as_deref().map_or(true, |t| t.trim().is_empty()) {
+        if options.token.as_deref().is_none_or(|t| t.trim().is_empty()) {
             return Err("GatewayServer remote binding requires an explicit auth token.".into());
         }
     }
@@ -136,7 +136,7 @@ fn read_body(stream: &mut TcpStream, req: &Request) -> Option<Vec<u8>> {
         buf.truncate(len);
         return Some(buf);
     }
-    if req.header("transfer-encoding").map_or(false, |t| t.eq_ignore_ascii_case("chunked")) {
+    if req.header("transfer-encoding").is_some_and(|t| t.eq_ignore_ascii_case("chunked")) {
         let mut out = Vec::new();
         loop {
             if let Some(i) = buf.windows(2).position(|w| w == b"\r\n") {
@@ -197,7 +197,7 @@ fn send_json(stream: &mut TcpStream, status: u16, body: JsValue) {
 fn handle_connection(mut stream: TcpStream, ctx: Arc<Ctx>) {
     let Some(req) = read_request(&mut stream) else { return };
     let is_upgrade = req.header("upgrade").is_some()
-        && req.header("connection").map_or(false, |c| c.split(',').any(|t| t.trim().eq_ignore_ascii_case("upgrade")));
+        && req.header("connection").is_some_and(|c| c.split(',').any(|t| t.trim().eq_ignore_ascii_case("upgrade")));
     if is_upgrade {
         return handle_upgrade(stream, req, ctx);
     }
@@ -249,7 +249,7 @@ fn web_authorized(header: Option<&str>, token: &str) -> bool {
     let rest = &h[6..];
     let is_ws = |c: char| c.is_whitespace() && c != '\u{85}' || c == '\u{feff}';
     let is_lt = |c: char| matches!(c, '\n' | '\r' | '\u{2028}' | '\u{2029}');
-    if !rest.chars().next().map_or(false, is_ws) || rest.chars().any(is_lt) {
+    if !rest.chars().next().is_some_and(is_ws) || rest.chars().any(is_lt) {
         return false;
     }
     let trimmed = rest.trim_start_matches(is_ws);
