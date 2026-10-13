@@ -6,6 +6,7 @@
 //! docs/rust-migration/coverage.csv); without it they fail closed.
 
 mod chat_search;
+mod skills;
 
 use std::process::{Command, ExitCode};
 
@@ -13,6 +14,7 @@ fn main() -> ExitCode {
     let argv: Vec<String> = std::env::args().skip(1).collect();
     match argv.first().map(String::as_str) {
         Some("chat") => chat_search::run_chat_search_cli(&argv[1..]),
+        Some("skills") => skills::run_skills_cli(&argv[1..]),
         _ => forward_to_typescript(&argv),
     }
 }

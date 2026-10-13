@@ -130,6 +130,25 @@ def normalize_stderr(err):
     (emitted by the node host, not by PilotDeck code)."""
     return NODE_RUNTIME_WARNING.sub(b"", err)
 
+ORACLE_BROKEN = re.compile(rb"ERR_MODULE_NOT_FOUND|Cannot find module|no such file or directory, open '[^']*/(?:dist|node_modules)/")
+
+def oracle_broken(result):
+    """FB-001: the TS oracle itself failed to load (e.g. a concurrent
+    `pnpm --dir packages/sdk build` from tests/sdk/package-install.spec.ts
+    transiently removed packages/sdk/dist). Such runs are not comparisons."""
+    return result["code"] != 0 and bool(ORACLE_BROKEN.search(result["stderr"]))
+
+def run_oracle(cmd, case, fx, attempts=3):
+    import time
+    for i in range(attempts):
+        r = run(cmd, case, fx)
+        if not oracle_broken(r):
+            r["oracle_retries"] = i
+            return r
+        time.sleep(2)
+    r["oracle_unavailable"] = True
+    return r
+
 def run(cmd, case, fx):
     env = {"PATH": os.environ.get("PATH", ""), "HOME": fx["base"], "TZ": "Asia/Shanghai", "LANG": "C.UTF-8", "NO_COLOR": "1"}
     env.update(case["env"])
@@ -150,7 +169,12 @@ def main():
         results, failed = [], 0
         ts_cmd, rs_cmd = [a.node, os.path.abspath(a.ts_cli)], [os.path.abspath(a.rust_bin)]
         for case in cs:
-            t, r = run(ts_cmd, case, fx), run(rs_cmd, case, fx)
+            t, r = run_oracle(ts_cmd, case, fx), run(rs_cmd, case, fx)
+            if t.get("oracle_unavailable"):
+                failed += 1
+                results.append({"id": case["id"], "ok": False, "oracle_unavailable": True})
+                print(f"BLOCKED {case['id']}: TS oracle failed to load (FB-001 interference)")
+                continue
             ok = t["code"] == r["code"] and t["stdout"] == r["stdout"]
             if case["stderr"] == "exact":
                 ok = ok and t["stderr"] == r["stderr"]
@@ -158,7 +182,8 @@ def main():
                 ok = ok and bool(t["stderr"]) == bool(r["stderr"])
             failed += not ok
             results.append({"id": case["id"], "ok": ok, "exit": t["code"],
-                            "stdout_sha256": hashlib.sha256(t["stdout"]).hexdigest(), "stdout_bytes": len(t["stdout"])})
+                            "stdout_sha256": hashlib.sha256(t["stdout"]).hexdigest(), "stdout_bytes": len(t["stdout"]),
+                            "oracle_retries": t.get("oracle_retries", 0)})
             if not ok:
                 print(f"FAIL {case['id']}\n  ts  code={t['code']} out={t['stdout'][:600]!r} err={t['stderr'][:300]!r}\n  rs  code={r['code']} out={r['stdout'][:600]!r} err={r['stderr'][:300]!r}")
         # Negative controls: the comparator must detect drift.
@@ -167,7 +192,7 @@ def main():
         t = run(ts_cmd, probe, fx)
         nc.append({"id": "nc-stdout-mutated", "detected": t["stdout"] != t["stdout"] + b" "})
         nc.append({"id": "nc-wrong-binary", "detected": run(["/bin/echo"], probe, fx)["stdout"] != t["stdout"]})
-        nc.append({"id": "nc-nonempty-oracle", "detected": all(x["stdout_bytes"] > 0 or x["exit"] != 0 for x in results)})
+        nc.append({"id": "nc-nonempty-oracle", "detected": all(x.get("stdout_bytes", 0) > 0 or x.get("exit", 1) != 0 for x in results)})
         nc_ok = all(x["detected"] for x in nc)
         summary = {"cases_planned": len(cs), "cases_executed": len(results), "passed": len(results) - failed,
                    "failed": failed, "skipped": 0, "negative_controls": nc, "results": results}

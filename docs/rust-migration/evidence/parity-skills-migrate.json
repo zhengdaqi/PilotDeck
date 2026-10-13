@@ -1,0 +1,247 @@
+{
+  "cases_planned": 28,
+  "cases_executed": 28,
+  "passed": 28,
+  "failed": 0,
+  "skipped": 0,
+  "negative_controls": [
+    {
+      "id": "nc-stdout-mutated",
+      "detected": true
+    },
+    {
+      "id": "nc-tree-mutated",
+      "detected": true
+    },
+    {
+      "id": "nc-wrong-binary",
+      "detected": true
+    }
+  ],
+  "results": [
+    {
+      "id": "dry-default-text",
+      "ok": true,
+      "exit": 1,
+      "stdout_bytes": 2940,
+      "stdout_sha256": "49e8faf966462c31dfe173f8802917c7ba24ceb506fdac434d18bb4911eb1f9b",
+      "tree_entries": 58
+    },
+    {
+      "id": "dry-from-cc-text",
+      "ok": true,
+      "exit": 1,
+      "stdout_bytes": 2590,
+      "stdout_sha256": "36e1662f7e981fb334491c3d86c8247e2c3f6ad26a36ac68b52c91926b6c2f1a",
+      "tree_entries": 58
+    },
+    {
+      "id": "dry-from-openclaw-hermes-text",
+      "ok": true,
+      "exit": 1,
+      "stdout_bytes": 2940,
+      "stdout_sha256": "dd6f1cabba8ad8a8e4bd2406b9d04a204c2901f3d4331cbedfcd3152df461620",
+      "tree_entries": 58
+    },
+    {
+      "id": "dry-rename-text",
+      "ok": true,
+      "exit": 1,
+      "stdout_bytes": 2619,
+      "stdout_sha256": "50c3ca5cd61f192cd8e145aa772b896e87763ef75b302c321b1fa28069ba6088",
+      "tree_entries": 58
+    },
+    {
+      "id": "dry-overwrite-text",
+      "ok": true,
+      "exit": 1,
+      "stdout_bytes": 2574,
+      "stdout_sha256": "3b944161f0945c8b2c1ecdca920aad6f6a4a93eecc24f6feb2ce4d614018139a",
+      "tree_entries": 58
+    },
+    {
+      "id": "dry-custom-text",
+      "ok": true,
+      "exit": 0,
+      "stdout_bytes": 3398,
+      "stdout_sha256": "dee76e8a91169429f196b67e67a03fe249a50160c9ab3be069dbc3b81c28a5dc",
+      "tree_entries": 58
+    },
+    {
+      "id": "exec-skip-text",
+      "ok": true,
+      "exit": 1,
+      "stdout_bytes": 2874,
+      "stdout_sha256": "39f6dd1180d9ef5c25448b7e11f392d784fac2c6d93a2cbe85d84f7e1f425583",
+      "tree_entries": 79
+    },
+    {
+      "id": "exec-rename-text",
+      "ok": true,
+      "exit": 1,
+      "stdout_bytes": 2875,
+      "stdout_sha256": "4e1b74083f30d5327e58058c114d61693037cc0f279f2966bac64f4e4e2950a0",
+      "tree_entries": 83
+    },
+    {
+      "id": "exec-overwrite-text",
+      "ok": true,
+      "exit": 1,
+      "stdout_bytes": 2492,
+      "stdout_sha256": "649eb83266eca4301a1ebec2864fe9b3fc05c9a9e0cbb5fce41114bc11fd8556",
+      "tree_entries": 76
+    },
+    {
+      "id": "exec-self-import-text",
+      "ok": true,
+      "exit": 1,
+      "stdout_bytes": 648,
+      "stdout_sha256": "21b2b08e084bc97316d2d92720df8f68b21c1c6d23dd0ac00cde5d4032e9c29b",
+      "tree_entries": 58
+    },
+    {
+      "id": "hermes-not-dir-text",
+      "ok": true,
+      "exit": 1,
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tree_entries": 58
+    },
+    {
+      "id": "dry-default-json",
+      "ok": true,
+      "exit": 0,
+      "stdout_bytes": 16419,
+      "stdout_sha256": "4e86032b4ae5eb657852e5aea6d5a6355e61fa6175e9d42cd7741266f00f7e33",
+      "tree_entries": 58
+    },
+    {
+      "id": "dry-from-cc-json",
+      "ok": true,
+      "exit": 0,
+      "stdout_bytes": 10732,
+      "stdout_sha256": "44fdabf87abc132ae44983b32dce092813acfeffa7c481382bec500875cbb44a",
+      "tree_entries": 58
+    },
+    {
+      "id": "dry-from-openclaw-hermes-json",
+      "ok": true,
+      "exit": 0,
+      "stdout_bytes": 16419,
+      "stdout_sha256": "2f1e239b03f22a225b16b1f69ca8c9ddd859b7793fff1020cdcf9f1c67b18a52",
+      "tree_entries": 58
+    },
+    {
+      "id": "dry-rename-json",
+      "ok": true,
+      "exit": 0,
+      "stdout_bytes": 11168,
+      "stdout_sha256": "3f1394b02a1b9930953e3914dd5bb5be94b78ed24e499db13b0c97602c82fa66",
+      "tree_entries": 58
+    },
+    {
+      "id": "dry-overwrite-json",
+      "ok": true,
+      "exit": 0,
+      "stdout_bytes": 11123,
+      "stdout_sha256": "301f0fd4d621afe53c24ce4b36f4674d87aa6faaa103401a78060e54d0e884d0",
+      "tree_entries": 58
+    },
+    {
+      "id": "dry-custom-json",
+      "ok": true,
+      "exit": 0,
+      "stdout_bytes": 3398,
+      "stdout_sha256": "dee76e8a91169429f196b67e67a03fe249a50160c9ab3be069dbc3b81c28a5dc",
+      "tree_entries": 58
+    },
+    {
+      "id": "exec-skip-json",
+      "ok": true,
+      "exit": 0,
+      "stdout_bytes": 13858,
+      "stdout_sha256": "0ae8e0656fc56080e9e7952062f087b61e51e7ea1f6476ee06853c566fa0cfda",
+      "tree_entries": 79
+    },
+    {
+      "id": "exec-rename-json",
+      "ok": true,
+      "exit": 0,
+      "stdout_bytes": 14501,
+      "stdout_sha256": "c074fe3d7fe65141a1a16698ffadae44e9fd8d0b26efb07e1ee8dae1bf52ce61",
+      "tree_entries": 83
+    },
+    {
+      "id": "exec-overwrite-json",
+      "ok": true,
+      "exit": 0,
+      "stdout_bytes": 8963,
+      "stdout_sha256": "54a1ce38e90b586be7a1b6a31f4b7b0f027416392e417cac18a8623d82dbc2da",
+      "tree_entries": 76
+    },
+    {
+      "id": "exec-self-import-json",
+      "ok": true,
+      "exit": 0,
+      "stdout_bytes": 2527,
+      "stdout_sha256": "cd434204ef471ac09635a661e6515bb0b15027db5e76b7d8ea87a72617980a89",
+      "tree_entries": 58
+    },
+    {
+      "id": "hermes-not-dir-json",
+      "ok": true,
+      "exit": 1,
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tree_entries": 58
+    },
+    {
+      "id": "pilot-home-flag",
+      "ok": true,
+      "exit": 0,
+      "stdout_bytes": 8939,
+      "stdout_sha256": "020fecab786247faa6888681fa15f09bcf4ce9280727d7a6a71e0f950dfeddd4",
+      "tree_entries": 80
+    },
+    {
+      "id": "project-flag",
+      "ok": true,
+      "exit": 1,
+      "stdout_bytes": 2408,
+      "stdout_sha256": "31162de06fd62934495d393498cec7894451cddaab23ad2c63626bb2179eeed0",
+      "tree_entries": 58
+    },
+    {
+      "id": "unknown-source",
+      "ok": true,
+      "exit": 1,
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tree_entries": 58
+    },
+    {
+      "id": "empty-from",
+      "ok": true,
+      "exit": 0,
+      "stdout_bytes": 16419,
+      "stdout_sha256": "4e86032b4ae5eb657852e5aea6d5a6355e61fa6175e9d42cd7741266f00f7e33",
+      "tree_entries": 58
+    },
+    {
+      "id": "wrong-subcommand",
+      "ok": true,
+      "exit": 1,
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tree_entries": 58
+    },
+    {
+      "id": "no-subcommand",
+      "ok": true,
+      "exit": 1,
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tree_entries": 58
+    }
+  ]
+}

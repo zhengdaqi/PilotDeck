@@ -50,7 +50,7 @@ Baseline: `standalone_alpha1` @ `b243fa00`. Line counts in `inventory-loc.json`.
 - `js-tiktoken`, `turndown`, `parse5`, `jsonrepair`, `ajv` semantics need Rust equivalents verified.
 - ICU-dependent formatting (`toLocaleString`) — output depends on the Node ICU version (see slice-1 contract).
 
-## Unknowns (need user/business decision before those slices)
+## Unknowns — RESOLVED by ADR-0002 (2026-10-13); kept for history
 1. `js_runtime` final axis for the web UI and desktop (Rust Wasm UI vs keep React as a declared browser host).
 2. Whether the public `@pilotdeck/sdk` npm API must remain a JS package (Node-API/Wasm binding) or may become a Rust crate + CLI.
 3. JS plugin compatibility (keep a declared JS host vs a versioned new plugin protocol).
