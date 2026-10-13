@@ -12,6 +12,7 @@ pub mod backend;
 pub mod conn;
 pub mod files;
 pub mod public;
+pub mod safe_write;
 pub mod http;
 pub mod token;
 pub mod ws;

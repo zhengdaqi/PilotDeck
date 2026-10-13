@@ -642,6 +642,7 @@ dependencies = [
  "base64",
  "chrono",
  "httparse",
+ "libc",
  "pilotdeck-agent-loop-sidecar",
  "pilotdeck-gateway-client",
  "pilotdeck-session-search",

@@ -1,6 +1,8 @@
 //! Port of `ui/server/services/modelReferences.js`: find, plan removal of, and rename model references in a
 //! PilotDeck config. Values are JSON; JS object key order (index keys first) is reproduced with `js_order`.
 //! Errors are V8 TypeError messages (strict-mode ES module semantics).
+//! Intended difference (SRC-DEFECT-009, ADR-0004): provider lookup uses own keys only, so a provider id that is not
+//! configured (including `__proto__`) gives NOT_FOUND. TS falls through to `Object.prototype` and reports success.
 use crate::js_object::{create_property_error, field, is_record, js_order, truthy};
 use pilotdeck_web_ui_core::js::trim;
 use serde_json::{json, Map, Value};
@@ -196,15 +198,12 @@ fn remaining_model_refs(config: &Value, provider_id: &str, model_id: &str) -> Ve
 enum Provider<'a> {
     Missing,
     Value(&'a Value),
-    /// `providers["__proto__"]` without an own key: `Object.prototype`, a record with no `models`.
-    ObjectPrototype,
 }
 
 fn lookup_provider<'a>(config: &'a Value, id: &str) -> Provider<'a> {
     match field(field(Some(config), "model"), "providers") {
         Some(Value::Object(m)) => match m.get(id) {
             Some(v) => Provider::Value(v),
-            None if id == "__proto__" => Provider::ObjectPrototype,
             None => Provider::Missing,
         },
         Some(Value::Array(a)) => match crate::js_object::array_index(id) {
@@ -247,7 +246,6 @@ pub fn plan_model_removal(config: &Value, provider_id: &str, model_id: &str, rep
     let provider = lookup_provider(&config, &pid);
     let provider_models = match &provider {
         Provider::Value(v @ Value::Object(_)) => field(Some(v), "models"),
-        Provider::ObjectPrototype => None,
         _ => return blocked(plan, "NOT_FOUND", format!("Provider \"{pid}\" is not configured.")),
     };
     if pid.is_empty() {

@@ -196,33 +196,20 @@ impl ProjectFileService {
 
     /// Intended difference from TS (SRC-DEFECT-007, ADR-0004): writes that resolve outside the root through a
     /// symlink are refused with `workspace_boundary` (TS only checks the path text and follows the link).
-    /// Checked before mkdir (so no directories get created outside the root) and again just before the write.
+    /// The path check runs first. The write itself goes through `safe_write` (openat/O_NOFOLLOW from a root fd), so a
+    /// symlink swapped in after the check cannot be followed and no directories are created outside the root.
     pub fn write_file(&self, rel: &str, content: &str, base64_enc: bool) -> R<()> {
         let target = self.lexical(rel)?;
         self.check_write_real(rel, &target)?;
-        let dir = paths::resolve(&[&target, ".."]);
-        mkdir_p(&dir)?;
-        self.check_write_real(rel, &target)?;
         let data = if base64_enc { node_base64_decode(content) } else { content.as_bytes().to_vec() };
-        fs::write(&target, data).map_err(|e| node_fs_error(&e, "open", &target))
-    }
-}
-
-/// `fs.mkdir(dir, {recursive:true})` error shape: reports the first failing path.
-fn mkdir_p(dir: &str) -> R<()> {
-    match fs::metadata(dir) {
-        Ok(m) if m.is_dir() => return Ok(()),
-        Ok(_) => return Err(FileErr::Other(format!("EEXIST: file already exists, mkdir '{dir}'"))),
-        Err(_) => {}
-    }
-    let parent = paths::resolve(&[dir, ".."]);
-    if parent != dir {
-        mkdir_p(&parent)?;
-    }
-    match fs::create_dir(dir) {
-        Ok(()) => Ok(()),
-        Err(e) if e.kind() == io::ErrorKind::AlreadyExists && fs::metadata(dir).map_or(false, |m| m.is_dir()) => Ok(()),
-        Err(e) => Err(node_fs_error(&e, "mkdir", dir)),
+        // The fd walk is the real guard (no check-then-use race); the path check above only keeps error order.
+        let rel_norm = relative(&self.root, &target);
+        let comps: Vec<String> = rel_norm.split('/').filter(|c| !c.is_empty()).map(str::to_string).collect();
+        match crate::safe_write::write_in_root(&self.root, &comps, &data) {
+            Ok(()) => Ok(()),
+            Err(crate::safe_write::WriteErr::Boundary) => Err(FileErr::Boundary(rel.into())),
+            Err(crate::safe_write::WriteErr::Io(e, syscall, path)) => Err(node_fs_error(&e, syscall, &path)),
+        }
     }
 }
 

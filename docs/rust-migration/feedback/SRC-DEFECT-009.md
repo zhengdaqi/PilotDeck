@@ -10,5 +10,6 @@
   Expected: `NOT_FOUND`. Other `Object.prototype` names (`constructor`, `toString`, ...) are functions, so they get
   `NOT_FOUND` correctly.
 - Reproduced by the hand-written cases in `rust/parity/ui_server/gen_model_references.mjs`.
-- Rust treatment: **behaviour-compatible** (the `Provider::ObjectPrototype` branch). **Pending user decision**: change to `NOT_FOUND`.
+- ~~Rust treatment: behaviour-compatible, pending user decision.~~
+- FINAL (ADR-0004, 2026-10-13 14:08): fixed. Rust returns `NOT_FOUND` for any provider that is not configured (own-key lookup).
 - Low impact: the route that calls this needs an authenticated settings user, and nothing is written.
