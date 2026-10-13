@@ -1,0 +1,7 @@
+sdk session-store oracle: 2440 ops, 0 mismatches
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+web-ui-core workspaceFileMention: 9011 vectors, 0 mismatches
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+sdk-wasm npm wrapper: 2440 ops, 0 mismatches
+wasm_bytes=156647
+negative control: one mtime changed in the fixture -> native 1 mismatch, wasm 1 mismatch

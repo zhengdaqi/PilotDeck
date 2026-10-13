@@ -9,7 +9,8 @@ const root = path.resolve(here, "../../..");
 const m = await import(path.join(root, "ui/src/utils/workspaceFileMention.ts"));
 
 let seed = 7;
-const rnd = (n) => { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed % n; };
+// mulberry32 (a plain LCG's low bits cycle and starve some branches)
+const rnd = (n) => { seed = (seed + 0x6d2b79f5) | 0; let t = seed; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) % n; };
 const pick = (a) => a[rnd(a.length)];
 // BMP only: TS slices by UTF-16 index and could split astral pairs, which JSON/Rust strings cannot hold.
 const atoms = ["src", "a", "B", "..", ".", "", "/", "\\", "//", "C:", "c:", "D:/", "/C:/", "x y", "é", "İ", "ß", "文件", " ", "\t", "\u00a0", "\u3000", "\n", "file.ts", "Ä"];

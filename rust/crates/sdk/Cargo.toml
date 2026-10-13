@@ -1,0 +1,10 @@
+[package]
+name = "pilotdeck-sdk"
+version = "0.0.0"
+edition = "2021"
+rust-version = "1.85"
+publish = false
+description = "Transport-agnostic core of the PilotDeck SDK (port of packages/sdk)."
+
+[dependencies]
+serde_json = { workspace = true, features = ["preserve_order"] }
