@@ -1,0 +1,8 @@
+slice 27 uploadLimits/gatewayConnectionCache/regenerateLastMessageTransaction evidence 2026-10-13 15:12:26 CST
+fixture stable
+test upload_limits_match_ts ... ok
+test gateway_connection_cache_matches_ts ... ok
+test regenerate_last_message_matches_ts ... ok
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+cases: 300 readUploadLimits env combos; 404 cache scripts (4 fixed backoff/reset/cap + 400 random, mulberry32) with deferred connect promises, timer and onDisconnect, event logs compared; 400 regenerate transactions (throw kinds, buffering, rollback, finalize failure), JSON results + writer frames compared
+mutations (9/9 killed): max-delay cap, backoff reset on success, stale-attempt guard, onInvalidated, 500 cap, positive check, rollback gate, buffer release, command fallback
