@@ -47,7 +47,7 @@ fn path_safe_sanitize_and_validate_match_ts() {
             Ok(v) => json!({ "ok": v }),
             Err(e) => json!({ "err": e }),
         };
-        assert_eq!(got, c["out"], "{}", c["s"]);
+        assert_eq!(got.to_string(), c["out"].to_string(), "{}", c["s"]); // string compare: key order matters
         n += 1;
     }
     assert_eq!(n, 3000);
