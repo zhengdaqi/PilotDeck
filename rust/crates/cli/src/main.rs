@@ -15,6 +15,9 @@ use std::process::{Command, ExitCode};
 
 fn main() -> ExitCode {
     let argv: Vec<String> = std::env::args().skip(1).collect();
+    if !is_forwarded(&argv) {
+        announce_env_proxy();
+    }
     match argv.first().map(String::as_str) {
         Some("chat") => chat_search::run_chat_search_cli(&argv[1..]),
         Some("cron") => cron::run_cron_cli(&argv[1..]),
@@ -25,7 +28,17 @@ fn main() -> ExitCode {
         Some(c @ ("run" | "resume")) => sdk_cli::run_turn_cli(c, &argv[1..]),
         Some(c @ ("sessions" | "settings")) => sdk_cli::run(c, &argv[1..]),
         Some("update") => update::run_update_cli(&argv[1..]),
-        Some("gateway") if argv.get(1).map(String::as_str) != Some("setup") => {
+        Some("gateway") if argv.get(1).map(String::as_str) == Some("setup") => {
+            let mut ctx = pilotdeck_setup::gateway_setup::Ctx::from_env();
+            match pilotdeck_setup::gateway_setup::run_gateway_setup(&mut ctx, &argv[2..]) {
+                Ok(()) | Err(pilotdeck_setup::gateway_setup::Stop::Eof) => ExitCode::SUCCESS,
+                Err(pilotdeck_setup::gateway_setup::Stop::Error(m)) => {
+                    eprintln!("{m}");
+                    ExitCode::from(1)
+                }
+            }
+        }
+        Some("gateway") => {
             eprintln!("Usage: pilotdeck gateway setup [feishu|weixin|wecom]");
             ExitCode::from(1)
         }
@@ -75,3 +88,30 @@ Options:
   --permission-mode <mode>  Session permission mode
   --json                    Print the final run/result as JSON
   --stream-json             Print each run event as JSONL";
+
+/// Mirrors the top-level `await installGlobalProxy()` in src/cli/pilotdeck.ts:
+/// when an env proxy is set, TS logs the dispatcher install to stdout before
+/// dispatching any command.
+fn announce_env_proxy() {
+    let get = |k: &str| std::env::var(k).ok().filter(|v| !v.is_empty());
+    let Some(url) = ["PILOTDECK_PROXY", "https_proxy", "HTTPS_PROXY", "http_proxy", "HTTP_PROXY"]
+        .iter()
+        .find_map(|k| get(k))
+    else {
+        return;
+    };
+    let user = get("no_proxy").or_else(|| get("NO_PROXY"));
+    let no_proxy: Vec<String> = user.into_iter().chain(["127.0.0.1".into(), "localhost".into()]).collect();
+    println!("[proxy] Global fetch proxy → {url} (noProxy: {})", no_proxy.join(","));
+}
+
+fn is_forwarded(argv: &[String]) -> bool {
+    match argv.first().map(String::as_str) {
+        Some(
+            "chat" | "cron" | "help" | "--help" | "-h" | "run" | "resume" | "sessions" | "settings"
+            | "update" | "gateway" | "skills",
+        ) => false,
+        Some("tui") => std::io::IsTerminal::is_terminal(&std::io::stdin()),
+        _ => true,
+    }
+}

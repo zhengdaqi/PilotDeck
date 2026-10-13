@@ -14,5 +14,6 @@ signal-hook = "0.3"
 pilotdeck-session-search = { path = "../session-search" }
 pilotdeck-skills = { path = "../skills" }
 pilotdeck-gateway-client = { path = "../gateway-client" }
+pilotdeck-setup = { path = "../setup" }
 serde_json = { workspace = true, features = ["preserve_order"] }
 serde.workspace = true

@@ -1,0 +1,78 @@
+{
+ "passed": 18,
+ "total": 18,
+ "results": [
+  {
+   "case": "quit",
+   "match": true
+  },
+  {
+   "case": "eof-menu",
+   "match": true
+  },
+  {
+   "case": "invalid-choice",
+   "match": true
+  },
+  {
+   "case": "wecom-manual-open",
+   "match": true
+  },
+  {
+   "case": "wecom-manual-allowlist",
+   "match": true
+  },
+  {
+   "case": "wecom-qr-deadproxy",
+   "match": true
+  },
+  {
+   "case": "wecom-existing-keep",
+   "match": true
+  },
+  {
+   "case": "wecom-existing-redo",
+   "match": true
+  },
+  {
+   "case": "feishu-deadproxy",
+   "match": true
+  },
+  {
+   "case": "feishu-eof-mid",
+   "match": true
+  },
+  {
+   "case": "weixin-deadproxy",
+   "match": true
+  },
+  {
+   "case": "menu-all-eof",
+   "match": true
+  },
+  {
+   "case": "bad-yaml-root",
+   "match": true
+  },
+  {
+   "case": "adapters-is-seq",
+   "match": true
+  },
+  {
+   "case": "scalar-root",
+   "match": true
+  },
+  {
+   "case": "weixin-existing-creds",
+   "match": true
+  },
+  {
+   "case": "feishu-existing",
+   "match": true
+  },
+  {
+   "case": "unknown-platform",
+   "match": true
+  }
+ ]
+}
