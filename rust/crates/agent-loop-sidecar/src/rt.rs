@@ -34,6 +34,8 @@ pub enum ErrKind {
     Terminal,
     /// ModelProviderError carrying a canonical model error
     Model(JsValue),
+    /// fatal compaction error (CompactionPersistenceError / budget contract)
+    Fatal,
 }
 
 #[derive(Debug, Clone)]

@@ -1,0 +1,16 @@
+run.py --comparison same-version --surface gateway --scenario all (53 scenarios), Linux
+TS sidecar baseline red: 26 ; Rust sidecar (PILOTDECK_AGENT_LOOP_SIDECAR_EXEC=release bin) red: 27
+Identical failure lines: 24
+DIFF permission_ask_approve/PilotDeck | TS: permission_ask_approve/PilotDeck: 4 semantic difference(s) | Rust: permission_ask_approve/PilotDeck: 2 semantic difference(s)
+DIFF sidecar_projected_request_compaction_budget/PilotDeck | TS: sidecar_projected_request_compaction_budget/PilotDeck: 2 semantic difference(s) | Rust: sidecar_projected_request_compaction_budget/PilotDeck: 4 semantic difference(s)
+DIFF sidecar_seed_read_state/PilotDeck | TS: None | Rust: sidecar_seed_read_state/PilotDeck: 2 semantic difference(s)
+
+Triage of differing lines (re-runs, 2026-10-13):
+- permission_ask_approve: in the known-flaky exclusion set.
+- sidecar_projected_request_compaction_budget: Rust 4 vs TS 2 in the full run. 3 Rust re-runs and 3 TS re-runs all give 2.
+  The extra diffs were status-event vs module_call trace interleaving (timing).
+- sidecar_seed_read_state: Rust red in the full run. 3 Rust re-runs red; a TS-sidecar re-run is also red with the
+  identical 2 diffs (turn_continued/context_budget status vs model.request ordering). Pre-existing timing-dependent,
+  not a Rust regression; candidate for the flaky list (recorded, not removed from the oracle).
+No scenario that was green on TS is deterministically red on Rust. Oracles/comparators unchanged.
+Control-plane parity: rust/parity/agent_loop_control_parity.py 18/18 (release build).

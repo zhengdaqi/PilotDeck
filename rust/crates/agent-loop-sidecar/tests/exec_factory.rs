@@ -53,10 +53,14 @@ fn factory_prologue_matches_ts_recording() {
         set(&mut answer, "requestId", rid);
         in_tx.send(Incoming::Line(to_json(&answer))).unwrap();
     }
-    // The AgentLoop body is not ported yet: the operation must fail loudly, never fake success.
-    let fin = parse(&out_rx.recv().unwrap());
-    assert_eq!(gs(&fin, "outcome"), Some("failed"));
-    assert_eq!(gb(&fin, "final"), Some(true));
-    in_tx.send(Incoming::Eof).unwrap();
-    assert_eq!(handle.join().unwrap(), 0);
+    // The AgentLoop body follows the prologue: next comes the steer drain (TS order:
+    // plan_todo read, get_metadata, drain_steer). End-to-end loop parity is covered by run.py.
+    let next = parse(&out_rx.recv().unwrap());
+    assert_eq!(gs(&next, "method"), Some("module_call"));
+    assert_eq!(gs(&next, "module"), Some("turn"));
+    assert_eq!(to_json(get(&next, "payload")), r#"{"operation":"drain_steer"}"#);
+    // Leave the runtime blocked on the outstanding call; EOF mid-operation exits the process (TS parity).
+    // Keep the input channel open so the runtime does not observe EOF before the harness exits.
+    std::mem::forget(in_tx);
+    drop(handle);
 }

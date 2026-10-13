@@ -8,7 +8,7 @@ Covered: JSON-lines framing; INVALID_JSON; every validateModuleMessage code; hel
 module_call → UNEXPECTED_MODULE_CALL; execute admission with expired deadlines → DEADLINE_EXCEEDED.
 Random ids (`prefix-<base36>`) normalized in comparison.
 
-NOT covered / not in production: admitted execute (AgentLoop port), active-operation cancel/status, duplicate execute.
-The Rust binary exits 70 on an admitted execute. Production still runs the TS sidecar.
+Admitted execute is now covered by CAP-AGENT-LOOP-EXEC.
+Production still runs the TS sidecar.
 
 Evidence: `rust/parity/agent_loop_control_parity.py` → `evidence/parity-agent-loop-control.txt` (18/18, Linux).

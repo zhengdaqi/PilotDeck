@@ -89,6 +89,7 @@ impl Methods {
 }
 
 pub struct Agent {
+    pub raw_idempotency_key: Option<String>,
     pub run_id: String,
     pub operation_id: String,
     pub idempotency_key: Option<String>,
@@ -197,7 +198,7 @@ impl Agent {
     /// Module call bound to the sidecar binding (`sidecarModuleBinding`).
     pub fn bind(&self, module: &'static str, request_id: String, payload: JsValue) -> Call {
         Call { run_id: self.run_id.clone(), operation_id: self.operation_id.clone(), idempotency_key: self.idempotency_key.clone(),
-            request_id, module, abortable: false, record_failure: false, payload }
+            request_id, module, abortable: false, record_failure: true, payload }
     }
 
     // ---- plan/todo port (hostPlanTodoPort) ----
@@ -265,7 +266,10 @@ impl Agent {
 
     // ---- turn callbacks (hostTurnCallbacks) ----
     pub fn turn_call(&self, rt: &mut Rt, operation: &str) -> R<JsValue> {
-        let call = self.bind("turn", format!("turn-{operation}-{}", uuid()), obj! {"operation" => operation});
+        self.turn_call_with(rt, operation, obj! {})
+    }
+    pub fn turn_call_with(&self, rt: &mut Rt, operation: &str, payload: JsValue) -> R<JsValue> {
+        let call = self.bind("turn", format!("turn-{operation}-{}", uuid()), spread(&obj! {"operation" => operation}, payload));
         let r = rt.call(call)?;
         if gb(&r, "ok") != Some(true) {
             return Err(module_failure(&r, &format!("Turn module {operation} failed.")));
@@ -327,7 +331,8 @@ impl Agent {
     // ---- event bridge (chained emits) ----
     pub fn emit_host_event(&self, rt: &mut Rt, event: JsValue) {
         if Methods::has(&self.m.event, "emit") {
-            let call = self.bind("event", format!("agent-event-{}", uuid()), obj! {"operation" => "emit", "event" => event});
+            let mut call = self.bind("event", format!("agent-event-{}", uuid()), obj! {"operation" => "emit", "event" => event});
+            call.record_failure = false;
             rt.emit_agent_event(call);
         }
     }

@@ -534,6 +534,7 @@ pub fn create(rt: &mut Rt, request: &JsValue, stream_id: &str) -> R<Agent> {
         has_persist_compaction: has(&m.turn, "persist_compaction"),
     };
     let mut a = Agent {
+        raw_idempotency_key: gs(request, "idempotencyKey").map(String::from),
         run_id: gs(request, "runId").unwrap_or("").to_string(),
         operation_id,
         idempotency_key: gs(request, "idempotencyKey").filter(|s| !s.is_empty()).map(String::from),

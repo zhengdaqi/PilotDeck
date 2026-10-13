@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "template_only": false,
+  "scope_id": "pilotdeck-standalone_alpha1-b243fa00/CAP-AGENT-LOOP-EXEC",
+  "facts": {
+    "baseline_runnable": true,
+    "oracle_ready": true,
+    "target_integration": "native",
+    "boundary_separable": true,
+    "atomic_cutover_required": false,
+    "bridge_scope_allowed": "unknown",
+    "wasm_host_probe_passed": "unknown",
+    "native_entry_probe_passed": true,
+    "bounded_batch_defined": "unknown",
+    "rule_stress_test_passed": "unknown",
+    "serial_build_budget_measured": "unknown",
+    "rollback_artifact_ready": "unknown",
+    "deterministic_core": false,
+    "replay_corpus_ready": "unknown",
+    "is_compiler": false,
+    "conformance_corpus_ready": "unknown",
+    "shadow_requested": false,
+    "shadow_effects_isolated": "unknown"
+  },
+  "evidence_refs": [
+    {
+      "path": "baseline.json",
+      "sha256": "c24602c1dbb40785298f3ab5d2d52db8eb70d471c550e13b69ba57f885817214"
+    },
+    {
+      "path": "evidence/agent-loop-parity-ts-baseline-summary.json",
+      "sha256": "13dcb4e75e73c887238aaf11ad5302ff38d3e3ae77bb5183e728fefd09c773c5"
+    },
+    {
+      "path": "evidence/agent-loop-parity-rust-sidecar-summary.json",
+      "sha256": "c362389d3c85e5337874b2252a7f53d394460828986e40548010c8bb49b0558b"
+    },
+    {
+      "path": "evidence/agent-loop-parity-rust-vs-ts.txt",
+      "sha256": "ec9d506c75afd3f36e03a1316b6c29af5fcf7b07e0f163802cf94d681e3e8c84"
+    },
+    {
+      "path": "evidence/parity-agent-loop-control.txt",
+      "sha256": "cc307c6379a9a6e1a825312da87e14827cee28ba6c3e6b5e89ae222a05a2b346"
+    },
+    {
+      "path": "ADR-0001-rust-architecture.md",
+      "sha256": "ee0f99372dbaf47a8a8fe268e81ebfe4e4be28a1223a0b7c0e746ffac922ed2e"
+    },
+    {
+      "path": "ADR-0002-user-decisions.md",
+      "sha256": "afcd5d6023e22b8f4f686859427261aa37545cbb2567ff1ac84bdd0c43c305d7"
+    }
+  ],
+  "frozen_by": "grokbot-executor (session 2026-10-13, standard profile; not independent of author)"
+}
