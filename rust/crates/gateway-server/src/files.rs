@@ -4,7 +4,6 @@ use crate::{obj, s, JsValue};
 use pilotdeck_session_search::paths;
 use std::fs;
 use std::io;
-use std::os::unix::fs::{FileTypeExt, MetadataExt};
 
 pub enum FileErr {
     Boundary(String),
@@ -58,7 +57,14 @@ pub struct ProjectFileService {
 }
 
 fn iso(m: &fs::Metadata) -> String {
-    let ms = m.mtime() * 1000 + m.mtime_nsec() / 1_000_000;
+    // Portable form of `mtime * 1000 + mtime_nsec / 1e6` (floor), also for times before the epoch.
+    let ms = match m.modified() {
+        Ok(t) => match t.duration_since(std::time::UNIX_EPOCH) {
+            Ok(d) => d.as_millis() as i64,
+            Err(e) => -(e.duration().as_nanos().div_ceil(1_000_000) as i64),
+        },
+        Err(_) => 0,
+    };
     chrono::DateTime::from_timestamp_millis(ms).map(|d| d.format("%Y-%m-%dT%H:%M:%S%.3fZ").to_string()).unwrap_or_default()
 }
 
@@ -125,7 +131,6 @@ impl ProjectFileService {
                 Some(t) if t.is_dir() => "directory",
                 Some(t) if t.is_file() => "file",
                 Some(t) if t.is_symlink() => "symlink",
-                Some(t) if t.is_block_device() || t.is_char_device() || t.is_fifo() || t.is_socket() => "other",
                 _ => "other",
             };
             let mut e = obj(vec![("name", s(&name)), ("path", s(&self.to_relative(&child))), ("type", s(ty))]);
