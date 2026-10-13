@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "template_only": false,
+  "scope_id": "pilotdeck-standalone_alpha1-b243fa00/CAP-CLI-SDK-RUN",
+  "facts": {
+    "baseline_runnable": true,
+    "oracle_ready": true,
+    "target_integration": "native",
+    "boundary_separable": true,
+    "atomic_cutover_required": false,
+    "bridge_scope_allowed": "unknown",
+    "wasm_host_probe_passed": "unknown",
+    "native_entry_probe_passed": true,
+    "bounded_batch_defined": "unknown",
+    "rule_stress_test_passed": "unknown",
+    "serial_build_budget_measured": "unknown",
+    "rollback_artifact_ready": "unknown",
+    "deterministic_core": false,
+    "replay_corpus_ready": "unknown",
+    "is_compiler": false,
+    "conformance_corpus_ready": "unknown",
+    "shadow_requested": false,
+    "shadow_effects_isolated": "unknown"
+  },
+  "evidence_refs": [
+    {
+      "path": "baseline.json",
+      "sha256": "c24602c1dbb40785298f3ab5d2d52db8eb70d471c550e13b69ba57f885817214"
+    },
+    {
+      "path": "evidence/parity-run-resume.json",
+      "sha256": "1b9fc466b81b3362d613474373f06849afdb83b723ea96f3a27a219afdd8da7c"
+    },
+    {
+      "path": "ADR-0001-rust-architecture.md",
+      "sha256": "ee0f99372dbaf47a8a8fe268e81ebfe4e4be28a1223a0b7c0e746ffac922ed2e"
+    },
+    {
+      "path": "ADR-0002-user-decisions.md",
+      "sha256": "afcd5d6023e22b8f4f686859427261aa37545cbb2567ff1ac84bdd0c43c305d7"
+    },
+    {
+      "path": "contracts/CAP-CLI-SDK-RUN.contract.md",
+      "sha256": "831e6f2606ecb74fdc18eae3e694e6359f52493754cb91b4d9f341e8fd058374"
+    },
+    {
+      "path": "feedback/SRC-DEFECT-002.md",
+      "sha256": "5a04b6350edcc3b76a96a4fa55aa7f421a92a88a5ee0f4b9cbe450d485bd3511"
+    }
+  ],
+  "frozen_by": "grokbot-executor (session 2026-10-13, light profile; not independent of author)"
+}

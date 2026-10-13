@@ -19,6 +19,18 @@ pub struct Options<'a> {
 pub struct Transport {
     ws: WebSocket<TcpStream>,
     request_timeout: Duration,
+    /// `hello_ok` frame.
+    pub hello: Value,
+    /// Frames for other ids received while waiting for a response (stream demux).
+    backlog: std::collections::VecDeque<Value>,
+    /// Streams: id → last seq.
+    streams: std::collections::HashMap<String, i64>,
+}
+
+pub enum StreamItem {
+    Event(Value),
+    End,
+    Interrupted,
 }
 
 /// WHATWG-ish URL checks performed by Node's `new WebSocket(url)`; returns (host:port, ws-url).
@@ -125,7 +137,13 @@ impl Transport {
                 Ok(Message::Text(t)) => {
                     if let Ok(v) = serde_json::from_str::<Value>(&t) {
                         if v.get("type").and_then(Value::as_str) == Some("hello_ok") {
-                            return Ok(Transport { ws, request_timeout: o.request_timeout });
+                            return Ok(Transport {
+                                ws,
+                                request_timeout: o.request_timeout,
+                                hello: v,
+                                backlog: Default::default(),
+                                streams: Default::default(),
+                            });
                         }
                     }
                 }
@@ -156,6 +174,7 @@ impl Transport {
             let _ = self.ws.get_ref().set_read_timeout(Some(left));
             let msg = match self.ws.read() {
                 Ok(m) => m,
+                Err(tungstenite::Error::Io(e)) if e.kind() == std::io::ErrorKind::Interrupted => continue,
                 Err(tungstenite::Error::Io(e)) if matches!(e.kind(), std::io::ErrorKind::WouldBlock | std::io::ErrorKind::TimedOut) => {
                     return Err(format!("Gateway request timed out: {method}"))
                 }
@@ -170,6 +189,9 @@ impl Transport {
                 return Err("Invalid Gateway JSON frame.".into());
             };
             if v.get("type").and_then(Value::as_str) != Some("response") || v.get("id").and_then(Value::as_str) != Some(&id) {
+                if v.get("id").and_then(Value::as_str).is_some_and(|i| self.streams.contains_key(i)) {
+                    self.backlog.push_back(v);
+                }
                 continue;
             }
             if v.get("ok") == Some(&Value::Bool(true)) {
@@ -182,6 +204,104 @@ impl Transport {
                 .unwrap_or("Gateway request failed.")
                 .to_string());
         }
+    }
+
+    /// `stream(method, params)`: sends the request and registers the stream id.
+    pub fn stream_start(&mut self, method: &str, params_json: &str) -> Result<String, String> {
+        let id = crate::random_uuid_v4();
+        self.streams.insert(id.clone(), -1);
+        let frame = format!(
+            "{{\"type\":\"request\",\"id\":\"{id}\",\"method\":{},\"params\":{params_json}}}",
+            serde_json::to_string(method).unwrap()
+        );
+        self.ws.send(Message::text(frame)).map_err(|_| "Gateway WebSocket is not connected.".to_string())?;
+        Ok(id)
+    }
+
+    /// Next item of stream `id` (seq-validated, `{...event, sequence}` like the TS queue).
+    pub fn stream_next(&mut self, id: &str, interrupt: &std::sync::atomic::AtomicBool) -> Result<StreamItem, String> {
+        loop {
+            let v = if let Some(v) = self.backlog.pop_front() {
+                v
+            } else {
+                if interrupt.load(std::sync::atomic::Ordering::SeqCst) {
+                    return Ok(StreamItem::Interrupted);
+                }
+                let _ = self.ws.get_ref().set_read_timeout(Some(Duration::from_millis(100)));
+                let msg = match self.ws.read() {
+                    Ok(m) => m,
+                    Err(tungstenite::Error::Io(e))
+                        if matches!(e.kind(), std::io::ErrorKind::WouldBlock | std::io::ErrorKind::TimedOut | std::io::ErrorKind::Interrupted) =>
+                    {
+                        continue
+                    }
+                    Err(_) => return Err("Gateway WebSocket closed.".into()),
+                };
+                match msg {
+                    Message::Text(t) => match serde_json::from_str::<Value>(&t) {
+                        Ok(v) => v,
+                        Err(_) => return Err("Invalid Gateway JSON frame.".into()),
+                    },
+                    Message::Close(f) => return Err(close_error(f)),
+                    _ => continue,
+                }
+            };
+            if v.get("id").and_then(Value::as_str) != Some(id) {
+                continue;
+            }
+            match v.get("type").and_then(Value::as_str) {
+                Some("response") => {
+                    self.streams.remove(id);
+                    if v.get("ok") == Some(&Value::Bool(true)) {
+                        return Ok(StreamItem::End);
+                    }
+                    return Err(v
+                        .get("error")
+                        .and_then(|e| e.get("message"))
+                        .and_then(Value::as_str)
+                        .unwrap_or("Gateway stream failed.")
+                        .to_string());
+                }
+                Some("event") => {
+                    let prev = *self.streams.get(id).unwrap_or(&-1);
+                    let seq = v.get("seq").and_then(Value::as_f64).unwrap_or(-1.0);
+                    if seq.fract() != 0.0 || seq < 0.0 {
+                        self.streams.remove(id);
+                        return Err(format!("Gateway event sequence must be a non-negative integer for {id}."));
+                    }
+                    let seq = seq as i64;
+                    if seq <= prev {
+                        continue;
+                    }
+                    if seq != prev + 1 {
+                        self.streams.remove(id);
+                        return Err(format!("Gateway event sequence gap for {id}: expected {}, received {seq}.", prev + 1));
+                    }
+                    self.streams.insert(id.to_string(), seq);
+                    let mut ev = match v.get("event") {
+                        Some(Value::Object(m)) => m.clone(),
+                        _ => serde_json::Map::new(),
+                    };
+                    ev.insert("sequence".into(), Value::from(seq));
+                    if v.get("final") == Some(&Value::Bool(true)) {
+                        self.streams.remove(id);
+                        self.backlog.push_front(serde_json::json!({"type":"response","id":id,"ok":true}));
+                        self.streams.insert(id.to_string(), seq);
+                    }
+                    return Ok(StreamItem::Event(Value::Object(ev)));
+                }
+                _ => continue,
+            }
+        }
+    }
+
+    pub fn capabilities(&self) -> Vec<String> {
+        self.hello
+            .get("serverInfo")
+            .and_then(|i| i.get("capabilities"))
+            .and_then(Value::as_array)
+            .map(|a| a.iter().filter_map(|x| x.as_str().map(String::from)).collect())
+            .unwrap_or_default()
     }
 
     pub fn close(mut self) {

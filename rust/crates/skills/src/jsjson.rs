@@ -56,6 +56,11 @@ impl JsObject {
         self.entries.is_empty()
     }
 
+    /// Own keys in ECMAScript enumeration order.
+    pub fn keys(&self) -> Vec<String> {
+        self.ordered().into_iter().map(|(k, _)| k.clone()).collect()
+    }
+
     /// Own enumerable keys in ECMAScript order.
     fn ordered(&self) -> Vec<&(String, JsValue)> {
         let mut ints: Vec<(u32, &(String, JsValue))> =
