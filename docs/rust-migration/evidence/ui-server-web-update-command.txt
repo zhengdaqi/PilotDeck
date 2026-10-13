@@ -1,0 +1,6 @@
+slice 37 webUpdateCommand evidence 2026-10-13 15:46:13 CST
+fixture stable
+test web_update_command_matches_ts ... ok
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.78s
+cases: 13 describeUpdateReason values; 3000 scripted runs (SERVER_PORT forms, health ok/503/ECONNREFUSED/other throw, context ok/BOM/other root/401 with object/null/number detail/500 non-JSON, check ok/503, apply NDJSON streams split at random byte offsets incl. invalid UTF-8, CRLF, blank/junk/null lines, error events with and without reason, stream errors, 409 and thrown apply, 1-4 status polls with clock steps up to 1 h, restart accepted/rejected/500, offline check/apply, checkOnly/restart flags) comparing the full fetch/sleep/output log and the result.
+mutations: 17/17 killed (__proto__ member, port integer check, JS Number parsing, ECONNREFUSED gate, context root check, null-detail TypeError, detail.error fallback, blank-line trim, truthy message output, for-await cancel rejection, interrupted notice, deadline bound, updateInProgress check, U+FFFD replacement, BOM strip, offline restart guard, 8-unit sha slice).
