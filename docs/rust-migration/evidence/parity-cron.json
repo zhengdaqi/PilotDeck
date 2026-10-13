@@ -1,0 +1,185 @@
+{
+  "cases_planned": 23,
+  "cases_executed": 23,
+  "passed": 23,
+  "failed": 0,
+  "skipped": 0,
+  "negative_controls": [
+    {
+      "id": "nc-normalizer-keeps-content",
+      "detected": true
+    },
+    {
+      "id": "nc-uuid-identity",
+      "detected": true
+    },
+    {
+      "id": "nc-oracle-nonempty",
+      "detected": true
+    }
+  ],
+  "results": [
+    {
+      "id": "no-server",
+      "ok": true,
+      "exit": 1,
+      "oracle_hung": false,
+      "rust_hung": false
+    },
+    {
+      "id": "no-token",
+      "ok": true,
+      "exit": 1,
+      "oracle_hung": false,
+      "rust_hung": false
+    },
+    {
+      "id": "list-empty",
+      "ok": true,
+      "exit": 0,
+      "oracle_hung": true,
+      "rust_hung": false
+    },
+    {
+      "id": "list-history-limit",
+      "ok": true,
+      "exit": 0,
+      "oracle_hung": true,
+      "rust_hung": false
+    },
+    {
+      "id": "list-limit-nan",
+      "ok": true,
+      "exit": 0,
+      "oracle_hung": true,
+      "rust_hung": false
+    },
+    {
+      "id": "create-cron",
+      "ok": true,
+      "exit": 0,
+      "oracle_hung": true,
+      "rust_hung": false
+    },
+    {
+      "id": "create-once-tz",
+      "ok": true,
+      "exit": 0,
+      "oracle_hung": true,
+      "rust_hung": false
+    },
+    {
+      "id": "create-channel-project",
+      "ok": true,
+      "exit": 0,
+      "oracle_hung": true,
+      "rust_hung": false
+    },
+    {
+      "id": "create-third",
+      "ok": true,
+      "exit": 0,
+      "oracle_hung": true,
+      "rust_hung": false
+    },
+    {
+      "id": "create-missing-message",
+      "ok": true,
+      "exit": 1,
+      "oracle_hung": true,
+      "rust_hung": false
+    },
+    {
+      "id": "create-missing-schedule",
+      "ok": true,
+      "exit": 1,
+      "oracle_hung": true,
+      "rust_hung": false
+    },
+    {
+      "id": "create-bad-cron",
+      "ok": true,
+      "exit": 1,
+      "oracle_hung": true,
+      "rust_hung": false
+    },
+    {
+      "id": "create-bad-once",
+      "ok": true,
+      "exit": 1,
+      "oracle_hung": true,
+      "rust_hung": false
+    },
+    {
+      "id": "list-after-create",
+      "ok": true,
+      "exit": 0,
+      "oracle_hung": true,
+      "rust_hung": false
+    },
+    {
+      "id": "delete-first",
+      "ok": true,
+      "exit": 0,
+      "oracle_hung": true,
+      "rust_hung": false
+    },
+    {
+      "id": "delete-stop-running",
+      "ok": true,
+      "exit": 0,
+      "oracle_hung": true,
+      "rust_hung": false
+    },
+    {
+      "id": "delete-missing",
+      "ok": true,
+      "exit": 0,
+      "oracle_hung": true,
+      "rust_hung": false
+    },
+    {
+      "id": "delete-no-id",
+      "ok": true,
+      "exit": 1,
+      "oracle_hung": true,
+      "rust_hung": false
+    },
+    {
+      "id": "stop-task",
+      "ok": true,
+      "exit": 0,
+      "oracle_hung": true,
+      "rust_hung": false
+    },
+    {
+      "id": "stop-run",
+      "ok": true,
+      "exit": 0,
+      "oracle_hung": true,
+      "rust_hung": false
+    },
+    {
+      "id": "stop-no-args",
+      "ok": true,
+      "exit": 1,
+      "oracle_hung": true,
+      "rust_hung": false
+    },
+    {
+      "id": "bad-subcommand",
+      "ok": true,
+      "exit": 1,
+      "oracle_hung": true,
+      "rust_hung": false
+    },
+    {
+      "id": "list-final",
+      "ok": true,
+      "exit": 0,
+      "oracle_hung": true,
+      "rust_hung": false
+    }
+  ],
+  "oracle_hangs": 21
+}

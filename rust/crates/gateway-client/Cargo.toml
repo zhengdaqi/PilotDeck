@@ -1,0 +1,12 @@
+[package]
+name = "pilotdeck-gateway-client"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Blocking client for the PilotDeck Gateway WS protocol (port of src/gateway/client/{probeServer,GatewayWsClient}.ts request path)"
+
+[dependencies]
+pilotdeck-session-search = { path = "../session-search" }
+pilotdeck-skills = { path = "../skills" }
+serde_json = { workspace = true, features = ["preserve_order"] }
+tungstenite.workspace = true

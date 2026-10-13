@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["crates/session-search", "crates/skills", "crates/cli"]
+members = ["crates/session-search", "crates/skills", "crates/gateway-client", "crates/cli"]
 
 [workspace.package]
 version = "0.1.0"
@@ -15,3 +15,4 @@ regex = "1"
 chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
 serde_yaml = "0.9"
 ryu-js = "1"
+tungstenite = { version = "0.24", default-features = false, features = ["handshake"] }
