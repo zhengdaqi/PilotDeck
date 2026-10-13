@@ -1,0 +1,4 @@
+web-ui-core batch2: 8119 checks, 0 mismatches
+web-ui-core workspaceFileMention: 9011 vectors, 0 mismatches
+mutation check: daysAgo threshold < 7 changed to <= 7 -> 42 mismatches
+browser: 17530 = 9011 + 8119 + 400 Date.parse host checks; Chrome 154 and WebKitGTK (Tauri) both 0 mismatches
