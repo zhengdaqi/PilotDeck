@@ -11,6 +11,7 @@ serde_json = { workspace = true, features = ["preserve_order"] }
 regex.workspace = true
 pilotdeck-web-ui-core = { path = "../web-ui-core" }
 pilotdeck-session-search = { path = "../session-search" }
+yaml-rust2 = "0.13"
 
 [dev-dependencies]
 tempfile = "3"

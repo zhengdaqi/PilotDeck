@@ -162,3 +162,113 @@ pub fn process_file_includes(content: &str, base_path: &str, depth: usize) -> Re
     }
     Ok(result)
 }
+pub use crate::frontmatter::parse_command;
+
+/// `processBashCommands(content, { cwd, timeout })`: runs each allowlisted `!command` line without a shell and
+/// substitutes its sanitized output (stdout, or stderr when stdout is empty).
+/// SRC-DEFECT-010 also covers this function: TS inserts the output through `String.prototype.replace`, so `$&` and
+/// the other patterns in command output are expanded. Rust inserts the output literally.
+pub fn process_bash_commands(content: &str, cwd: &std::path::Path, timeout: std::time::Duration) -> Result<String, String> {
+    if content.is_empty() {
+        return Ok(content.to_string());
+    }
+    // /(?:^|\n)!(.+?)(?=\n|$)/g without the m flag: `.` stops at line terminators, `$` is the end of input.
+    let chars: Vec<(usize, char)> = content.char_indices().collect();
+    let mut matches: Vec<(usize, usize, String)> = vec![];
+    let mut k = 0;
+    while k < chars.len() {
+        let (b, c) = chars[k];
+        let bang = if b == 0 && c == '!' { Some(k) } else if c == '\n' && chars.get(k + 1).is_some_and(|x| x.1 == '!') { Some(k + 1) } else { None };
+        let Some(bk) = bang else {
+            k += 1;
+            continue;
+        };
+        let mut e = bk + 1;
+        while e < chars.len() && !matches!(chars[e].1, '\n' | '\r' | '\u{2028}' | '\u{2029}') {
+            e += 1;
+        }
+        let end_ok = e == chars.len() || chars[e].1 == '\n';
+        if e > bk + 1 && end_ok {
+            let end = chars.get(e).map_or(content.len(), |x| x.0);
+            matches.push((b, end, content[chars[bk + 1].0..end].to_string()));
+            k = e;
+        } else {
+            k += 1;
+        }
+    }
+    let mut result = content.to_string();
+    for (start, end, cmd) in matches {
+        let full = &content[start..end];
+        let command_string = pilotdeck_web_ui_core::js::trim(&cmd).to_string();
+        let v = validate_command(&command_string).map_err(|e| e.to_string())?;
+        if v["allowed"] != true {
+            return Err(format!("Command not allowed: {command_string} - {}", v["error"].as_str().unwrap_or("")));
+        }
+        let program = v["command"].as_str().unwrap().to_string();
+        let args: Vec<String> = v["args"].as_array().unwrap().iter().map(|a| a.as_str().unwrap().to_string()).collect();
+        let output = run_exec_file(&program, &args, cwd, timeout).map_err(|e| match e {
+            ExecError::Timeout => format!("Command timeout: {command_string}"),
+            ExecError::Other(m) => format!("Command failed: {command_string} - {m}"),
+        })?;
+        let output = sanitize_output(&output);
+        if let Some(p) = result.find(full) {
+            let rep = if full.starts_with('\n') { format!("\n{output}") } else { output };
+            result.replace_range(p..p + full.len(), &rep);
+        }
+    }
+    Ok(result)
+}
+
+enum ExecError {
+    Timeout,
+    Other(String),
+}
+
+/// Node `execFile(file, args, { cwd, timeout, maxBuffer: 1 MiB })`: output is `stdout || stderr`; errors carry
+/// Node's messages (`spawn <file> ENOENT`, `Command failed: <file> <args>\n<stderr>`).
+fn run_exec_file(file: &str, args: &[String], cwd: &std::path::Path, timeout: std::time::Duration) -> Result<String, ExecError> {
+    use std::io::Read;
+    use std::process::{Command, Stdio};
+    let mut child = Command::new(file).args(args).current_dir(cwd).stdin(Stdio::null()).stdout(Stdio::piped()).stderr(Stdio::piped()).spawn().map_err(|e| {
+        let code = match e.kind() {
+            std::io::ErrorKind::NotFound => "ENOENT",
+            std::io::ErrorKind::PermissionDenied => "EACCES",
+            _ => "EIO",
+        };
+        ExecError::Other(format!("spawn {file} {code}"))
+    })?;
+    let mut out_pipe = child.stdout.take().unwrap();
+    let mut err_pipe = child.stderr.take().unwrap();
+    let t_out = std::thread::spawn(move || {
+        let mut v = vec![];
+        let _ = out_pipe.read_to_end(&mut v);
+        v
+    });
+    let t_err = std::thread::spawn(move || {
+        let mut v = vec![];
+        let _ = err_pipe.read_to_end(&mut v);
+        v
+    });
+    let start = std::time::Instant::now();
+    let status = loop {
+        if let Some(s) = child.try_wait().map_err(|e| ExecError::Other(e.to_string()))? {
+            break s;
+        }
+        if start.elapsed() >= timeout {
+            let _ = child.kill();
+            let _ = child.wait();
+            return Err(ExecError::Timeout);
+        }
+        std::thread::sleep(std::time::Duration::from_millis(5));
+    };
+    let stdout = String::from_utf8_lossy(&t_out.join().unwrap_or_default()).into_owned();
+    let stderr = String::from_utf8_lossy(&t_err.join().unwrap_or_default()).into_owned();
+    if stdout.len() > 1024 * 1024 || stderr.len() > 1024 * 1024 {
+        return Err(ExecError::Other("stdout maxBuffer length exceeded".into()));
+    }
+    if !status.success() {
+        let cmd = std::iter::once(file.to_string()).chain(args.iter().cloned()).collect::<Vec<_>>().join(" ");
+        return Err(ExecError::Other(format!("Command failed: {cmd}\n{stderr}")));
+    }
+    Ok(if stdout.is_empty() { stderr } else { stdout })
+}
