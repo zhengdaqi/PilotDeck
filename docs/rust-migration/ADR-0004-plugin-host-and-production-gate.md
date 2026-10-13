@@ -76,3 +76,7 @@ In the SDK transport, malformed frames (`null`, `ok:false` without `error`, a no
 `safe_write_windows.rs` gives the same guarantee. Each directory on the way is opened with `FILE_FLAG_OPEN_REPARSE_POINT` and pinned without `FILE_SHARE_DELETE`. Reparse points are resolved and checked against the root before the walk restarts. The final file is opened without following a reparse point.
 
 The whole workspace (except the Tauri desktop app) now compile-checks for `x86_64-pc-windows-gnu`. It has not been run on Windows yet; that remains part of the production gate.
+
+## SRC-DEFECT-016 (2026-10-13: fixed under the source-defect policy, intended difference)
+The SDK hook server crashes the host process on a request target that `new URL` rejects (an unhandled rejection
+before authentication). Rust answers 404 instead. Details and evidence: feedback/SRC-DEFECT-016.md and `hook_server_parity.mjs`.

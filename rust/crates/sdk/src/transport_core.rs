@@ -60,7 +60,7 @@ pub fn is_retryable_connect_error(e: &SdkError) -> bool {
     e.code == "transport_error" || e.code == "timeout"
 }
 
-fn js_number_to_string(f: f64) -> String {
+pub fn js_number_to_string(f: f64) -> String {
     if f.is_nan() {
         return "NaN".into();
     }
@@ -91,7 +91,7 @@ fn js_number_to_string(f: f64) -> String {
 }
 
 /// `String(v)` (what `new Error(v)` does to a non-string message).
-fn js_string(v: &Value) -> String {
+pub fn js_string(v: &Value) -> String {
     match v {
         Value::Null => "null".into(),
         Value::Bool(b) => b.to_string(),
@@ -102,7 +102,7 @@ fn js_string(v: &Value) -> String {
     }
 }
 
-fn truthy(v: Option<&Value>) -> bool {
+pub fn truthy(v: Option<&Value>) -> bool {
     match v {
         None | Some(Value::Null) => false,
         Some(Value::Bool(b)) => *b,

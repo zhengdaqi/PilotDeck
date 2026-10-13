@@ -48,3 +48,18 @@ client.ts, transport.ts, hook-server.
   - Two mutations survive by design: the default connectTimeout (scenarios always pass it) and the close check in `open()` (unreachable sequentially).
 - Intended difference: a socket that TS drops after a failure is left open (leaked); Rust/wasm closes it.
 - `wss://` still needs TLS (unchanged gap).
+
+## Slice 26: hook-server.ts → `crates/sdk/src/hook_server.rs` (feature `net`)
+- **Ported:** `HostedHookServer` (constructor checks, start/close, config shape) and `isLoopbackHttpUrl`.
+  - HTTP/1.1 server, one thread per connection.
+  - Request handling: routing via WHATWG URL resolution (url crate), Bearer token check, `Number()` matcher selector, 1MB body limit (connection dropped like TS `request.destroy()`).
+  - Hook logic: camelCase→snake_case input, the input validations, callback timeout and abort, async/sync merging rules, `defer`→`passthrough`, and error JSON with `code` for PilotDeckError.
+- **Callbacks** are Rust closures `(input, toolUseId, {signal, asyncHookId}) -> Result<Option<Value>, HookError>`.
+- **Live parity:** `rust/parity/sdk/hook_server_parity.mjs`.
+  - Inputs: a shared callback catalogue, random configs and start options, raw HTTP requests (methods, odd targets, auth variants, chunked bodies, broken requests, oversized bodies), plus 19 fixed merge scripts.
+  - The TS dist and the Rust probe are compared on status, content-type and body.
+  - Results: 1266/1266, 1374/1374 and 1374/1374 over 3 seeds × 150 scripts. Mutations: 10 run, 10 killed (after adding the fixed scripts).
+- **SRC-DEFECT-016 fixed:** a request target that `new URL` rejects crashes the TS host process; Rust answers 404.
+- **Pending:**
+  - Abort on client disconnect mid-callback: TS aborts the callback signal at once. Rust notices the disconnect only on write; `close()` still aborts.
+  - JSON bodies containing lone-surrogate escapes: serde rejects them, so Rust answers 500 "not valid JSON" where TS accepts the body.
