@@ -44,7 +44,7 @@ SRC-DEFECT-004 (malformed frame crash), SRC-DEFECT-005 (unhandled rejection cras
   - The root is `projectKey`, because the TS server entry binds no `resolveProject`.
   - Covered by 71 file-route parity cases on real temp trees: symlinks in and out, a dangling link, a fifo, bad UTF-8, a
     BOM, unicode names, big files.
-  - SRC-DEFECT-007 (write follows symlinks out of the root) is replicated as-is, pending user decision.
+  - SRC-DEFECT-007: FIXED (intended difference, ADR-0004). A write that resolves outside the root gets 403 workspace_boundary (real-path check).
 
 - Public module-host transports in their bound configuration (`publicApprovalHttpTransport.ts`,
   `publicHostHttpTransport.ts`).
@@ -67,7 +67,7 @@ SRC-DEFECT-004 (malformed frame crash), SRC-DEFECT-005 (unhandled rejection cras
   - Approximations:
     - Client-disconnect abort is not propagated to `provider.call` (the host passes a never-aborted signal).
     - A stream whose head the server rejects is still drained by the host.
-  - SRC-DEFECT-008 (no response for oversized approval input) is replicated, pending decision.
+  - SRC-DEFECT-008: FIXED (intended difference, ADR-0004). Oversized approval input gets 413 APPROVAL_INPUT_TOO_LARGE.
 
 PENDING. Not dropped; each fails loudly, never fakes success:
 - `/feishu/webhook` option.

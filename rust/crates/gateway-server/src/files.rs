@@ -167,10 +167,42 @@ impl ProjectFileService {
             ("content", s(&base64::engine::general_purpose::STANDARD.encode(&bytes))), ("binary", JsValue::Bool(true))]))
     }
 
+    /// Real-path boundary check for a write target: an existing target (including a symlink, even a dangling one)
+    /// must resolve inside the root, and so must the deepest existing ancestor.
+    fn check_write_real(&self, rel: &str, target: &str) -> R<()> {
+        if let Ok(m) = fs::symlink_metadata(target) {
+            match fs::canonicalize(target) {
+                Ok(real) if self.inside(&real.to_string_lossy()) => return Ok(()),
+                Ok(_) => return Err(FileErr::Boundary(rel.into())),
+                Err(_) if m.file_type().is_symlink() => return Err(FileErr::Boundary(rel.into())),
+                Err(_) => {}
+            }
+        }
+        let mut cur = paths::resolve(&[target, ".."]);
+        loop {
+            if let Ok(real) = fs::canonicalize(&cur) {
+                return if self.inside(&real.to_string_lossy()) { Ok(()) } else { Err(FileErr::Boundary(rel.into())) };
+            }
+            if fs::symlink_metadata(&cur).is_ok_and(|m| m.file_type().is_symlink()) {
+                return Err(FileErr::Boundary(rel.into())); // dangling symlinked directory: mkdir would follow it
+            }
+            let parent = paths::resolve(&[&cur, ".."]);
+            if parent == cur {
+                return Ok(());
+            }
+            cur = parent;
+        }
+    }
+
+    /// Intended difference from TS (SRC-DEFECT-007, ADR-0004): writes that resolve outside the root through a
+    /// symlink are refused with `workspace_boundary` (TS only checks the path text and follows the link).
+    /// Checked before mkdir (so no directories get created outside the root) and again just before the write.
     pub fn write_file(&self, rel: &str, content: &str, base64_enc: bool) -> R<()> {
         let target = self.lexical(rel)?;
+        self.check_write_real(rel, &target)?;
         let dir = paths::resolve(&[&target, ".."]);
         mkdir_p(&dir)?;
+        self.check_write_real(rel, &target)?;
         let data = if base64_enc { node_base64_decode(content) } else { content.as_bytes().to_vec() };
         fs::write(&target, data).map_err(|e| node_fs_error(&e, "open", &target))
     }

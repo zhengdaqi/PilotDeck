@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "template_only": false,
+  "scope_id": "pilotdeck-standalone_alpha1-b243fa00/CAP-UI-SERVER-SERVICES",
+  "facts": {
+    "baseline_runnable": true,
+    "oracle_ready": true,
+    "target_integration": "native",
+    "boundary_separable": true,
+    "atomic_cutover_required": false,
+    "bridge_scope_allowed": "unknown",
+    "wasm_host_probe_passed": "unknown",
+    "native_entry_probe_passed": true,
+    "bounded_batch_defined": "unknown",
+    "rule_stress_test_passed": "unknown",
+    "serial_build_budget_measured": "unknown",
+    "rollback_artifact_ready": "unknown",
+    "deterministic_core": true,
+    "replay_corpus_ready": true,
+    "is_compiler": false,
+    "conformance_corpus_ready": "unknown",
+    "shadow_requested": false,
+    "shadow_effects_isolated": "unknown"
+  },
+  "evidence_refs": [
+    {
+      "path": "baseline.json",
+      "sha256": "c24602c1dbb40785298f3ab5d2d52db8eb70d471c550e13b69ba57f885817214"
+    },
+    {
+      "path": "evidence/ui-server-model-references-and-defect-fixes.txt",
+      "sha256": "744f1eb88b0c170b5c74d080bf9704f9bdea3ed16a1f13cb6218c5374a9f0095"
+    },
+    {
+      "path": "evidence/gateway-server-parity-slice15.txt",
+      "sha256": "226de766fc6aa5f388269bbcda916823310c27ea4a6b4f51772ff9f085e88661"
+    },
+    {
+      "path": "contracts/CAP-UI-SERVER-SERVICES.contract.md",
+      "sha256": "74f6b9337b99c9edf9895e5e0a8cfdd5b42d281ca4b84df287542c7ba5e04178"
+    },
+    {
+      "path": "../../rust/crates/ui-server-core/tests/fixtures/model_references.json",
+      "sha256": "1e3f3d7f021d39d468a1970a414ef6db392c9de6ce616c1ed94bdabfb6a60e63"
+    }
+  ],
+  "frozen_by": "grokbot-executor (session 2026-10-13, standard profile; not independent of author)"
+}

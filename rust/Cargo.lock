@@ -735,6 +735,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "pilotdeck-ui-server-core"
+version = "0.0.0"
+dependencies = [
+ "pilotdeck-web-ui-core",
+ "serde_json",
+]
+
+[[package]]
 name = "pilotdeck-web-ui-core"
 version = "0.1.0"
 dependencies = [

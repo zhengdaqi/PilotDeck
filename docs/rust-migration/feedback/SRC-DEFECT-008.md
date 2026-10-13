@@ -11,4 +11,5 @@
 - Rust treatment: **behavior-compatible**. The connection is closed without a response. **Pending user decision**:
   send the intended 413.
 
-- Decision (ADR-0004, 2026-10-13): keep reproducing the TS behaviour for now.
+- ~~Decision (ADR-0004, 2026-10-13 13:34): keep reproducing the TS behaviour for now.~~
+- FINAL (ADR-0004, user decision 2026-10-13 14:02): fixed in Rust, an intended behaviour difference. Oversized input gets HTTP 413 `APPROVAL_INPUT_TOO_LARGE`. The earlier "keep reproducing" decision is superseded.

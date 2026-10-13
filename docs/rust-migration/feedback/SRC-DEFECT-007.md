@@ -13,4 +13,5 @@
   **Pending user decision**: either realpath-check the deepest existing ancestor and the target before writing, returning
   403 `workspace_boundary`, or keep the TS behavior.
 
-- Decision (ADR-0004, 2026-10-13): keep reproducing the TS behaviour for now.
+- ~~Decision (ADR-0004, 2026-10-13 13:34): keep reproducing the TS behaviour for now.~~
+- FINAL (ADR-0004, user decision 2026-10-13 14:02): fixed in Rust, an intended behaviour difference. Writes that resolve outside the root (symlinks, real-path check) get 403 `workspace_boundary`. The earlier "keep reproducing" decision is superseded.
