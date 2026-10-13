@@ -1,0 +1,15 @@
+slice 20 frontmatter/parseCommand/processBashCommands evidence 2026-10-13 14:22:03 CST
+fixture stable
+fixture stable
+fixture stable
+test bash_command_timeout_reports_like_ts ... ok
+test bash_commands_match_ts_except_src_defect_010 ... ok
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+test file_includes_match_ts_except_fixed_defects ... ok
+test replace_arguments_matches_fixed_reference ... ok
+test path_safe_sanitize_and_validate_match_ts ... ok
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+exact 4030 (yaml error kind only: 2094) intended 311 known-gap 5 bad 0
+test frontmatter_and_parse_command_match_ts ... ok
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.50s
+mutations: Date.UTC 1900 rule, duplicate-key error, merge no-override, date key text, legacy octal, CR strip -> each fails; merge-override survived the random set and is now caught by added fixed cases

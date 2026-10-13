@@ -60,3 +60,11 @@ These defects are in `ui/server/utils/commandParser.js`; see `feedback/SRC-DEFEC
 - 012: the whitespace in front of `@file` is kept.
 
 Evidence: the `command_parser_oracle` test. TS must still show each defect, and the Rust port must match the fixed reference.
+
+## SRC-DEFECT-013/014 (2026-10-13: fixed under the source-defect policy, intended differences)
+- 013 (frontmatter): a YAML timestamp used as a mapping key keeps its source text. TS uses `String(date)`, which depends on the server's time zone and locale.
+- 014 (frontmatter): `Object.prototype` member names after `---` are not engines. TS invokes the prototype function.
+
+SRC-DEFECT-010 also covers `processBashCommands`: command output is inserted literally.
+
+Evidence: the `frontmatter_oracle` and `bash_commands_oracle` tests. YAML-GAP-001 is pending (see feedback/).
