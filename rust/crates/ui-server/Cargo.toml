@@ -1,0 +1,16 @@
+[package]
+name = "pilotdeck-ui-server"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "axum host for the ui/server HTTP routes (port of ui/server/index.js + routes/*)"
+
+[dependencies]
+pilotdeck-ui-server-core = { path = "../ui-server-core" }
+axum = { version = "0.8", default-features = false, features = ["http1", "json", "tokio", "query"] }
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "fs", "signal"] }
+serde_json = { workspace = true, features = ["preserve_order"] }
+
+[[bin]]
+name = "pilotdeck-ui-server"
+path = "src/main.rs"
