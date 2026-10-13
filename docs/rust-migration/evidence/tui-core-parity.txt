@@ -1,0 +1,7 @@
+# CAP-TUI-CORE differential, 2026-10-13 CST, Linux, Node 22.23.3 (Unicode 17.0)
+Oracle fixture: node rust/parity/tui/gen_tui_core_fixture.mjs (dist build; --check: ok, also verifies generated src/tables.rs)
+cargo test -p pilotdeck-tui-core: 8 passed, 0 failed
+ - reducer: 300 event sequences / 1821 step states (exact JSON)
+ - render state: 300 ; formatToolSummary: 300 ; groupConsecutiveTools: 200 ; sidebar helpers: 200 (groups, collapse, rows, icons, titles)
+ - truncateForDisplay + countVisualLines: 400 (380 non-ASCII, 201 actually truncated) ; graphemes vs Intl.Segmenter: 300 ; relativeTime 11 ; sessionKey 3
+Domain limit: ANSI-free text; ANSI SGR/hyperlink and RGI emoji sequences pending. Interactive Ink app pending (forwarded to TS).

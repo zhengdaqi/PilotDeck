@@ -1,0 +1,12 @@
+[package]
+name = "pilotdeck-tui-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Pure TUI core (Rust port of src/adapters/channel/tui: reducer, render state, summaries, grouping, sidebar, truncation)"
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+regex.workspace = true
+unicode-segmentation = "1"
