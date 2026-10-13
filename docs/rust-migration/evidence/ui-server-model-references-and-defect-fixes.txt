@@ -1,0 +1,8 @@
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+     Running tests/write_boundary.rs (target/debug/deps/write_boundary-0e2b000047623d6e)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+ui-server modelReferences oracle: 8045 cases, 0 mismatches
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.38s
+mutation checks: Map::remove instead of shift_remove -> 6 mismatches; always emitting 'to' -> 93 mismatches
+SRC-DEFECT-007 mutation: write_boundary fails (link_out/planted.txt must be refused) when the real-path check is removed

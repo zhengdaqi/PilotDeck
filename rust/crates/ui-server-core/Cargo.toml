@@ -1,0 +1,11 @@
+[package]
+name = "pilotdeck-ui-server-core"
+version = "0.0.0"
+edition = "2021"
+rust-version = "1.85"
+publish = false
+description = "Pure service layer of ui/server (Node web backend) ported to Rust."
+
+[dependencies]
+serde_json = { workspace = true, features = ["preserve_order"] }
+pilotdeck-web-ui-core = { path = "../web-ui-core" }

@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "scope_id": "pilotdeck-standalone_alpha1-b243fa00/CAP-UI-SERVER-SERVICES",
+  "status": "SELECTED",
+  "selected_branches": [
+    "S03",
+    "V01"
+  ],
+  "provisional_branches": [],
+  "reasons": [
+    "S03: target_integration=native",
+    "V01: deterministic observable core"
+  ],
+  "blocking_checks": [],
+  "probe_checks": [],
+  "required_gates": [
+    "G03",
+    "G05",
+    "G06",
+    "G07",
+    "G09",
+    "G11",
+    "G17"
+  ],
+  "exit_checks": [
+    "architecture_dependency_constraints",
+    "complete_case_and_seed_sets",
+    "external_contract_parity",
+    "feedback_window",
+    "formal_entrypoint",
+    "full_observable_trace",
+    "full_scope_native_ownership",
+    "minimized_divergence_regressions",
+    "rng_algorithm_and_consumption",
+    "unsupported_capabilities_reported"
+  ],
+  "evidence_refs": [
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/baseline.json",
+      "sha256": "c24602c1dbb40785298f3ab5d2d52db8eb70d471c550e13b69ba57f885817214"
+    },
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/evidence/ui-server-model-references-and-defect-fixes.txt",
+      "sha256": "744f1eb88b0c170b5c74d080bf9704f9bdea3ed16a1f13cb6218c5374a9f0095"
+    },
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/evidence/gateway-server-parity-slice15.txt",
+      "sha256": "226de766fc6aa5f388269bbcda916823310c27ea4a6b4f51772ff9f085e88661"
+    },
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/contracts/CAP-UI-SERVER-SERVICES.contract.md",
+      "sha256": "74f6b9337b99c9edf9895e5e0a8cfdd5b42d281ca4b84df287542c7ba5e04178"
+    },
+    {
+      "path": "/workspace/PilotDeck/rust/crates/ui-server-core/tests/fixtures/model_references.json",
+      "sha256": "1e3f3d7f021d39d468a1970a414ef6db392c9de6ce616c1ed94bdabfb6a60e63"
+    }
+  ],
+  "phase_bindings": {
+    "P03": "provisional_decision_and_ADR",
+    "P04": "branch_contract",
+    "P07": "branch_adapters",
+    "P08": "selection_confirmed",
+    "P09": "first_real_slice",
+    "P12": "recalibrate",
+    "P26": "branch_exit_audit"
+  },
+  "meaning": "selection only; not implementation, deployment approval, or product PASS",
+  "facts_sha256": "f9a58605cb2f77fc5d009350248b500eea011518f367e038014b92d1f3792ae1",
+  "catalog_sha256": "1eb0fd94be42b40d4c075d7e80831a88e07e36bcc2d9b8f7c74958e9911cf375",
+  "selector_sha256": "1494d06c53c669aa990c2ba4337185aef9d6e8782fea505856cfde30e2e6d3fe"
+}

@@ -6,6 +6,8 @@ Rust:      pilotdeck-gateway-server -- node bridge.mjs (same fake_gateway.mjs ov
 Every observable byte-level outcome (WS frames, close codes/reasons, HTTP status/content-type/body)
 is compared exactly after normalizing random ids/timestamps. Known, documented divergences
 (SRC-DEFECT-004/005/006) are asserted separately and never counted as passes.
+Intended behaviour differences (ADR-0004; SRC-DEFECT-007 write boundary, SRC-DEFECT-008 approval 413) are checked
+case by case. TS must still show the defect and Rust must show the fix; these cases are reported separately, never as passes.
 Usage: gateway_server_parity.py --rust BIN [--out FILE]
 """
 import argparse, base64, json, os, re, socket, struct, subprocess, sys, tempfile, time
@@ -345,6 +347,31 @@ def divergence_cases(rust_srv_factory, ts_srv_factory):
     finally: t.stop(); r.stop()
     return res
 
+def _boundary(v): return v.get("status") == 403 and json.loads(v.get("body") or "{}").get("error", {}).get("code") == "workspace_boundary"
+def _tree_sizes_only_differ_at_secret_link(t, r):
+    if t.get("status") != 200 or r.get("status") != 200: return False
+    te, re_ = json.loads(t["body"]), json.loads(r["body"])
+    def strip(tree):
+        out = []
+        for e in tree["entries"]:
+            if e["name"] == "secret_link.txt": e = {k: v for k, v in e.items() if k != "size"}
+            out.append(e)
+        return dict(tree, entries=out)
+    size = lambda tree: [e.get("size") for e in tree["entries"] if e["name"] == "secret_link.txt"]
+    return strip(te) == strip(re_) and size(te) == [1] and size(re_) == [6]
+INTENDED = {
+    # SRC-DEFECT-007: TS writes through the symlink (200), Rust refuses with 403 workspace_boundary.
+    "files/w_via_link_out": lambda t, r: t.get("status") == 200 and _boundary(r),
+    "files/w_via_secret_link": lambda t, r: t.get("status") == 200 and _boundary(r),
+    "files/outside_after": lambda t, r: "planted.txt" in t and "planted.txt" not in r,
+    # Knock-on effect of the w_via_secret_link difference: the link target's size is 1 after the TS write ("y") and still
+    # 6 in Rust ("secret"). Every other byte of the tree must match.
+    "files/tree_after": lambda t, r: _tree_sizes_only_differ_at_secret_link(t, r),
+    # SRC-DEFECT-008: TS sends no response at all; Rust sends 413 APPROVAL_INPUT_TOO_LARGE.
+    "public/ap_too_large": lambda t, r: "status" not in t and r.get("status") == 413
+        and json.loads(r.get("body") or "{}") == {"code": "APPROVAL_INPUT_TOO_LARGE"},
+}
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--rust", required=True); ap.add_argument("--out"); a = ap.parse_args()
     static = tempfile.mkdtemp(prefix="gw-static-")
@@ -352,7 +379,7 @@ def main():
                  ("data.json", "{}"), ("LICENSE", "license"), ("a%20b.txt", "pct")]:
         open(os.path.join(static, n), "w").write(c)
     os.makedirs(os.path.join(static, "sub"), exist_ok=True)
-    total = fails = 0; lines = []
+    total = fails = 0; lines = []; intended = []
     for variant in ["full", "minimal"]:
         for with_static in ([True, False] if variant == "full" else [False]):
             ts_argv = ["node", "ts_server.mjs", variant, TOKEN] + ([static] if with_static else [])
@@ -368,9 +395,17 @@ def main():
                 except Exception as e:
                     raise RuntimeError("%s server (%s): %s; stderr tail: %s" % (name, variant, e, srv.p.stderr.read()[-1500:] if not srv.alive() else "alive"))
                 finally: srv.stop()
+            for key, check in INTENDED.items():
+                kind, k = key.split("/")
+                if kind not in results["ts"]: continue
+                tv, rv = norm(results["ts"][kind][k]), norm(results["rust"][kind].get(k))
+                ok = check(tv, rv)
+                fails += not ok
+                intended.append(("OK   " if ok else "FAIL ") + key + "  TS: %s  RUST: %s" % (json.dumps(tv)[:200], json.dumps(rv)[:200]))
             for kind in ["http", "ws", "files", "public"]:
                 if kind not in results["ts"]: continue
                 for k in results["ts"][kind]:
+                    if kind + "/" + k in INTENDED: continue
                     total += 1
                     tv, rv = norm(results["ts"][kind][k]), norm(results["rust"][kind].get(k))
                     ok = tv == rv
@@ -385,6 +420,8 @@ def main():
     div = divergence_cases(lambda: Server([a.rust, "--port", "0", "--token", TOKEN, "--", "node", "bridge.mjs", "full"]),
                            lambda: Server(["node", "ts_server.mjs", "full", TOKEN]))
     lines.append("%d/%d parity cases passed" % (total - fails, total))
+    lines.append("INTENDED DIFFERENCES (ADR-0004; TS shows the defect, Rust the fix; not counted as parity):")
+    lines.extend("  " + x for x in intended)
     lines.append("DOCUMENTED DIVERGENCES (not counted): " + json.dumps(div, indent=1))
     text = "\n".join(lines); print(text)
     if a.out: open(a.out, "w").write(text + "\n")

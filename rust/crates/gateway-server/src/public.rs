@@ -67,9 +67,9 @@ pub fn handle_approvals(stream: &mut TcpStream, gw: &dyn GatewayBackend, token: 
     }
     let bytes = match read(64 * 1024) {
         BodyRead::Ok(b) => b,
-        // TS throws APPROVAL_INPUT_TOO_LARGE inside `for await (chunk of req)`; leaving the loop destroys the request,
-        // the abort handler fires, and the catch destroys the response: the client gets no response (SRC-DEFECT-008).
-        BodyRead::TooLarge => { let _ = stream.shutdown(std::net::Shutdown::Both); return; }
+        // Intended difference from TS (SRC-DEFECT-008, ADR-0004): TS means to send 413 APPROVAL_INPUT_TOO_LARGE, but its
+        // abort path destroys the response, so the client gets none. Rust sends the 413.
+        BodyRead::TooLarge => return fail(stream, 413, "APPROVAL_INPUT_TOO_LARGE"),
         BodyRead::Failed => return, // request aborted: TS destroys the response
     };
     let Some(body) = parse_json(&bytes) else { return fail(stream, 400, "APPROVAL_INPUT_INVALID") };
