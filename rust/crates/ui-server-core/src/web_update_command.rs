@@ -180,7 +180,7 @@ pub async fn create_command_client<H: UpdateHost>(h: &mut H, server_port: Option
         Some(p) => number(p),
         None => 3001.0,
     };
-    if !(port.is_finite() && port.fract() == 0.0) || !(1.0..=65535.0).contains(&port) {
+    if !(port.is_finite() && port.fract() == 0.0 && (1.0..=65535.0).contains(&port)) {
         return Err(failure("invalidPort", "SERVER_PORT must identify the local Web service."));
     }
     let base = format!("http://127.0.0.1:{}", js_number_to_string(port));
