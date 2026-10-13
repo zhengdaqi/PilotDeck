@@ -11,3 +11,8 @@
   sidecar must reproduce exactly the baseline's failure set (no new failures, no "fixed" ones hidden).
   Not fixed by the migration; reported for the product owners.
 - Evidence: `evidence/agent-loop-parity-ts-baseline-summary.json`.
+
+## Addendum: flakiness of the TS-sidecar baseline
+A second full baseline run had 25 failures, not 26, and the failing set was different. permission_ask_approve,
+multi_tool_mixed_permission and sidecar_parent_close_after_admission flip from run to run because of timing. The Rust sidecar
+gate therefore compares failure sets modulo these three scenarios.
