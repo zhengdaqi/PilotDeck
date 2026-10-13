@@ -8,6 +8,7 @@ pub mod command_parser;
 pub mod node_path;
 pub mod shell_quote;
 pub mod settings_files;
+pub mod services;
 
 /// Node's fs error message: `<CODE>: <description>, <syscall> '<path>'`.
 pub fn node_fs_message(e: &std::io::Error, syscall: &str, path: &str) -> String {
@@ -20,4 +21,17 @@ pub fn node_fs_message(e: &std::io::Error, syscall: &str, path: &str) -> String 
         _ => return e.to_string(),
     };
     format!("{code}: {desc}, {syscall} '{path}'")
+}
+
+/// `String(v)` for a JSON value.
+pub fn js_object_string(v: &serde_json::Value) -> String {
+    use serde_json::Value;
+    match v {
+        Value::Null => "null".into(),
+        Value::Bool(b) => b.to_string(),
+        Value::Number(n) => js_number::js_number_to_string(n.as_f64().unwrap_or(f64::NAN)),
+        Value::String(s) => s.clone(),
+        Value::Array(a) => a.iter().map(|x| if x.is_null() { String::new() } else { js_object_string(x) }).collect::<Vec<_>>().join(","),
+        Value::Object(_) => "[object Object]".into(),
+    }
 }
