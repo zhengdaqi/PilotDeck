@@ -9,11 +9,16 @@ description = "Native port of the PilotDeck Gateway server edge (src/gateway/ser
 pilotdeck-skills = { path = "../skills" }
 pilotdeck-session-search = { path = "../session-search" }
 pilotdeck-gateway-client = { path = "../gateway-client" }
+pilotdeck-agent-loop-sidecar = { path = "../agent-loop-sidecar" }
 sha1 = "0.10"
 base64 = "0.22"
 httparse = "1"
 chrono = { workspace = true }
+unicode-normalization = "0.1"
 
 [[bin]]
 name = "pilotdeck-gateway-server"
 path = "src/main.rs"
+
+[dev-dependencies]
+serde_json = { workspace = true }

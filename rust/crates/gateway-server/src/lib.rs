@@ -10,6 +10,8 @@
 //! (`backend::ProcessGateway`). See docs/rust-migration/contracts/CAP-GATEWAY-SERVER.contract.md.
 pub mod backend;
 pub mod conn;
+pub mod files;
+pub mod public;
 pub mod http;
 pub mod token;
 pub mod ws;

@@ -123,6 +123,62 @@ fn read_request(stream: &mut TcpStream) -> Option<Request> {
     }
 }
 
+/// Read the full request body (Content-Length or chunked), like `for await (const chunk of request)`.
+fn read_body(stream: &mut TcpStream, req: &Request) -> Option<Vec<u8>> {
+    let mut buf = req.body_prefix.clone();
+    let mut chunk = [0u8; 8192];
+    if let Some(len) = req.header("content-length").and_then(|v| v.parse::<usize>().ok()) {
+        while buf.len() < len {
+            let n = stream.read(&mut chunk).ok()?;
+            if n == 0 { break; }
+            buf.extend_from_slice(&chunk[..n]);
+        }
+        buf.truncate(len);
+        return Some(buf);
+    }
+    if req.header("transfer-encoding").map_or(false, |t| t.eq_ignore_ascii_case("chunked")) {
+        let mut out = Vec::new();
+        loop {
+            if let Some(i) = buf.windows(2).position(|w| w == b"\r\n") {
+                let size_line = String::from_utf8_lossy(&buf[..i]).to_string();
+                let n = usize::from_str_radix(size_line.split(';').next().unwrap_or("").trim(), 16).ok()?;
+                if n == 0 { return Some(out); }
+                if buf.len() >= i + 2 + n + 2 {
+                    out.extend_from_slice(&buf[i + 2..i + 2 + n]);
+                    buf.drain(..i + 2 + n + 2);
+                    continue;
+                }
+            }
+            let r = stream.read(&mut chunk).ok()?;
+            if r == 0 { return Some(out); }
+            buf.extend_from_slice(&chunk[..r]);
+        }
+    }
+    Some(buf)
+}
+
+fn stream_clone(s: &TcpStream) -> Option<TcpStream> {
+    s.try_clone().ok()
+}
+
+fn read_body_limited(stream: Option<TcpStream>, req: &Request, limit: usize) -> crate::public::BodyRead {
+    let Some(mut stream) = stream else { return crate::public::BodyRead::Failed };
+    match read_body(&mut stream, req) {
+        Some(b) if b.len() > limit => crate::public::BodyRead::TooLarge,
+        Some(b) => crate::public::BodyRead::Ok(b),
+        None => crate::public::BodyRead::Failed,
+    }
+}
+
+pub fn reason(status: u16) -> &'static str {
+    match status {
+        200 => "OK", 201 => "Created", 202 => "Accepted", 204 => "No Content", 400 => "Bad Request", 401 => "Unauthorized",
+        403 => "Forbidden", 404 => "Not Found", 405 => "Method Not Allowed", 409 => "Conflict", 413 => "Payload Too Large",
+        418 => "I'm a Teapot", 451 => "Unavailable For Legal Reasons", 500 => "Internal Server Error", 501 => "Not Implemented",
+        502 => "Bad Gateway", 503 => "Service Unavailable", _ => "",
+    }
+}
+
 fn respond(stream: &mut TcpStream, status: u16, content_type: &str, body: &[u8]) {
     let reason = match status {
         200 => "OK", 400 => "Bad Request", 401 => "Unauthorized", 403 => "Forbidden", 404 => "Not Found",
@@ -151,25 +207,18 @@ fn handle_connection(mut stream: TcpStream, ctx: Arc<Ctx>) {
 fn handle_http(stream: &mut TcpStream, req: &Request, ctx: &Ctx) {
     let pathname = url_pathname(&req.target);
     let auth = req.header("authorization");
-    // handlePublicApprovalHttpRequest (no approval bridge bound)
+    // handlePublicApprovalHttpRequest / handlePublicHostHttpRequest (bound through the Gateway host when it
+    // advertises `__approvals` / `__host`; unbound otherwise).
     if pathname == "/api/module-host/approvals/status" || pathname == "/api/module-host/approvals/resume" {
-        if ctx.token.is_empty() || auth != Some(format!("Bearer {}", ctx.token).as_str()) {
-            return send_json(stream, 401, obj(vec![("code", s("PUBLIC_HOST_TRANSPORT_UNAUTHORIZED"))]));
-        }
-        if req.method != "POST" {
-            return send_json(stream, 405, obj(vec![("code", s("PUBLIC_HOST_METHOD_NOT_ALLOWED"))]));
-        }
-        return send_json(stream, 503, obj(vec![("code", s("APPROVAL_BINDING_UNAVAILABLE"))]));
+        let approver = req.header("x-staffdeck-approver-authorization").map(str::to_string);
+        let clone = stream_clone(stream);
+        let mut read = move |limit: usize| read_body_limited(clone.as_ref().and_then(|c| c.try_clone().ok()), req, limit);
+        return crate::public::handle_approvals(stream, &*ctx.gateway, &ctx.token, &pathname, &req.method, auth, approver.as_deref(), &mut read);
     }
-    // handlePublicHostHttpRequest (no provider resolver bound)
     if pathname == "/api/module-host/describe" || pathname == "/api/module-host/call" {
-        if auth != Some(format!("Bearer {}", ctx.token).as_str()) {
-            return send_json(stream, 401, obj(vec![("code", s("PUBLIC_HOST_TRANSPORT_UNAUTHORIZED"))]));
-        }
-        if req.method != "POST" {
-            return send_json(stream, 405, obj(vec![("code", s("PUBLIC_HOST_METHOD_NOT_ALLOWED"))]));
-        }
-        return send_json(stream, 501, obj(vec![("code", s("PUBLIC_HOST_PORT_UNAVAILABLE"))]));
+        let clone = stream_clone(stream);
+        let mut read = move |limit: usize| read_body_limited(clone.as_ref().and_then(|c| c.try_clone().ok()), req, limit);
+        return crate::public::handle_host(stream, &*ctx.gateway, &ctx.token, &pathname, &req.method, auth, &mut read);
     }
     if pathname == "/health" {
         return respond(stream, 200, "application/json", br#"{"ok":true}"#);
@@ -259,13 +308,42 @@ fn handle_web_api(stream: &mut TcpStream, req: &Request, ctx: &Ctx, pathname: &s
         }
         if let Some(sub) = sub {
             // TS decodes before its try block: a URIError is an unhandled rejection (SRC-DEFECT-005); drop the request.
-            let Some(_project_key) = decode_uri_component(key) else { return };
-            let pending = (sub == "/files/tree" && req.method == "GET") || (sub == "/files/read" && req.method == "GET")
-                || (sub == "/files/write" && req.method == "POST");
-            if pending {
-                // PENDING (not dropped): ProjectFileService (src/adapters/web/projectFiles.ts) is not ported yet.
-                return send_json(stream, 501, obj(vec![("error", obj(vec![("code", s("RUST_GATEWAY_PENDING")),
-                    ("message", s("Rust gateway server: /api/web project files routes are not ported yet (pending)."))]))]));
+            let Some(project_key) = decode_uri_component(key) else { return };
+            // No resolveProject is bound by the TS server entry: projectRoot = projectKey.
+            let result: Option<Result<JsValue, crate::files::FileErr>> = if sub == "/files/tree" && req.method == "GET" {
+                let path = crate::files::search_param(&req.target, "path").unwrap_or_else(|| ".".into());
+                Some(crate::files::ProjectFileService::new(&project_key).read_tree(&path))
+            } else if sub == "/files/read" && req.method == "GET" {
+                match crate::files::search_param(&req.target, "path").filter(|p| !p.is_empty()) {
+                    None => return send_json(stream, 400, obj(vec![("error", obj(vec![("code", s("missing_path")), ("message", s("?path required"))]))])),
+                    Some(path) => Some(crate::files::ProjectFileService::new(&project_key).read_file(&path)),
+                }
+            } else if sub == "/files/write" && req.method == "POST" {
+                let body = read_body(stream, req);
+                let parsed = body.filter(|b| !b.is_empty()).and_then(|b| pilotdeck_skills::v8json::parse(&String::from_utf8_lossy(&b)).ok());
+                let field = |k: &str| parsed.as_ref().map(|v| crate::get(v, k).clone()).unwrap_or(JsValue::Undefined);
+                let (path, content, enc) = (field("path"), field("content"), field("encoding"));
+                let path_ok = matches!(&path, JsValue::Str(p) if !p.is_empty());
+                let enc_ok = match &enc { JsValue::Undefined => true, JsValue::Str(e) => e == "utf8" || e == "base64", _ => false };
+                let valid = path_ok && matches!(content, JsValue::Str(_)) && enc_ok;
+                if !valid {
+                    return send_json(stream, 400, obj(vec![("error", obj(vec![("code", s("invalid_body")), ("message", s("Expected { path, content[, encoding] }"))]))]));
+                }
+                let (JsValue::Str(p), JsValue::Str(c)) = (&path, &content) else { unreachable!() };
+                let b64 = matches!(&enc, JsValue::Str(e) if e == "base64");
+                Some(crate::files::ProjectFileService::new(&project_key).write_file(p, c, b64).map(|_| obj(vec![("ok", JsValue::Bool(true))])))
+            } else {
+                None
+            };
+            match result {
+                Some(Ok(v)) => return send_json(stream, 200, v),
+                Some(Err(crate::files::FileErr::Boundary(p))) => {
+                    return send_json(stream, 403, obj(vec![("error", obj(vec![("code", s("workspace_boundary")), ("message", s(&format!("Path escapes workspace root: {p}")))]))]))
+                }
+                Some(Err(crate::files::FileErr::Other(m))) => {
+                    return send_json(stream, 500, obj(vec![("error", obj(vec![("code", s("internal_error")), ("message", s(&m))]))]))
+                }
+                None => {}
             }
         }
     }

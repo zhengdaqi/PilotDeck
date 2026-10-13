@@ -35,9 +35,41 @@ Ported (behavior-compatible):
 Bounded fixes, each a documented divergence pending user decision and never counted as parity:
 SRC-DEFECT-004 (malformed frame crash), SRC-DEFECT-005 (unhandled rejection crash), SRC-DEFECT-006 (half-open close cleanup).
 
+- `/api/web/projects/:key/files/{tree,read,write}` and `ProjectFileService`:
+  - lexical and realpath boundary checks
+  - tree typing and sorting (`localeCompare` on names verified against Node, 20000/20000 cases, Latin and accent domain)
+  - text/base64 reads with the 1 MiB cap
+  - recursive mkdir and writes; lenient Node base64 decoding; WHATWG `searchParams`; Content-Length and chunked bodies
+  - Node `fs` error messages
+  - The root is `projectKey`, because the TS server entry binds no `resolveProject`.
+  - Covered by 71 file-route parity cases on real temp trees: symlinks in and out, a dangling link, a fifo, bad UTF-8, a
+    BOM, unicode names, big files.
+  - SRC-DEFECT-007 (write follows symlinks out of the root) is replicated as-is, pending user decision.
+
+- Public module-host transports in their bound configuration (`publicApprovalHttpTransport.ts`,
+  `publicHostHttpTransport.ts`).
+  - Rust owns the HTTP side:
+    - auth and method checks
+    - size limits (64 KiB / 32 MiB)
+    - JSON and shape validation
+    - the allowed-key and scope-override rules
+    - binding subject checks
+    - the wire-operation filter
+    - status validation
+    - the header whitelist
+    - NDJSON/SSE chunked streaming, with mid-stream destroy
+    - error mapping (409 conflict, 502 defaults)
+  - The bound `PublicApprovalBridge` and provider resolver stay in the Gateway host. They are reached through
+    `GatewayBackend` methods `__approvals.*` and `__host.*` (resolve, call, and release, with handles so the resolver
+    runs once per request).
+  - Parity: 58 public cases against the real TS transports with the same fake bridge and provider (`fake_public.mjs`),
+    including the effects log.
+  - Approximations:
+    - Client-disconnect abort is not propagated to `provider.call` (the host passes a never-aborted signal).
+    - A stream whose head the server rejects is still drained by the host.
+  - SRC-DEFECT-008 (no response for oversized approval input) is replicated, pending decision.
+
 PENDING. Not dropped; each fails loudly, never fakes success:
-- `/api/web/projects/:key/files/{tree,read,write}` (ProjectFileService): `501 RUST_GATEWAY_PENDING`.
-- Bound public approval bridge and public host provider resolver (`publicApprovals`, `publicHostCapabilities`).
 - `/feishu/webhook` option.
 - The `Gateway` implementation itself (InProcessGateway: sessions, agent loop host, tools, storage, cron, MCP...). The
   Rust edge reaches a Gateway only through `GatewayBackend`. Today that is `ProcessGateway` (JSON-lines host process).
