@@ -34,6 +34,10 @@
     {
       "path": "contracts/CAP-TUI-CORE.contract.md",
       "sha256": "0f9c56cdfa5d3c22ff97883770b3645d20238c7d53de4db698fbfc1f01f92909"
+    },
+    {
+      "path": "../../rust/crates/tui-core/tests/fixtures/tui_core.json",
+      "sha256": "396d997b315c9bcea84e2b063b37e939156e1e813a2b84ca56d505266b96dfd2"
     }
   ],
   "frozen_by": "grokbot-executor (session 2026-10-13, standard profile; not independent of author)"

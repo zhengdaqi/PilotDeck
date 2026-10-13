@@ -1,20 +1,18 @@
 {
   "schema_version": 1,
   "scope_id": "pilotdeck-standalone_alpha1-b243fa00/CAP-TUI-CORE",
-  "status": "NEEDS_PROBE",
-  "selected_branches": [],
-  "provisional_branches": [
+  "status": "SELECTED",
+  "selected_branches": [
     "S03",
     "V01"
   ],
+  "provisional_branches": [],
   "reasons": [
     "S03: target_integration=native",
     "V01: deterministic observable core"
   ],
   "blocking_checks": [],
-  "probe_checks": [
-    "replay_corpus_ready"
-  ],
+  "probe_checks": [],
   "required_gates": [
     "G03",
     "G05",
@@ -48,6 +46,10 @@
     {
       "path": "/workspace/PilotDeck/docs/rust-migration/contracts/CAP-TUI-CORE.contract.md",
       "sha256": "0f9c56cdfa5d3c22ff97883770b3645d20238c7d53de4db698fbfc1f01f92909"
+    },
+    {
+      "path": "/workspace/PilotDeck/rust/crates/tui-core/tests/fixtures/tui_core.json",
+      "sha256": "396d997b315c9bcea84e2b063b37e939156e1e813a2b84ca56d505266b96dfd2"
     }
   ],
   "phase_bindings": {
@@ -60,7 +62,7 @@
     "P26": "branch_exit_audit"
   },
   "meaning": "selection only; not implementation, deployment approval, or product PASS",
-  "facts_sha256": "2fb608fd2b67c678d1b4b9b8e2d157a2bbf6488a2ccc8e16af820f856c5848a4",
+  "facts_sha256": "10b79cf2dbb632208ef78a9d7c0c4c9f2cd106cf26b1921dbccc8eef10924da5",
   "catalog_sha256": "1eb0fd94be42b40d4c075d7e80831a88e07e36bcc2d9b8f7c74958e9911cf375",
   "selector_sha256": "1494d06c53c669aa990c2ba4337185aef9d6e8782fea505856cfde30e2e6d3fe"
 }
