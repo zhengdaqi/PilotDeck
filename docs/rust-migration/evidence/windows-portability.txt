@@ -1,0 +1,5 @@
+slice 22 Windows portability evidence 2026-10-13 14:30:46 CST
+cargo check --workspace --target x86_64-pc-windows-gnu (mingw-w64 14.2): OK (all crates; desktop-tauri is a separate workspace, not checked)
+fixes: gateway-server files.rs (portable mtime, unix-only FileTypeExt removed), skills migrate symlink (Windows symlink_dir/symlink_file like Node), safe_write Windows implementation
+Linux regression: gateway parity 832/832 parity cases passed ; 
+not run on Windows (no Windows machine) - pending

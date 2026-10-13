@@ -315,7 +315,17 @@ fn copy_tree(src: &Path, dst: &Path) -> std::io::Result<()> {
         if fs::symlink_metadata(dst).is_ok() {
             fs::remove_file(dst)?;
         }
+        #[cfg(unix)]
         std::os::unix::fs::symlink(target, dst)?;
+        // Node's fs.symlink without a type on Windows picks "dir" or "file" from the target (stat follows links).
+        #[cfg(windows)]
+        {
+            if fs::metadata(&target).map(|m| m.is_dir()).unwrap_or(false) {
+                std::os::windows::fs::symlink_dir(target, dst)?;
+            } else {
+                std::os::windows::fs::symlink_file(target, dst)?;
+            }
+        }
     } else if ft.is_dir() {
         if !dst.exists() {
             fs::create_dir(dst)?;

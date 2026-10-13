@@ -71,3 +71,8 @@ Evidence: the `frontmatter_oracle` and `bash_commands_oracle` tests. YAML-GAP-00
 
 ## SRC-DEFECT-015 (2026-10-13: fixed under the source-defect policy, intended difference)
 In the SDK transport, malformed frames (`null`, `ok:false` without `error`, a non-string `error.code`) no longer throw in the socket listener. A `null` frame is ignored; the request settles as `gateway_request_failed`. Evidence: `transport_oracle`.
+
+## SRC-DEFECT-007 on Windows (2026-10-13)
+`safe_write_windows.rs` gives the same guarantee. Each directory on the way is opened with `FILE_FLAG_OPEN_REPARSE_POINT` and pinned without `FILE_SHARE_DELETE`. Reparse points are resolved and checked against the root before the walk restarts. The final file is opened without following a reparse point.
+
+The whole workspace (except the Tauri desktop app) now compile-checks for `x86_64-pc-windows-gnu`. It has not been run on Windows yet; that remains part of the production gate.
