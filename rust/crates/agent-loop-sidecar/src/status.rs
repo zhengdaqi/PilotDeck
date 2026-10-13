@@ -324,7 +324,7 @@ pub fn missing_tool_recovery(tool_name: &str, message: &str, permission_mode: &s
     } else {
         "environment_issue"
     };
-    let next = vec![format!("Inspect the evidence, change the approach, then retry only with corrected inputs. Current permission mode: {permission_mode}.")];
+    let next = [format!("Inspect the evidence, change the approach, then retry only with corrected inputs. Current permission mode: {permission_mode}.")];
     let cleaned = lines_of(message).iter().map(|l| l.trim_end()).filter(|l| !is_tool_error_line(l.trim())).collect::<Vec<_>>().join("\n");
     let cleaned = cleaned.trim().to_string();
     let original = if cleaned.is_empty() {
@@ -400,7 +400,7 @@ pub fn strip_trailing_error_pair(messages: &mut Vec<JsValue>) {
             messages.pop();
         }
     }
-    if messages.last().map_or(false, |m| gs(m, "role") == Some("assistant")) {
+    if messages.last().is_some_and(|m| gs(m, "role") == Some("assistant")) {
         messages.pop();
     }
 }
@@ -426,8 +426,8 @@ pub fn is_missing_reasoning_content_error(e: &JsValue) -> bool {
     let m = gs(e, "message").unwrap_or("").to_lowercase();
     let word = |w: &str| {
         m.match_indices(w).any(|(i, _)| {
-            let before = m[..i].chars().last().map_or(true, |c| !(c.is_alphanumeric() || c == '_'));
-            let after = m[i + w.len()..].chars().next().map_or(true, |c| !(c.is_alphanumeric() || c == '_'));
+            let before = m[..i].chars().last().is_none_or(|c| !(c.is_alphanumeric() || c == '_'));
+            let after = m[i + w.len()..].chars().next().is_none_or(|c| !(c.is_alphanumeric() || c == '_'));
             before && after
         })
     };

@@ -589,10 +589,8 @@ fn png_chunk(out: &mut Vec<u8>, kind: &[u8], data: &[u8]) {
 pub fn solid_png_rows([r, g, b]: [u8; 3], size: u32) -> Vec<u8> {
     let mut rows = Vec::new();
     for _ in 0..size {
-        rows.push(0);
-        for _ in 0..size {
-            rows.extend_from_slice(&[r, g, b]);
-        }
+        rows.push(0u8);
+        rows.extend(std::iter::repeat_n([r, g, b], size as usize).flatten());
     }
     rows
 }

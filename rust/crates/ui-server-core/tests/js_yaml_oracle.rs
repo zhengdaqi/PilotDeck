@@ -14,7 +14,7 @@ fn js_yaml_safe_load_matches_ts() {
             Ok(Some(y)) => json!({ "ok": y.to_json() }),
             Err(e) => json!({ "err": e }),
         };
-        if got.to_string() == c["out"].to_string() {
+        if got == c["out"] {
             if got.get("ok").is_some() { ok += 1 } else { err += 1 }
         } else {
             bad.push(format!("{input:?}\n ts {}\n rs {}", c["out"], got));

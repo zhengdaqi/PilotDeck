@@ -681,10 +681,10 @@ impl App {
                     let g = |k: &str| m.get(k).and_then(Value::as_str);
                     let text = g("text").filter(|t| !t.is_empty());
                     let (role, kind) = (g("role").unwrap_or(""), g("kind").unwrap_or(""));
-                    if role == "user" && kind == "text" && text.is_some() {
-                        out.push(TuiMessage::User { text: text.unwrap().into() });
-                    } else if role == "assistant" && kind == "text" && text.is_some() {
-                        out.push(TuiMessage::Assistant { text: text.unwrap().into(), thinking: None });
+                    if let (true, Some(t)) = (role == "user" && kind == "text", text) {
+                        out.push(TuiMessage::User { text: t.into() });
+                    } else if let (true, Some(t)) = (role == "assistant" && kind == "text", text) {
+                        out.push(TuiMessage::Assistant { text: t.into(), thinking: None });
                     } else if role == "assistant" && kind == "thinking" && text.is_some() {
                         if let Some(TuiMessage::Assistant { thinking, .. }) = out.last_mut() {
                             *thinking = Some(thinking.clone().unwrap_or_default() + text.unwrap());

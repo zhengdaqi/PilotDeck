@@ -1,0 +1,10 @@
+slice 35 clippy cleanup 2026-10-13 15:40:54 CST — clippy 0.1.85 (/workspace/.tools rustup), cargo clippy --workspace --all-targets: 0 warnings (before: about 85).
+Mechanical fixes (cargo clippy --fix plus by hand): map_or→is_some_and/is_none_or, elided lifetimes, clamp, write! instead of format!-collect, doc-list indentation, unnecessary unwrap, simplified boolean (same precedence), &PathBuf→&Path, repeat_n for the PNG row, reaping the child in the plugin spawn test.
+Rejected autofix: clippy::cmp_owned rewrote the ui_services_oracle comparator into String != serde_json::Value (always unequal) and broke the regenerate test. It was restored to compare against the serialized TS log, with a file-level allow and a reason, so the comparator was not weakened.
+Allowed with a reason (design choices, see the crate-level comments): result_large_err (JsError/SdkError keep the full JS error shape), result_unit_err (host traits mirror throwing DOM/IPC calls), too_many_arguments and type_complexity (signatures mirror the TS), should_implement_trait (SDK next() is not an iterator), comparison_chain (JS-ordered branches kept for review against the source).
+All oracles rerun after the changes:
+- cargo test --workspace: 58 suites, 0 failures
+- gateway parity: 832/832, plus 5/5 intended differences OK
+- sdk-wasm: 2440 ops, 0 mismatches; validateOptions: 9860, 0 mismatches
+- web-ui in Chrome: 21036 checks, 0 mismatches; Tauri smoke: 21036, 0 mismatches
+- cargo check --target x86_64-pc-windows-gnu: OK

@@ -44,7 +44,7 @@ pub fn sha256_hex(data: &[u8]) -> String {
             h[i] = h[i].wrapping_add(v[i]);
         }
     }
-    h.iter().map(|x| format!("{x:08x}")).collect()
+    h.iter().fold(String::new(), |mut s, x| { use std::fmt::Write; let _ = write!(s, "{x:08x}"); s })
 }
 
 pub fn random_bytes<const N: usize>() -> [u8; N] {
@@ -65,7 +65,7 @@ pub fn uuid_v4() -> String {
     let mut b = random_bytes::<16>();
     b[6] = (b[6] & 0x0f) | 0x40;
     b[8] = (b[8] & 0x3f) | 0x80;
-    let h: String = b.iter().map(|x| format!("{x:02x}")).collect();
+    let h: String = b.iter().fold(String::new(), |mut s, x| { use std::fmt::Write; let _ = write!(s, "{x:02x}"); s });
     format!("{}-{}-{}-{}-{}", &h[0..8], &h[8..12], &h[12..16], &h[16..20], &h[20..32])
 }
 

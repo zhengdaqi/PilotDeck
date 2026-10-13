@@ -121,7 +121,7 @@ impl Timeline {
                 }
                 _ => None,
             };
-            let has = matches!(get(block, "timeline"), JsValue::Undefined | JsValue::Null) == false;
+            let has = !matches!(get(block, "timeline"), JsValue::Undefined | JsValue::Null);
             if let Some(id) = id {
                 if !has {
                     let p = self.update(&id);

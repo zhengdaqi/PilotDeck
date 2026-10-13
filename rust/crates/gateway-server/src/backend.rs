@@ -6,6 +6,7 @@
 //!   no argument, argc 1 without `params` = called with `undefined`
 //! - host -> server: `{"id":N,"event":<GatewayEvent>}` (submitTurn only, zero or more), then
 //!   `{"id":N,"ok":true,"result":<value>}` or `{"id":N,"ok":false,"error":<GwError wire>}`
+//!
 //! The error wire carries the TS classification GatewayWsConnection branches on:
 //! `kind` = `skill_validation` | `skill_manager` | `structured` (DialogGatewayError or Error with string code) | `plain`.
 use crate::{get, JsValue};

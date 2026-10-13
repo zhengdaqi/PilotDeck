@@ -17,7 +17,7 @@ fn media_ref_id(b: &JsValue) -> Option<&str> {
     if gs(b, "type") == Some("media_reference") { gs(b, "toolCallId").filter(|s| !s.is_empty()) } else { None }
 }
 fn text_starts(b: &JsValue, p: &str) -> bool {
-    gs(b, "type") == Some("text") && gs(b, "text").map_or(false, |t| t.starts_with(p))
+    gs(b, "type") == Some("text") && gs(b, "text").is_some_and(|t| t.starts_with(p))
 }
 
 fn collect_tool_call_ids(ms: &[JsValue]) -> Vec<String> {
@@ -59,7 +59,7 @@ fn is_real_user_request(m: &JsValue) -> bool {
 }
 
 fn ensure_trailing_user(mut ms: Vec<JsValue>) -> Vec<JsValue> {
-    if ms.last().map_or(false, |m| role(m) == Some("assistant")) {
+    if ms.last().is_some_and(|m| role(m) == Some("assistant")) {
         ms.push(obj! {"role" => "user", "content" => vec![obj! {"type" => "text", "text" => CONTINUATION_TEXT}]});
     }
     ms

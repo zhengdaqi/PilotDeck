@@ -280,7 +280,7 @@ fn read_body(r: &mut BufReader<TcpStream>, req: &Request) -> Body {
             let Ok(n) = usize::from_str_radix(size.trim().split(';').next().unwrap_or("").trim(), 16) else { return Body::Bad };
             if n == 0 {
                 let mut t = String::new();
-                while r.read_line(&mut t).unwrap_or(0) > 0 && t.trim_end_matches(['\r', '\n']).len() > 0 {
+                while r.read_line(&mut t).unwrap_or(0) > 0 && !t.trim_end_matches(['\r', '\n']).is_empty() {
                     t.clear();
                 }
                 return Body::Ok(body);

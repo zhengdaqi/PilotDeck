@@ -321,7 +321,7 @@ pub fn search(input: &SearchInput) -> Result<SearchResult, SearchError> {
     if query.is_empty() {
         return Ok(SearchResult { query, matches: Vec::new(), truncated: false, sessions_scanned: 0 });
     }
-    let limit = input.limit.unwrap_or(DEFAULT_LIMIT).max(1.0).min(MAX_LIMIT);
+    let limit = input.limit.unwrap_or(DEFAULT_LIMIT).clamp(1.0, MAX_LIMIT);
     let matcher = build_matcher(&query, input.case_sensitive, input.regex)?;
     let role_filter = input.role.unwrap_or(RoleFilter::All);
     let files = collect_session_files(input);

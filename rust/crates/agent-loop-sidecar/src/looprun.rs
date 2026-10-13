@@ -200,7 +200,7 @@ impl<'a> Run<'a> {
         self.messages.retain(|m| {
             let md = get(m, "metadata");
             !(gs(m, "role") == Some("user") && gb(md, "transient") == Some(true)
-                && gs(md, "transientId").map_or(false, |t| ids.iter().any(|x| x == t)))
+                && gs(md, "transientId").is_some_and(|t| ids.iter().any(|x| x == t)))
         });
     }
 
@@ -229,7 +229,7 @@ impl<'a> Run<'a> {
                 return Err(invalid("Turn steer response contains an invalid message."));
             }
             let a = get(item, "allowedReadFiles");
-            if !is_undef(a) && arr(a).map_or(true, |l| l.iter().any(|p| str_of(p).is_none())) {
+            if !is_undef(a) && arr(a).is_none_or(|l| l.iter().any(|p| str_of(p).is_none())) {
                 return Err(invalid("Turn steer response contains invalid allowedReadFiles."));
             }
         }
@@ -243,7 +243,7 @@ fn pos_finite(v: Option<f64>) -> Option<f64> {
     v.filter(|n| n.is_finite() && *n > 0.0)
 }
 
-impl<'a> Run<'a> {
+impl Run<'_> {
     fn cap(&self, p: &str, m: &str) -> Option<&TokenCap> {
         let k = cal_key(p, m);
         self.a.caps.iter().find(|(x, _)| *x == k).map(|(_, c)| c)
@@ -622,7 +622,7 @@ fn pos_int(v: &JsValue) -> Option<f64> {
     num(v).filter(|n| is_safe_int(*n) && *n > 0.0)
 }
 
-impl<'a> Run<'a> {
+impl Run<'_> {
     fn model_context(&self) -> JsValue {
         let a = &*self.a;
         let mo = a.input.model_override.as_ref().map(|o| obj! {"provider" => get(o, "provider"), "model" => get(o, "model")});
@@ -732,7 +732,7 @@ impl<'a> Run<'a> {
             return Ok(out);
         }
         // Per-call path: concurrency-safe calls are issued together, then the rest in order.
-        let safe = |c: &JsValue| self.a.tools.iter().find(|t| Some(t.name.as_str()) == gs(c, "name")).map_or(false, |t| t.concurrency_safe);
+        let safe = |c: &JsValue| self.a.tools.iter().find(|t| Some(t.name.as_str()) == gs(c, "name")).is_some_and(|t| t.concurrency_safe);
         let concurrent: Vec<usize> = (0..calls.len()).filter(|i| safe(&calls[*i])).collect();
         let sequential: Vec<usize> = (0..calls.len()).filter(|i| !safe(&calls[*i])).collect();
         let mut slots: Vec<Option<JsValue>> = vec![None; calls.len()];
@@ -1123,7 +1123,7 @@ fn sorted_js(mut v: Vec<String>) -> Vec<String> {
 }
 
 // ---------------- runOrdered ----------------
-impl<'a> Run<'a> {
+impl Run<'_> {
     /// `continueWithSyntheticPrompt`: Ok(None) = continue the loop, Ok(Some) = completed turn.
     fn continue_with_synthetic(&mut self, decision: crate::lfr::Decision, strip_current: bool) -> R<Option<RunResult>> {
         use crate::lfr::Decision;
@@ -1142,7 +1142,7 @@ impl<'a> Run<'a> {
                     match strip {
                         Some("error_pair") => strip_trailing_error_pair(&mut self.messages),
                         Some("assistant") => {
-                            if self.messages.last().map_or(false, |m| gs(m, "role") == Some("assistant")) {
+                            if self.messages.last().is_some_and(|m| gs(m, "role") == Some("assistant")) {
                                 self.messages.pop();
                             }
                         }
@@ -1152,7 +1152,7 @@ impl<'a> Run<'a> {
                 self.push_transient(&prompt, &purpose);
                 let (p, m) = (self.a.cfg.provider.clone(), self.a.cfg.model.clone());
                 let rec = crate::lfr::LARGE_FILE_OUTPUT_RETRY_TOKENS;
-                if self.current_max_output(&p, &m).map_or(true, |c| c < rec) {
+                if self.current_max_output(&p, &m).is_none_or(|c| c < rec) {
                     self.set_cap(&p, &m, |c| c.session_max_output_tokens = Some(rec));
                 }
                 self.continued("model_error");
@@ -1463,8 +1463,8 @@ impl<'a> Run<'a> {
                     b.0 = turn_spent;
                 }
             }
-            let max_turn_reached = self.a.input.max_budget_usd.map_or(false, |m| turn_spent >= m);
-            let task_reached = self.a.input.task_budget_usd.map_or(false, |t| spent >= t);
+            let max_turn_reached = self.a.input.max_budget_usd.is_some_and(|m| turn_spent >= m);
+            let task_reached = self.a.input.task_budget_usd.is_some_and(|t| spent >= t);
             if max_turn_reached || task_reached {
                 let task_terminal = task_reached && !max_turn_reached;
                 let limit = if task_terminal { self.a.input.task_budget_usd.unwrap() } else { self.a.input.max_budget_usd.unwrap() };
@@ -1803,7 +1803,7 @@ impl<'a> Run<'a> {
                         None => continue,
                     }
                 }
-                let can_continue = self.a.input.max_turns.map_or(true, |m| self.turn_count < m);
+                let can_continue = self.a.input.max_turns.is_none_or(|m| self.turn_count < m);
                 if can_continue && self.a.input.has_drain_or_close {
                     let p = self.a.turn_call(self.rt, "drain_or_close_steer")?;
                     if gb(&p, "closed").is_none() {
@@ -1858,7 +1858,7 @@ impl<'a> Run<'a> {
             let mut pool: Vec<Option<JsValue>> = results.into_iter().map(Some).collect();
             let mut paired: Vec<JsValue> = Vec::new();
             for c in &tool_calls {
-                let pos = pool.iter().position(|r| r.as_ref().map_or(false, |r| get(r, "toolCallId") == get(c, "id")));
+                let pos = pool.iter().position(|r| r.as_ref().is_some_and(|r| get(r, "toolCallId") == get(c, "id")));
                 paired.push(match pos {
                     Some(i) => pool[i].take().unwrap(),
                     None => missing_tool_result(c, "Tool execution did not produce a result.", &pm),
@@ -2119,7 +2119,7 @@ fn annotate_repeated(r: JsValue, repeated: &[String]) -> JsValue {
     spread(&r, obj! {"content" => new_content, "metadata" => spread(&md, obj! {"recovery" => new_rec})})
 }
 
-impl<'a> Run<'a> {
+impl Run<'_> {
     /// Returns true when the stream loop must stop (canonical `error` event).
     fn on_model_event(&mut self, event: &JsValue, asm: &mut Assembler, executed: &mut Option<(JsValue, JsValue, JsValue)>) -> bool {
         let ty = gs(event, "type").unwrap_or("").to_string();
@@ -2163,7 +2163,7 @@ impl<'a> Run<'a> {
 
     /// `resolveBudgetUsage`: provider usage, else the countTokens-based estimate.
     fn resolve_budget_usage(&mut self, usage: &JsValue, estimate: Option<f64>, assistant: &JsValue) -> R<JsValue> {
-        if matches!(usage, JsValue::Obj(o) if o.iter().any(|(_, v)| num(v).map_or(false, |n| n.is_finite()))) {
+        if matches!(usage, JsValue::Obj(o) if o.iter().any(|(_, v)| num(v).is_some_and(|n| n.is_finite()))) {
             return Ok(usage.clone());
         }
         let text = ga(assistant, "content").iter().map(|b| match gs(b, "type") {

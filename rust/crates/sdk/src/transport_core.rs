@@ -7,6 +7,7 @@
 //! - a `null` frame;
 //! - `ok: false` without an `error` object;
 //! - a non-string `error.code`.
+//!
 //! Rust treats a `null` frame as ignorable, a missing `error` as `{}`, and a non-string code as absent.
 use serde_json::{Map, Value};
 use std::collections::{HashMap, VecDeque};

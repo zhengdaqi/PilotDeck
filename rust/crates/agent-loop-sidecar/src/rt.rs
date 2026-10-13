@@ -264,7 +264,7 @@ impl Host {
                 let mut known = false;
                 if let Some(active) = sh.actives.get_mut(&op) {
                     known = true;
-                    matches = active.run_id == run && req.as_ref().map_or(true, |r| *r == active.request_id);
+                    matches = active.run_id == run && req.as_ref().is_none_or(|r| *r == active.request_id);
                     if matches {
                         let reason = get(&value, "reason").clone();
                         if gs(&value, "reason") == Some(format!("timeout:{run}").as_str()) {
@@ -456,10 +456,10 @@ impl Rt {
     }
 
     pub fn deadline_exceeded(&self) -> bool {
-        lock(&self.shared).actives.get(&self.op).map_or(false, |a| a.deadline_exceeded)
+        lock(&self.shared).actives.get(&self.op).is_some_and(|a| a.deadline_exceeded)
     }
     pub fn aborted(&self) -> bool {
-        lock(&self.shared).actives.get(&self.op).map_or(false, |a| a.reason.is_some())
+        lock(&self.shared).actives.get(&self.op).is_some_and(|a| a.reason.is_some())
     }
     pub fn abort_reason(&self) -> Option<JsValue> {
         lock(&self.shared).actives.get(&self.op).and_then(|a| a.reason.clone())

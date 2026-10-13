@@ -6,6 +6,7 @@
 //! is native. AgentLoop execution itself is not migrated yet: `execute` requests that pass
 //! admission are reported through `Server::on_execute`, which the binary answers by refusing
 //! to run (see main.rs). Production keeps the TS sidecar until CAP-AGENT-LOOP is complete.
+#![allow(clippy::too_many_arguments, clippy::type_complexity)] // Event builders mirror the TS call signatures one-to-one.
 
 use pilotdeck_skills::jsjson::{stringify_compact, JsObject, JsValue};
 
