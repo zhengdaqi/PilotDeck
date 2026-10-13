@@ -192,7 +192,7 @@ pub fn random_id() -> String {
     (0..len).map(|_| { let d = digits[(n % 36) as usize] as char; n /= 36; d }).collect()
 }
 
-fn capabilities() -> JsValue {
+pub fn capabilities() -> JsValue {
     let m = |name: &str, extra: JsObject| {
         let mut o = JsObject::new().with("name", s(name));
         for k in extra.keys() {
@@ -428,3 +428,16 @@ pub fn parse_js_date(text: &str) -> Option<f64> {
                 .map(|d| d.and_hms_opt(0, 0, 0).unwrap().and_utc().timestamp_millis() as f64)
         })
 }
+
+/// Milliseconds since the Unix epoch (`Date.now()`).
+pub fn now_ms() -> f64 {
+    std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map(|d| d.as_millis() as f64).unwrap_or(0.0)
+}
+
+// AgentLoop execute-path port (work in progress; not wired into the binary yet).
+pub mod json;
+pub mod rt;
+pub mod timeline;
+pub mod agent;
+pub mod factory;
+pub mod exec;

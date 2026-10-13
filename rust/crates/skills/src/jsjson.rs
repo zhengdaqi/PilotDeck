@@ -52,6 +52,21 @@ impl JsObject {
         self.entries.iter().find(|(k, _)| k == key).map(|(_, v)| v)
     }
 
+    pub fn get_mut(&mut self, key: &str) -> Option<&mut JsValue> {
+        self.entries.iter_mut().find(|(k, _)| k == key).map(|(_, v)| v)
+    }
+
+    /// `delete obj[key]`
+    pub fn remove(&mut self, key: &str) -> Option<JsValue> {
+        let idx = self.entries.iter().position(|(k, _)| k == key)?;
+        Some(self.entries.remove(idx).1)
+    }
+
+    /// Own entries in ECMAScript enumeration order.
+    pub fn iter(&self) -> impl Iterator<Item = (&String, &JsValue)> {
+        self.ordered().into_iter().map(|(k, v)| (k, v))
+    }
+
     pub fn is_empty(&self) -> bool {
         self.entries.is_empty()
     }
