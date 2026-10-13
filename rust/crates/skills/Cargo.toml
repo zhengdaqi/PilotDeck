@@ -1,0 +1,12 @@
+[package]
+name = "pilotdeck-skills"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Skill validation and third-party skill migration (Rust port of src/extension/skills/{migrateSkills,SkillManager}.ts)"
+
+[dependencies]
+pilotdeck-session-search = { path = "../session-search" }
+serde_yaml.workspace = true
+ryu-js.workspace = true
+regex.workspace = true

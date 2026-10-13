@@ -11,5 +11,7 @@ path = "src/main.rs"
 
 [dependencies]
 pilotdeck-session-search = { path = "../session-search" }
-serde_json.workspace = true
+pilotdeck-skills = { path = "../skills" }
+pilotdeck-gateway-client = { path = "../gateway-client" }
+serde_json = { workspace = true, features = ["preserve_order"] }
 serde.workspace = true

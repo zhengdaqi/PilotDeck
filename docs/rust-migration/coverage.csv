@@ -4,9 +4,9 @@ CAP-CLI-DISPATCH,pilotdeck <other commands>,src/cli/pilotdeck.ts(main),first_par
 CAP-CLI-SDK,pilotdeck run/resume/sessions/settings/help,src/cli/sdkCli.ts;packages/sdk,first_party_runtime,linux;macos;windows,,,,,,,,not_started
 CAP-CLI-SERVER,pilotdeck server,src/cli/pilotdeckServer.ts;src/gateway;ui/server,first_party_runtime,linux;macos;windows,,,,,,,,not_started
 CAP-CLI-GATEWAY-SETUP,pilotdeck gateway setup,src/cli/commands/gatewaySetup.ts,first_party_runtime,linux;macos;windows,,,,,,,,not_started
-CAP-CLI-CRON,pilotdeck cron,src/cli/pilotdeck.ts(handleCronCommand);src/cron,first_party_runtime,linux;macos;windows,,,,,,,,not_started
+CAP-CLI-CRON,pilotdeck cron,src/cli/pilotdeck.ts(handleCronCommand);src/gateway/client/probeServer.ts;src/gateway/client/GatewayWsClient.ts(request path);src/gateway/server/authToken.ts(read),first_party_runtime,linux;macos;windows,CAP-CLI-CRON/v1,rust/crates/gateway-client;rust/crates/cli/src/cron.rs,P11-slice-3,server_side_remains_ts_until_CAP-GATEWAY,tungstenite,G03;G05;G06;G07;G09;G11;G17,docs/rust-migration/evidence/parity-cron.json,linux_parity_passed_pending_independent_review(SRC-DEFECT-001 deviation)
 CAP-CLI-UPDATE,pilotdeck update,src/cli/pilotdeck.ts(handleUpdateCommand),first_party_runtime,linux;macos;windows,,,,,,,,not_started
-CAP-CLI-SKILLS,pilotdeck skills migrate,src/extension/skills,first_party_runtime,linux;macos;windows,,,,,,,,not_started
+CAP-CLI-SKILLS,pilotdeck skills migrate,src/cli/pilotdeck.ts(handleSkillsCommand);src/extension/skills/migrateSkills.ts;src/extension/skills/SkillManager.ts(validate/import/frontmatter),first_party_runtime,linux;macos;windows,CAP-CLI-SKILLS-MIGRATE/v1,rust/crates/skills;rust/crates/cli/src/skills.rs,P10-slice-2,none,serde_yaml(YAML parser substitute),G03;G05;G06;G07;G09;G11;G17,docs/rust-migration/evidence/parity-skills-migrate.json,linux_parity_passed_pending_independent_review
 CAP-CLI-TUI,pilotdeck tui,src/adapters(TuiChannel/ink),first_party_runtime,linux;macos;windows,,,,,,,,not_started
 CAP-SIDECAR,pilotdeck-agent-loop-sidecar,src/cli/pilotdeck-agent-loop-sidecar.ts,first_party_runtime,linux;macos;windows,,,,,,,,not_started
 CAP-GATEWAY,HTTP/WS gateway,src/gateway,first_party_runtime,linux;macos;windows,,,,,,,,not_started
@@ -15,11 +15,11 @@ CAP-TOOLS,builtin tools,src/tool;src/sandbox;src/permission,first_party_runtime,
 CAP-SESSION,session runtime/storage,src/session(rest);src/storage,first_party_runtime,linux;macos;windows,,,,,,,,not_started
 CAP-CONTEXT-MEMORY,context & memory,src/context;edgeclaw-memory-core,first_party_runtime,linux;macos;windows,,,,,,,,not_started
 CAP-MCP,MCP clients,src/mcp,first_party_runtime,linux;macos;windows,,,,,@modelcontextprotocol/sdk,,,not_started
-CAP-EXTENSIONS,plugins & skills,src/extension,first_party_runtime,linux;macos;windows,,,,,js_plugin_host_decision_pending,,,blocked_on_user_decision
+CAP-EXTENSIONS,plugins & skills,src/extension,first_party_runtime,linux;macos;windows,,,,,js_plugin_host_decision_pending,,,not_started(route frozen in ADR-0002)
 CAP-CHANNELS,channel adapters,src/adapters,first_party_runtime,linux;macos;windows,,,,,lark/weixin SDKs,,,not_started
 CAP-AUTOMATION,always-on/cron/sop/workflow/task/goal/plan-todo,src/always-on;src/cron;src/sop;src/workflow;src/task;src/goal;src/plan-todo,first_party_runtime,linux;macos;windows,,,,,,,,not_started
 CAP-MISC-RUNTIME,telemetry/status/lsp/web/network/lifecycle/runtime/interaction/composition/pilot,src/*,first_party_runtime,linux;macos;windows,,,,,,,,not_started
 CAP-UI-SERVER,express server,ui/server,first_party_runtime(js),linux;macos;windows,,,,,,,,not_started
-CAP-WEB-UI,browser UI,ui/src;ui/shared,first_party_browser,browsers,,,,,,,,blocked_on_user_decision
-CAP-DESKTOP,electron app,apps/desktop,first_party_desktop,macos;windows;linux,,,,,,,,blocked_on_user_decision
-CAP-SDK-NPM,@pilotdeck/sdk,packages/sdk,public_npm_api,node,,,,,,,,blocked_on_user_decision
+CAP-WEB-UI,browser UI,ui/src;ui/shared,first_party_browser,browsers,,,,,,,,not_started(route frozen in ADR-0002)
+CAP-DESKTOP,electron app,apps/desktop,first_party_desktop,macos;windows;linux,,,,,,,,not_started(route frozen in ADR-0002)
+CAP-SDK-NPM,@pilotdeck/sdk,packages/sdk,public_npm_api,node,,,,,,,,not_started(route frozen in ADR-0002)
