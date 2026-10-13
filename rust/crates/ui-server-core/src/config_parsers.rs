@@ -7,6 +7,7 @@
 //! - src/model/thinking/settings.ts `parseThinkingSettings`
 //! - src/pilot/config/parseGatewayConfig.ts (`parseGatewayConfig`, `parseAdaptersConfig`)
 //! - src/pilot/config/parseToolsConfig.ts
+//!
 //! Parsed objects omit `undefined` fields (the JSON view of the TS result); passthrough numbers keep their JSON value.
 use crate::js_number::js_trim;
 use crate::js_object::field;

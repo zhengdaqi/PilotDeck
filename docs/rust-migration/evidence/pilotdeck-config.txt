@@ -1,0 +1,12 @@
+Slice 40 — pilotdeckConfig pure part
+Oracle: env HOME=/tmp/pdhome PILOT_HOME=/tmp/pdhome/.pd node --experimental-transform-types rust/parity/ui_server/gen_pilotdeck_config.mjs [--check]
+  2500 cases (3 fixed + 2497 mulberry32 seed 4040), 15 functions per case, per-case controlled process.env
+  (11 variables). --check: "fixture stable".
+Test: cargo test -p pilotdeck-ui-server-core --test pilotdeck_config -> 2 passed (oracle + node path.join table).
+Mutation: 19/21 killed.
+  Equivalent: (1) dropping the `typeof ref !== 'string'` arm of validateRequiredModelRef (non-strings normalize to ''
+  and hit the same message); (2) dropping the `diagnostic.path` truthiness check (parseGatewayConfig/parseToolsConfig
+  never emit an empty path).
+  Initially surviving, killed by added cases: memory API type for openai-responses (fixed case 0); relative `..`
+  stacking in path_join (unit case ["..",".."]).
+Also: config_parsers.rs doc-list clippy warning fixed (blank //! line).

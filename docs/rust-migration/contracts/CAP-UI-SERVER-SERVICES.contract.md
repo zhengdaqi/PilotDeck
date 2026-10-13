@@ -27,3 +27,21 @@ routes (the axum host is to be decided in the routes slice).
 - slice 37: webUpdateCommand.js → `web_update_command.rs` (sans-IO `UpdateHost`: fetch with a streaming `BodyStream`, clock, sleep, uuid, realpath, `localHeaders`, offline service). Kept: SERVER_PORT via JS `Number` (hex, exponent, whitespace), ECONNREFUSED-only offline fallback, request error reason/message fallbacks (including the TypeError for a `null` detail), the NDJSON progress stream through a WHATWG streaming UTF-8 decoder (split sequences, U+FFFD, a trailing partial line is ignored), the early `return` from for-await rejecting when the body had already failed (`BodyStream::cancel`), recovery polling against the clock deadline, restart confirmation, and `describeUpdateReason` including Object.prototype member names. Host requirements: `localHeaders` (SQLite + JWT signing) and `createWebUpdateService` stay host-side. Typed boundary: a JSON SyntaxError's V8 text is not reproduced (`message: None`; only the error kind is part of the contract). Oracle gen_web_update_command.mjs; evidence ui-server-web-update-command.txt.
 - slice 38: releaseService.js → `release_service.rs` (normalizeRepository, releaseVersion including `Date.UTC`'s 0–99 → 1900+ year mapping for leap days, compareVersions with the safe-integer bound, getLatestRelease manifest and asset validation, sha256 lowercasing, spread-order asset output, Set identity on raw name values, the TypeError for a `null` asset). The host performs the GET (headers and 15 s timeout are the request contract). Typed boundary: a JSON SyntaxError's V8 text is not reproduced. Also fixes the slice-37 clippy warning (same condition). Oracle gen_release_service.mjs; evidence ui-server-release-service.txt.
 - slice 39 (pilotdeckConfig dependencies): `config_parsers.rs` ports PROVIDER_CATALOG + lookupCatalogProvider, providerCredentialScope (default URL, catalog API-key env var gated on protocol and canonical WHATWG URL), parseThinkingSettings, parseGatewayConfig, parseAdaptersConfig and parseToolsConfig (diagnostics in TS order). The catalog is a generated snapshot (`src/provider_catalog.json`) that gen_config_parsers.mjs --check proves identical to the TS module. Object.prototype provider ids map to "no catalog entry" (all their catalog fields are undefined in TS). Not yet ported: lookupCatalogModel (needed by the model runtime, not by pilotdeckConfig). Oracle gen_config_parsers.mjs; evidence ui-server-config-parsers.txt.
+
+## pilotdeckConfig (pure part) — slice 40 (`ui-server-core/src/pilotdeck_config.rs`)
+
+- Ported: buildDefaultPilotDeckConfig, normalizePilotDeckConfig (deepMerge, implicit `enabled: true` for configured
+  memory/router/tools.webSearch, officePreview migration, spreadsheetMode removal), sanitizeProviderCredentials,
+  resolveModel, validatePilotDeckConfig (providers, agent/memory/subagent refs, router scenarios/fallback/baseline/
+  pricing/tokenSaver, gateway+tools diagnostics, contextWindow deprecation, officePreview), maskSecrets,
+  preserveMaskedSecrets, hasUnresolvedMaskedSecrets, resolveConfiguredProviderUrl/ApiKey, buildRuntimeEnv,
+  buildMemoryLlmOptions, buildMemoryDefaults, configRevision (sha256), expandTilde (POSIX path.join), syncAgentModelWithRouter.
+- `process.env` / `os.homedir()` / `PILOT_HOME` are explicit (`PilotDeckEnv`); the JS module captures PILOT_HOME at load.
+- JS exceptions keep V8 text: `Cannot read properties of null (reading 'officePreview'|'model')`,
+  `Cannot set properties of undefined (setting 'service')`, `Cannot create property 'service' on number '5'`.
+- Typed boundaries (documented, not generated): `__proto__` keys; array-valued `webui.officePreview` (JS sets a
+  property on the array; outside the JSON domain, `unreachable!`); providers given as arrays/strings resolve by index
+  in JS and are treated as "not a record" here (identical outcome: index values are never records in YAML input).
+- Pending: YAML read/write half (readPilotDeckConfigFile, serializePilotDeckConfigResponse, updatePilotDeckConfig,
+  writePilotDeckConfig, atomic writes, finalizeBootstrapPlaceholder, purgeLegacyProviderDrafts, configToYaml,
+  rawYamlToMaskedString, parseConfigYaml).
