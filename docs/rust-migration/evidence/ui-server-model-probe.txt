@@ -1,0 +1,9 @@
+slice 34 model probe evidence 2026-10-13 15:35:59 CST
+fixture stable
+test png_and_requests ... ok
+test helpers ... ok
+test endpoints_and_shapes ... ok
+test probes ... ok
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.21s
+cases: 1500 endpoint inputs (chat/models candidates + first), 15 Google model names, 95 shape checks, 19 network errors, 2723 helper cases (hasErrorFinish/extractProbeText/isIncomplete incl. V8 TypeErrors, stripThinking, looksLikeImageUnsupported×classifyProbeError, responseDetail, isValidImageColorAnswer), 200 requestFor, PNG header/IEND/raw pixels/CRC, 1500 probeModelConnection runs with a scripted fetch (request log + result); fixed seed mulberry32 3434
+mutations: 16/18 killed (version segment beta digits, models/<m>:method parent check, encodeURIComponent set, Google alias, output_text shape, ECONNREFUSED rule, string iteration, thought filter, 60-unit gap bound, line terminators, allowed value(s), empty network message, fallback status only with >1 URL, shape gate on incomplete, think-strip cursor, astral = 2 units). Equivalent: candidate dedupe (versioned and unversioned URLs can never be equal) and the falsy last.detail guard (detail is always a truthy string).
