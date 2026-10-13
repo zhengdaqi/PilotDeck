@@ -1,0 +1,10 @@
+[package]
+name = "pilotdeck-plugin-host"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "JS plugin host via Node child processes (ADR-0004): port of src/mcp/runtime/projectMcpSpec.ts + stdio MCP subprocess launch"
+
+[dependencies]
+serde_json.workspace = true
+pilotdeck-session-search = { path = "../session-search" }

@@ -10,3 +10,5 @@
 - The host transport (`send(413)` then `return`) does deliver its 413 (case `public/h_too_large`).
 - Rust treatment: **behavior-compatible**. The connection is closed without a response. **Pending user decision**:
   send the intended 413.
+
+- Decision (ADR-0004, 2026-10-13): keep reproducing the TS behaviour for now.

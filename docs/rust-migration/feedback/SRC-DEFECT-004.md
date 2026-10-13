@@ -7,7 +7,7 @@
   Binding is loopback-only by default.
 - Reproduced by `rust/parity/gateway/gateway_server_parity.py`. Divergence "SRC-DEFECT-004 unmasked client frame":
   `ts_server_alive=false`.
-- Rust treatment (bounded fix, **pending user decision**): `ws::serve` destroys only the offending connection. The server
+- Rust treatment (bounded fix, **FINAL: intended behaviour difference, ADR-0004**): `ws::serve` destroys only the offending connection. The server
   stays up (`rust_server_alive=true`, `/health` 200 afterwards). This case is reported as a documented divergence and never
   counted as a parity pass. If the user wants byte-for-byte compatibility instead, the Rust server would have to exit the
   process. We do not recommend that.

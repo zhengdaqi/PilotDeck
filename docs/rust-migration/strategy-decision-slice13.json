@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "scope_id": "pilotdeck-standalone_alpha1-b243fa00/CAP-WEB-UI",
+  "status": "SELECTED",
+  "selected_branches": [
+    "S03",
+    "V01"
+  ],
+  "provisional_branches": [],
+  "reasons": [
+    "S03: target_integration=native",
+    "V01: deterministic observable core"
+  ],
+  "blocking_checks": [],
+  "probe_checks": [],
+  "required_gates": [
+    "G03",
+    "G05",
+    "G06",
+    "G07",
+    "G09",
+    "G11",
+    "G17"
+  ],
+  "exit_checks": [
+    "architecture_dependency_constraints",
+    "complete_case_and_seed_sets",
+    "external_contract_parity",
+    "feedback_window",
+    "formal_entrypoint",
+    "full_observable_trace",
+    "full_scope_native_ownership",
+    "minimized_divergence_regressions",
+    "rng_algorithm_and_consumption",
+    "unsupported_capabilities_reported"
+  ],
+  "evidence_refs": [
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/baseline.json",
+      "sha256": "c24602c1dbb40785298f3ab5d2d52db8eb70d471c550e13b69ba57f885817214"
+    },
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/evidence/web-ui-slice1-chrome.json",
+      "sha256": "3ba75edc389fd4ab921bd0672cbe22a683d22cb1e776bee04775c64f6a507f00"
+    },
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/evidence/desktop-tauri-linux-smoke.txt",
+      "sha256": "ef78f474c68f614de5335483d897042c42c2baeef47102e81e6c06c265bfe677"
+    },
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/contracts/CAP-WEB-UI.contract.md",
+      "sha256": "7f268a8bbdbb9d77d0131200243ab8f1dbe5f7f344d29094edfe60352385882f"
+    },
+    {
+      "path": "/workspace/PilotDeck/rust/crates/web-ui-core/tests/fixtures/workspace_file_mention.json",
+      "sha256": "d2a3d496cacc6564027f98818d8b1420750346fc2042732d2745cbe380fcc052"
+    }
+  ],
+  "phase_bindings": {
+    "P03": "provisional_decision_and_ADR",
+    "P04": "branch_contract",
+    "P07": "branch_adapters",
+    "P08": "selection_confirmed",
+    "P09": "first_real_slice",
+    "P12": "recalibrate",
+    "P26": "branch_exit_audit"
+  },
+  "meaning": "selection only; not implementation, deployment approval, or product PASS",
+  "facts_sha256": "f5c96b7477c9cad3327b1361fa17bbd650487b8ac0f74707c790de8c103432e4",
+  "catalog_sha256": "1eb0fd94be42b40d4c075d7e80831a88e07e36bcc2d9b8f7c74958e9911cf375",
+  "selector_sha256": "1494d06c53c669aa990c2ba4337185aef9d6e8782fea505856cfde30e2e6d3fe"
+}
