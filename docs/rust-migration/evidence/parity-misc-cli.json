@@ -1,0 +1,95 @@
+{
+  "cases": [
+    {
+      "case": "update-bad-arg",
+      "pass": true,
+      "oracle": {
+        "code": 1,
+        "stdout": "Usage: update [--check] [--restart]\n",
+        "stderr": ""
+      }
+    },
+    {
+      "case": "update-check-devtree",
+      "pass": true,
+      "oracle": {
+        "code": 1,
+        "stdout": "development: Developer branches/worktrees and development runtimes do not support self-update.\n",
+        "stderr": ""
+      }
+    },
+    {
+      "case": "update-mixed",
+      "pass": true,
+      "oracle": {
+        "code": 1,
+        "stdout": "Usage: update [--check] [--restart]\n",
+        "stderr": ""
+      }
+    },
+    {
+      "case": "gateway-none",
+      "pass": true,
+      "oracle": {
+        "code": 1,
+        "stdout": "",
+        "stderr": "Usage: pilotdeck gateway setup [feishu|weixin|wecom]\n"
+      }
+    },
+    {
+      "case": "gateway-bad",
+      "pass": true,
+      "oracle": {
+        "code": 1,
+        "stdout": "",
+        "stderr": "Usage: pilotdeck gateway setup [feishu|weixin|wecom]\n"
+      }
+    },
+    {
+      "case": "tui-notty",
+      "pass": true,
+      "oracle": {
+        "code": 1,
+        "stdout": "",
+        "stderr": "pilotdeck tui requires an interactive terminal.\n"
+      }
+    },
+    {
+      "case": "help",
+      "pass": true,
+      "oracle": {
+        "code": 0,
+        "stdout": "PilotDeck SDK CLI\n\n  pilotdeck run <prompt> [options]\n  pilotdeck resume <session-id> <prompt> [options]\n  pilotdeck sessions list [options]\n  pilotdeck sessions messages <session-id> [options]\n  pilotdeck settings get [options]\n  pilotdeck settings set '<json>' [options]\n\nOptions:\n  --gateway-url <url>       Gateway WebSocket URL\n  --auth-token <token>      Gateway auth token\n  --project <path>          Explicit Gateway project key (defaults to Gateway workspace)\n  --channel <name>          Session channel (defaults to cli)\n  --model <provider/model>  Session model override\n  --permission-mode <mode>  Session permission mode\n  --json                    Print the final run/result as JSON\n  --stream-json             Print each run event as JSONL\n",
+        "stderr": ""
+      }
+    },
+    {
+      "case": "help-long",
+      "pass": true,
+      "oracle": {
+        "code": 0,
+        "stdout": "PilotDeck SDK CLI\n\n  pilotdeck run <prompt> [options]\n  pilotdeck resume <session-id> <prompt> [options]\n  pilotdeck sessions list [options]\n  pilotdeck sessions messages <session-id> [options]\n  pilotdeck settings get [options]\n  pilotdeck settings set '<json>' [options]\n\nOptions:\n  --gateway-url <url>       Gateway WebSocket URL\n  --auth-token <token>      Gateway auth token\n  --project <path>          Explicit Gateway project key (defaults to Gateway workspace)\n  --channel <name>          Session channel (defaults to cli)\n  --model <provider/model>  Session model override\n  --permission-mode <mode>  Session permission mode\n  --json                    Print the final run/result as JSON\n  --stream-json             Print each run event as JSONL\n",
+        "stderr": ""
+      }
+    },
+    {
+      "case": "help-h",
+      "pass": true,
+      "oracle": {
+        "code": 0,
+        "stdout": "PilotDeck SDK CLI\n\n  pilotdeck run <prompt> [options]\n  pilotdeck resume <session-id> <prompt> [options]\n  pilotdeck sessions list [options]\n  pilotdeck sessions messages <session-id> [options]\n  pilotdeck settings get [options]\n  pilotdeck settings set '<json>' [options]\n\nOptions:\n  --gateway-url <url>       Gateway WebSocket URL\n  --auth-token <token>      Gateway auth token\n  --project <path>          Explicit Gateway project key (defaults to Gateway workspace)\n  --channel <name>          Session channel (defaults to cli)\n  --model <provider/model>  Session model override\n  --permission-mode <mode>  Session permission mode\n  --json                    Print the final run/result as JSON\n  --stream-json             Print each run event as JSONL\n",
+        "stderr": ""
+      }
+    },
+    {
+      "case": "update-no-updater",
+      "pass": true,
+      "oracle": {
+        "code": 1,
+        "stdout": "",
+        "stderr": "Update failed: This installation does not include the Git Web updater. Use application settings or update manually.\n"
+      }
+    }
+  ],
+  "negative_control_detected": true
+}

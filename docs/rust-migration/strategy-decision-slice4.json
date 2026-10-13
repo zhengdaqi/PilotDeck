@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "scope_id": "pilotdeck-standalone_alpha1-b243fa00/CAP-CLI-MISC",
+  "status": "SELECTED",
+  "selected_branches": [
+    "S03"
+  ],
+  "provisional_branches": [],
+  "reasons": [
+    "S03: target_integration=native"
+  ],
+  "blocking_checks": [],
+  "probe_checks": [],
+  "required_gates": [
+    "G03",
+    "G05",
+    "G06",
+    "G07",
+    "G09",
+    "G11",
+    "G17"
+  ],
+  "exit_checks": [
+    "architecture_dependency_constraints",
+    "external_contract_parity",
+    "feedback_window",
+    "formal_entrypoint",
+    "full_scope_native_ownership"
+  ],
+  "evidence_refs": [
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/baseline.json",
+      "sha256": "c24602c1dbb40785298f3ab5d2d52db8eb70d471c550e13b69ba57f885817214"
+    },
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/evidence/parity-misc-cli.json",
+      "sha256": "8de50020ac52c74364a2a1e11b5511637c350db36cf66a14a0dbbba9f4b61862"
+    },
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/ADR-0001-rust-architecture.md",
+      "sha256": "ee0f99372dbaf47a8a8fe268e81ebfe4e4be28a1223a0b7c0e746ffac922ed2e"
+    },
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/ADR-0002-user-decisions.md",
+      "sha256": "afcd5d6023e22b8f4f686859427261aa37545cbb2567ff1ac84bdd0c43c305d7"
+    },
+    {
+      "path": "/workspace/PilotDeck/docs/rust-migration/contracts/CAP-CLI-MISC.contract.md",
+      "sha256": "411a7391912ec8ceafa0223365b2c8da5baca15dae1d95c1d251ea53f1d7da60"
+    }
+  ],
+  "phase_bindings": {
+    "P03": "provisional_decision_and_ADR",
+    "P04": "branch_contract",
+    "P07": "branch_adapters",
+    "P08": "selection_confirmed",
+    "P09": "first_real_slice",
+    "P12": "recalibrate",
+    "P26": "branch_exit_audit"
+  },
+  "meaning": "selection only; not implementation, deployment approval, or product PASS",
+  "facts_sha256": "e53883c3cd37c0f7bac90a1dd34f8b664f04b67a5c54cc500080fa4d5bce5961",
+  "catalog_sha256": "1eb0fd94be42b40d4c075d7e80831a88e07e36bcc2d9b8f7c74958e9911cf375",
+  "selector_sha256": "1494d06c53c669aa990c2ba4337185aef9d6e8782fea505856cfde30e2e6d3fe"
+}
