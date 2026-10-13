@@ -777,6 +777,7 @@ name = "pilotdeck-ui-server-core"
 version = "0.0.0"
 dependencies = [
  "pilotdeck-session-search",
+ "pilotdeck-skills",
  "pilotdeck-web-ui-core",
  "regex",
  "serde_json",
