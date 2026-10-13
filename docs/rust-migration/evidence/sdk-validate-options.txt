@@ -4,3 +4,5 @@ test validate_options_matches_ts ... ok
 test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
 cases: 9860 unique options objects (fixed probes + every field alone x25 + 12000 random combos, mulberry32) run through the real client.ts validateOptions (load hook re-exports it); results: ok 1805, validation_error 5444, unsupported_capability 2400, V8 TypeError 211; compared as 'code: message' strings
 mutations: 21/21 killed (NaN SameValueZero, isAbsolute, unsupported-key list, reconnect delay order, safe-integer bound, string includes, thinking display, search_tools reserved, optional-chain trim, self-observer, hosted MCP skip, agent spec start(), Object.entries on strings, jitter finiteness, custom systemPrompt recursion, ...)
+slice 33 wasm export (2026-10-13 15:30:04 CST): npm wrapper validateOptions (marker encoder + validateOptionsJson) replays the same fixture:
+sdk-wasm validateOptions: 9860 cases, 0 mismatches

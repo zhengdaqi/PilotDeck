@@ -191,3 +191,14 @@ pub fn map_error(code: Option<String>, message: &str, details: &str) -> String {
     let d = Some(parse(details)).filter(|d| !d.is_null());
     err_json(&tc::map_error(code.as_deref(), message, d)).to_string()
 }
+
+/// `validateOptions(options)`: `options` is marker-encoded JSON (see npm/index.js `encodeOptions`).
+/// Returns "" when valid, else `{"code","message"}` (code `TypeError` for V8 TypeErrors).
+#[wasm_bindgen(js_name = validateOptionsJson)]
+pub fn validate_options_json(options: &str) -> String {
+    use pilotdeck_sdk::options::{validate_options, Js};
+    match validate_options(&Js::from_json(&parse(options))) {
+        Ok(()) => String::new(),
+        Err(e) => serde_json::json!({ "code": e.code, "message": e.message }).to_string(),
+    }
+}

@@ -71,4 +71,11 @@ isAbsolutePath. Input is a JS-shaped `Js` value (functions, undefined members an
 the wasm/JS host and loosely typed native config are validated the same way. Check order, messages, codes and the
 V8 TypeErrors for wrong member types are kept. Oracle: rust/parity/sdk/gen_validate_options.mjs → 9860/9860;
 evidence sdk-validate-options.txt. Pending in client.ts: sdkSessionConfig/query init sequence, Query/stream
-control, MCP preparation, resource-client methods (wasm export of validateOptions comes with that slice).
+control, MCP preparation, resource-client methods (validateOptions is exported to wasm since slice 33).
+
+## Slice 33: validateOptions in the wasm npm wrapper
+`npm/index.js` exports `validateOptions(options)` and `encodeOptions`. The encoder marks functions, undefined
+members and non-finite numbers, and the wasm `validateOptionsJson` runs `options.rs`. Errors are rethrown as
+`PilotDeckError` (code/message) or `TypeError`. Check: `node rust/sdk-wasm/check_validate_options.mjs` → 9860/9860.
+Limitation (recorded): the encoder walks own enumerable properties, while TS also reads inherited ones through
+`options.x` (prototype-carried options are not supported by the wrapper).
