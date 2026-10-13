@@ -11,7 +11,7 @@ description = "Transport-agnostic core of the PilotDeck SDK (port of packages/sd
 default = ["fs", "net"]
 fs = ["dep:base64", "dep:pilotdeck-agent-loop-sidecar"]
 # Native WebSocket network layer (blocking IO thread over tungstenite).
-net = ["dep:tungstenite", "dep:pilotdeck-gateway-client", "dep:getrandom"]
+net = ["dep:tungstenite", "dep:pilotdeck-gateway-client", "dep:getrandom", "dep:url"]
 
 [dependencies]
 serde_json = { workspace = true, features = ["preserve_order"] }
@@ -20,3 +20,4 @@ pilotdeck-agent-loop-sidecar = { path = "../agent-loop-sidecar", optional = true
 tungstenite = { workspace = true, optional = true }
 pilotdeck-gateway-client = { path = "../gateway-client", optional = true }
 getrandom = { version = "0.2", optional = true }
+url = { version = "2", optional = true }

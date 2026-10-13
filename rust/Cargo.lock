@@ -693,6 +693,7 @@ dependencies = [
  "pilotdeck-gateway-client",
  "serde_json",
  "tungstenite",
+ "url",
 ]
 
 [[package]]
