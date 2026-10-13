@@ -9,6 +9,7 @@ pub mod node_path;
 pub mod shell_quote;
 pub mod settings_files;
 pub mod services;
+pub mod model_probe;
 pub mod connection_test_tasks;
 pub mod terminal_runtime;
 
