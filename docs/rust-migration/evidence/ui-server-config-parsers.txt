@@ -1,0 +1,6 @@
+slice 39 config parsers evidence 2026-10-13 15:51:22 CST
+fixture stable (catalog snapshot matches TS)
+test config_parsers_match_ts ... ok
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.40s
+cases: catalog snapshot (12 providers) byte-equal to JSON.stringify(PROVIDER_CATALOG); 3000 credential-scope cases (all providers, own protocol/URL variants, prototype ids) with lookup fields, default URL and env var (394 resolve an env var); 1500 parseThinkingSettings; 1500 parseGatewayConfig; 1500 parseAdaptersConfig; 2500 parseToolsConfig (results and diagnostics).
+mutations: 17/19 killed. Equivalent: the http(s) scheme filter in canonicalProviderUrl (catalog URLs are http(s), so other schemes never compare equal) and the finiteness check (JSON values cannot be Infinity/NaN).
